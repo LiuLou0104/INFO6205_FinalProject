@@ -1,0 +1,6 @@
+# ignore packages
+.idea/
+out/
+
+# ignore file
+*.iml
