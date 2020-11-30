@@ -19,6 +19,10 @@ public class AreaUnit {
     public AreaUnit(){
     }
 
+    public void calcInfectSpeed(){
+        this.infectSpeed = 1.0;
+    }
+
     public double getPopulationDensity() {
         return populationDensity;
     }
