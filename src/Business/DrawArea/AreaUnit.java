@@ -1,29 +1,22 @@
-package edu.neu.coe.info6205;
+package Business.DrawArea;
 
-public class Block {
-    private int BLOCK_LENGTH = 1;
-    private int BLOCK_WIDTH = 1;
+import Business.Pathogen.Pathogen;
+import Business.Pathogen.Hospital;
+
+public class AreaUnit {
+    public static int BLOCK_LENGTH = 1;
+    public static int BLOCK_WIDTH = 1;
     private double populationDensity = 0; //人口密度
-    private double infectSpeed = 0; //传染速度 = 人口密度 * ???
+    private double infectSpeed = 0; //传染速度 = 人口密度 * ???  infectNum * 2^t
     private double infectNum = 0; //该地区感染人数
+    private double headcount = 0; //该地区的总人数
+    private double popFlowSpeed = 0;//该地区的向外人口流动速度（单位时间的人口流出量）
     private boolean isQuarantine = false; //是否隔离（旅行限制）
     private boolean isMask = false; //是否使用口罩
     private Pathogen pathogen; //该地区的病毒种类（通过set方法传入）
     private Hospital hospital; //该地区的医院（通过set方法传入）
 
-    public Block(){}
-
-    /*
-    * District由Block组成，初始化District
-    * */
-    public Block[][] initDistrict(int districtLength, int districtWidth){
-        Block[][] district = new Block[districtWidth/BLOCK_WIDTH][districtLength/BLOCK_LENGTH];
-        for(int i=0;i<districtWidth/BLOCK_WIDTH;i++){
-            for(int j=0;j<districtLength/BLOCK_LENGTH;j++){
-                district[i][j] = new Block();
-            }
-        }
-        return district;
+    public AreaUnit(){
     }
 
     public double getPopulationDensity() {
@@ -80,5 +73,21 @@ public class Block {
 
     public void setHospital(Hospital hospital) {
         this.hospital = hospital;
+    }
+
+    public double getHeadcount() {
+        return headcount;
+    }
+
+    public void setHeadcount(double headcount) {
+        this.headcount = headcount;
+    }
+
+    public double getPopFlowSpeed() {
+        return popFlowSpeed;
+    }
+
+    public void setPopFlowSpeed(double popFlowSpeed) {
+        this.popFlowSpeed = popFlowSpeed;
     }
 }

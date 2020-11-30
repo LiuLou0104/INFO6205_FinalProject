@@ -1,11 +1,9 @@
-package edu.neu.coe.info6205;
-
-import java.nio.file.Path;
+package Business.Pathogen;
 
 public class Pathogen {
     private String name = "SARS-CoV-2"; //病原体名称
-    private double K_FACTOR = 0; //k-factor
-    private double R_FACTOR = 0; //r-factor
+    private double K_FACTOR = 0; //k-factor 人有多少概率携带并传播
+    private double R_FACTOR = 0; //r-factor 1.4-3.8
 
     public Pathogen(){}
 

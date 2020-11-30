@@ -1,4 +1,4 @@
-package edu.neu.coe.info6205;
+package Business.Pathogen;
 
 public class Hospital {
     private String name = "";
