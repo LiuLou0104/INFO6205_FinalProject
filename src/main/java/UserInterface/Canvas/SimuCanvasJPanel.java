@@ -1,4 +1,4 @@
-package main.java.UserInterface.Canvas;
+package UserInterface.Canvas;
 
 /**
  * @Author: LiuLou

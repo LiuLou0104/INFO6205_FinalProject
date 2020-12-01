@@ -1,4 +1,4 @@
-package main.java.Business.Report;
+package Business.Report;
 
 public class ChartDirectory {
 }

@@ -1,7 +1,7 @@
-package main.java.UserInterface;
+package UserInterface;
 
-import main.java.UserInterface.MultipleSimu.MultiSimuJPanel;
-import main.java.UserInterface.SingleSimu.SingleSimuJPanel;
+import UserInterface.MultipleSimu.MultiSimuJPanel;
+import UserInterface.SingleSimu.SingleSimuJPanel;
 
 import java.awt.*;
 

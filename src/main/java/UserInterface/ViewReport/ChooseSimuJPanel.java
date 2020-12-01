@@ -1,4 +1,4 @@
-package main.java.UserInterface.ViewReport;
+package UserInterface.ViewReport;
 
 import javax.swing.*;
 import java.awt.*;

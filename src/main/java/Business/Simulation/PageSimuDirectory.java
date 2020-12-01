@@ -1,4 +1,4 @@
-package main.java.Business.Simulation;
+package Business.Simulation;
 
 import java.util.ArrayList;
 import java.util.List;

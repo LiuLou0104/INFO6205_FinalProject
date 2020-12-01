@@ -1,4 +1,4 @@
-package main.java.Business.Pathogen;
+package Business.Pathogen;
 
 public class Hospital {
     private String name = "";

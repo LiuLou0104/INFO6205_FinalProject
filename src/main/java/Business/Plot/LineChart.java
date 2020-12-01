@@ -1,4 +1,4 @@
-package main.java.Business.Plot;
+package Business.Plot;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtils;
