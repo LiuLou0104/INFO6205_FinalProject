@@ -1,4 +1,4 @@
-package main.java.Business.Pathogen;
+package Business.Pathogen;
 
 public class Pathogen {
     private String name = "SARS-CoV-2"; //病原体名称

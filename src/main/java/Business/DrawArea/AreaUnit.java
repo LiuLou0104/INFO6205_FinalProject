@@ -1,7 +1,7 @@
-package main.java.Business.DrawArea;
+package Business.DrawArea;
 
-import main.java.Business.Pathogen.Pathogen;
-import main.java.Business.Pathogen.Hospital;
+import Business.Pathogen.Hospital;
+import Business.Pathogen.Pathogen;
 
 public class AreaUnit {
     public static int BLOCK_LENGTH = 1;

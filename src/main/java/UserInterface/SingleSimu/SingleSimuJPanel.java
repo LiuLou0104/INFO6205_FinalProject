@@ -1,6 +1,6 @@
-package main.java.UserInterface.SingleSimu;
+package UserInterface.SingleSimu;
 
-import main.java.UserInterface.ViewReport.ChooseSimuJPanel;
+import UserInterface.ViewReport.ChooseSimuJPanel;
 
 import javax.swing.*;
 import java.awt.*;

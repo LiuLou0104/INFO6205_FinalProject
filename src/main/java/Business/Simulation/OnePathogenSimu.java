@@ -1,7 +1,7 @@
-package main.java.Business.Simulation;
+package Business.Simulation;
 
-import main.java.Business.DrawArea.Area;
-import main.java.Business.DrawArea.AreaUnit;
+import Business.DrawArea.Area;
+import Business.DrawArea.AreaUnit;
 
 import java.util.Observable;
 

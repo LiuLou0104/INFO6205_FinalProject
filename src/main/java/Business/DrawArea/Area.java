@@ -1,5 +1,4 @@
-package main.java.Business.DrawArea;
-
+package Business.DrawArea;
 
 public class Area {
     private AreaUnit[][] area;

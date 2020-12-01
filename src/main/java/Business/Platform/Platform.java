@@ -1,4 +1,4 @@
-package main.java.Business.Platform;
+package Business.Platform;
 
 public class Platform {
 }

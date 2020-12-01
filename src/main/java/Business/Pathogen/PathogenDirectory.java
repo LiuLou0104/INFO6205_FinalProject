@@ -1,4 +1,4 @@
-package main.java.Business.Pathogen;
+package Business.Pathogen;
 
 import java.util.ArrayList;
 import java.util.List;
