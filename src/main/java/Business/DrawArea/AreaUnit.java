@@ -1,7 +1,7 @@
 package Business.DrawArea;
 
-import Business.Pathogen.Hospital;
 import Business.Pathogen.Pathogen;
+import Business.Pathogen.Hospital;
 
 public class AreaUnit {
     public static int BLOCK_LENGTH = 1;
@@ -17,6 +17,16 @@ public class AreaUnit {
     private Hospital hospital; //该地区的医院（通过set方法传入）
 
     public AreaUnit(){
+    }
+
+    public void calcInfectSpeed(){
+        calcPopulationDensity();
+        this.infectSpeed = infectNum * (0.005 * populationDensity * pathogen.getR_FACTOR() * 0.3 / pathogen.getK_FACTOR() * 9);
+        //this.infectSpeed = 1.0;
+    }
+  
+    private void calcPopulationDensity(){
+        this.populationDensity = this.headcount / (BLOCK_WIDTH * BLOCK_LENGTH);
     }
 
     public double getPopulationDensity() {

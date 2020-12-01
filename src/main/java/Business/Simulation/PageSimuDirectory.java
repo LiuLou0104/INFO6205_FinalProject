@@ -8,11 +8,12 @@ public class PageSimuDirectory {
     public PageSimuDirectory(){
         pageSimuList = new ArrayList<>();
     }
-
+    public void add(PageSimu pageSimu){
+        pageSimuList.add(pageSimu);
+    }
     public List<PageSimu> getPageSimuList() {
         return pageSimuList;
     }
-
     public void setPageSimuList(List<PageSimu> pageSimuList) {
         this.pageSimuList = pageSimuList;
     }

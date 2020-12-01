@@ -8,11 +8,12 @@ public class PageSimu {
     public PageSimu(){
         onePathogenSimuList = new ArrayList<>();
     }
-
+    public void add(OnePathogenSimu onePathogenSimu){
+        onePathogenSimuList.add(onePathogenSimu);
+    }
     public List<OnePathogenSimu> getOnePathogenSimuList() {
         return onePathogenSimuList;
     }
-
     public void setOnePathogenSimuList(List<OnePathogenSimu> onePathogenSimuList) {
         this.onePathogenSimuList = onePathogenSimuList;
     }
