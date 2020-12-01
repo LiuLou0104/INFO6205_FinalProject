@@ -89,6 +89,7 @@ public class OnePathogenSimu extends Observable implements Runnable {
         return counter;
     }
 
+
     //↓
     public void currToDown(int i, int j){
         //area[i][j]地区的感染率
@@ -234,6 +235,7 @@ public class OnePathogenSimu extends Observable implements Runnable {
         area[i-1][j-1].setInfectNum(area[i-1][j-1].getInfectNum()-infectOutNum);
         area[i][j].setInfectNum(area[i][j].getInfectNum()+infectOutNum);
     }
+
 
 
 
