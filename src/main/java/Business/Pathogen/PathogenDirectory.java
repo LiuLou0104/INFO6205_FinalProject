@@ -1,5 +1,7 @@
 package Business.Pathogen;
 
+import Business.Pathogen.Pathogen;
+
 import java.util.ArrayList;
 import java.util.List;
 
