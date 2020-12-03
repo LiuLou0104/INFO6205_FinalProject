@@ -6,6 +6,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.title.TextTitle;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
@@ -61,12 +62,20 @@ public class PlotAbstract {
         return dataset;
     }
 
-    private static CategoryDataset getDataSet() {
+    public static CategoryDataset getDataSet() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
         // TODO: construct the dataset
 
         return dataset;
+    }
+
+    public static TimeSeriesCollection getTimeSeries() {
+        TimeSeriesCollection timeSeriesCollection = new TimeSeriesCollection();
+
+        // TODO: construct the dataset
+
+        return timeSeriesCollection;
     }
 
 }

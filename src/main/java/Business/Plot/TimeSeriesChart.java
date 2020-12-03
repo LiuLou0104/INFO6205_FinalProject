@@ -3,31 +3,35 @@ package Business.Plot;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.xy.XYSeriesCollection;
 
-public class ScatterPlot extends PlotAbstract {
+public class TimeSeriesChart extends PlotAbstract {
 
     private String title;
     private String xAxisLable;
     private String yAxisLable;
-    private boolean legend = true;
+    private boolean legend = false;
     private boolean tooltips = false;
     private boolean urls = false;
 
-    public ScatterPlot() {
+    public String getTitle() {
+        return title;
+    }
+
+    public TimeSeriesChart() {
         super();
     }
 
-    public ScatterPlot(String title, String xLable, String yLable) {
+    public TimeSeriesChart(String title, String xLable, String yLable) {
         this.title = title;
         this.xAxisLable = xLable;
         this.yAxisLable = yLable;
     }
 
-    public JFreeChart Plot(CategoryDataset dataset) {
-        JFreeChart chart = ChartFactory.createScatterPlot(this.title,
+    public JFreeChart Plot(XYSeriesCollection dataset) {
+        JFreeChart chart = ChartFactory.createTimeSeriesChart(this.title,
                 this.xAxisLable,  this.yAxisLable,
-                dataset, PlotOrientation.VERTICAL,
+                dataset,
                 this.legend, this.tooltips, this.urls);
 
         return chart;
