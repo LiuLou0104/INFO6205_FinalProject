@@ -5,7 +5,10 @@ import Business.Simulation.PageSimu;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.xy.XYSeriesCollection;
 
+import java.util.Date;
+
 import static Business.Plot.PlotAbstract.*;
+import static Business.Utilities.DateFormat.*;
 
 public class Plot {
 
@@ -14,8 +17,9 @@ public class Plot {
         XYSeriesCollection dataset = getXYSeriesDataSetInfectNum(pageSimu.getOnePathogenSimuList());
         JFreeChart chart = lineChart.Plot(dataset);
 
-        String fileName = lineChart.getTitle() + "_"/* + date*/;
-        Chart outputChart = new Chart(title, fileName);
+        Date date = new Date();
+        String fileName = lineChart.getTitle() + "_" + DateFormat3(date);
+        Chart outputChart = new Chart(date, fileName);
         /* add outputChart to ChartDirectory*/
         pageSimu.addChart(outputChart);
         saveChartAsJPG(chart, lineChart.getTitle(), fileName);
@@ -26,8 +30,9 @@ public class Plot {
         XYSeriesCollection dataset = getXYSeriesDataSetInfectUnits(pageSimu.getOnePathogenSimuList());
         JFreeChart chart = lineChart.Plot(dataset);
 
-        String fileName = lineChart.getTitle() + "_"/* + date*/;
-        Chart outputChart = new Chart(title, fileName);
+        Date date = new Date();
+        String fileName = lineChart.getTitle() + "_" + DateFormat3(date);
+        Chart outputChart = new Chart(date, fileName);
         /* add outputChart to ChartDirectory*/
         pageSimu.addChart(outputChart);
         saveChartAsJPG(chart, lineChart.getTitle(), fileName);

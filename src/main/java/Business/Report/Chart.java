@@ -11,8 +11,8 @@ public class Chart {
         this.date = new Date();
     }
 
-    public Chart(String title, String fileName) {
-        this.date = new Date();
+    public Chart(Date date, String fileName) {
+        this.date = date;
         this.fileName = fileName;
     }
 }
