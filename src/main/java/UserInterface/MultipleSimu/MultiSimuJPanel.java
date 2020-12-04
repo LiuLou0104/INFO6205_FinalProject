@@ -364,8 +364,11 @@ public class MultiSimuJPanel extends javax.swing.JPanel {
 
         //TODO waiting for business code
         OnePathogenSimu ops1 = new OnePathogenSimu(pathogen1, popuDensity, isWearingMask, isQuarantine, isTest);
+        ops1.addObserver(jplCanvas1);
         ops1.startSim();
+
         OnePathogenSimu ops2 = new OnePathogenSimu(pathogen2, popuDensity, isWearingMask, isQuarantine, isTest);
+        ops2.addObserver(jplCanvas2);
         ops2.startSim();
 //        System.out.println(pathogen1.getName() + pathogen2.getName() + popuDensity + isWearingMask + isQuarantine + isTest);
     }
@@ -412,8 +415,8 @@ public class MultiSimuJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jblPathogen2;
-    private javax.swing.JPanel jplCanvas1;
-    private javax.swing.JPanel jplCanvas2;
+    private SimuCanvasJPanel jplCanvas1;
+    private SimuCanvasJPanel jplCanvas2;
     private javax.swing.JLabel lblPathogen1;
     private javax.swing.ButtonGroup bgMask;
     private javax.swing.ButtonGroup bgQuarantine;

@@ -297,6 +297,7 @@ public class SingleSimuJPanel extends javax.swing.JPanel {
 
         //TODO waiting for business code
         OnePathogenSimu ops = new OnePathogenSimu(pathogen, popuDensity, isWearingMask, isQuarantine, isTest);
+        ops.addObserver(jplCanvas);
         ops.startSim();
 //        System.out.println(pathogen.getName() + popuDensity + isWearingMask + isQuarantine + isTest);
     }
@@ -340,7 +341,7 @@ public class SingleSimuJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JPanel jplCanvas;
+    private SimuCanvasJPanel jplCanvas;
     private javax.swing.ButtonGroup bgMask;
     private javax.swing.ButtonGroup bgQuarantine;
     private javax.swing.ButtonGroup bgTest;
