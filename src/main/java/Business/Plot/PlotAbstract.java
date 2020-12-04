@@ -1,5 +1,6 @@
 package Business.Plot;
 
+import Business.DrawArea.AreaUnit;
 import Business.Simulation.OnePathogenSimu;
 import org.jfree.chart.ChartUtils;
 import org.jfree.chart.JFreeChart;
@@ -40,23 +41,43 @@ public class PlotAbstract {
         }
     }
 
-    public static XYSeriesCollection getXYSeriesDataSet(List<OnePathogenSimu> pathogenSimus){
+    /**
+     * XY Series for line chart
+     * @param pathogenSimus
+     * @return
+     */
+    public static XYSeriesCollection getXYSeriesDataSetInfectNum(List<OnePathogenSimu> pathogenSimus){
         XYSeriesCollection dataset = new XYSeriesCollection();
         int seriesNum = 0;
         int abTime = 0; // Absolute time of the simulaiton
 
         for (OnePathogenSimu pathogenSimu : pathogenSimus) {
             XYSeries series = new XYSeries("XYSeries" + seriesNum);
-            // TODO: for loop to add x and y to the xyseries
-            /*
-            for (pathogenSimus.someData) {
-                y =
-                series.add(abTime++, y);
-            }
-            abTime = 0; // reset absolute Time
 
-            dataset.addSeries(series);
-             */
+            for (OnePathogenSimu patheSim : pathogenSimu.getInfectNum()) {
+                series.add(abTime++, patheSim.calcInfectedNum());
+            }
+        }
+
+        return dataset;
+    }
+
+    /**
+     * XY Series for line chart
+     * @param pathogenSimus
+     * @return
+     */
+    public static XYSeriesCollection getXYSeriesDataSetInfectUnits(List<OnePathogenSimu> pathogenSimus){
+        XYSeriesCollection dataset = new XYSeriesCollection();
+        int seriesNum = 0;
+        int abTime = 0; // Absolute time of the simulaiton
+
+        for (OnePathogenSimu pathogenSimu : pathogenSimus) {
+            XYSeries series = new XYSeries("XYSeries" + seriesNum);
+
+            for (OnePathogenSimu patheSim : pathogenSimu.getInfectNum()) {
+                series.add(abTime++, patheSim.calcInfectedUnits());
+            }
         }
 
         return dataset;
@@ -66,6 +87,34 @@ public class PlotAbstract {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
         // TODO: construct the dataset
+
+        return dataset;
+    }
+
+    /**
+     * XY Series for Scatter Plot to draw the Area for
+     * which is under serious epidemic
+     * @param pathogenSimus
+     * @return
+     */
+    public static XYSeriesCollection getXYSeriesDataSetEpiArea(List<OnePathogenSimu> pathogenSimus){
+        XYSeriesCollection dataset = new XYSeriesCollection();
+        int seriesNum = 0;
+
+        for (OnePathogenSimu pathogenSimu : pathogenSimus) {
+            AreaUnit[][] areaUnits = pathogenSimu.getArea();
+            for (int i = 0; i < pathogenSimu.AREA_WIDTH; i++) {
+                for (int j = 0; j < pathogenSimu.AREA_LENGTH;i++) {
+                    if(areaUnits[i][j].getInfectNum() / areaUnits[i][j].getHeadcount() > 0.3) {
+                        XYSeries serie = new XYSeries("XYSeries" + seriesNum++);
+                        int x = j;
+                        int y = i;
+                        serie.add(x, y);
+                        dataset.addSeries(serie);
+                    }
+                }
+            }
+        }
 
         return dataset;
     }

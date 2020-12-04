@@ -4,6 +4,7 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.xy.XYDataset;
 
 public class ScatterPlot extends PlotAbstract {
 
@@ -24,7 +25,7 @@ public class ScatterPlot extends PlotAbstract {
         this.yAxisLable = yLable;
     }
 
-    public JFreeChart Plot(CategoryDataset dataset) {
+    public JFreeChart Plot(XYDataset dataset) {
         JFreeChart chart = ChartFactory.createScatterPlot(this.title,
                 this.xAxisLable,  this.yAxisLable,
                 dataset, PlotOrientation.VERTICAL,
