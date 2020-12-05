@@ -1,5 +1,9 @@
 package UserInterface.ViewReport;
 
+import Business.Pathogen.Pathogen;
+import Business.Platform.Platform;
+import Business.Simulation.PageSimu;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -15,10 +19,23 @@ public class ChooseSimuJPanel extends javax.swing.JPanel {
      * Creates new form ChooseSimuJPanel
      */
     private JPanel jplContainer;
+    private Platform platform;
 
-    public ChooseSimuJPanel(JPanel jplContainer) {
+    public ChooseSimuJPanel(JPanel jplContainer, Platform platform) {
         initComponents();
         this.jplContainer = jplContainer;
+        this.platform = platform;
+        populateCbx();
+    }
+
+    private void populateCbx() {
+        DefaultComboBoxModel<Object> dcbm = new DefaultComboBoxModel<>();
+        //TODO waiting for business code
+//        for (PageSimu pageSimu : platform.getPageSimuDirectory()) {
+//            dcbm.addElement(pageSimu);
+//        }
+        cbxChooseSimulationToViewReport.setModel(dcbm);
+        cbxChooseSimulationToViewReport.setSelectedIndex(-1);
     }
 
     /**
@@ -36,6 +53,7 @@ public class ChooseSimuJPanel extends javax.swing.JPanel {
         cbxChooseSimulationToViewReport = new javax.swing.JComboBox<>();
         btnBack1 = new javax.swing.JButton();
 
+        btnViewReport.setBackground(new java.awt.Color(255, 153, 51));
         btnViewReport.setFont(new java.awt.Font("微软雅黑", 1, 14)); // NOI18N
         btnViewReport.setText("View Report");
         btnViewReport.addActionListener(new java.awt.event.ActionListener() {
@@ -95,9 +113,14 @@ public class ChooseSimuJPanel extends javax.swing.JPanel {
     }// </editor-fold>
 
     private void btnViewReportActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-        // TODO pass the simulation object to ViewReportJPanel
-        ViewReportJPanel vrjp = new ViewReportJPanel(jplContainer);
+        //TODO Test
+//        if (cbxChooseSimulationToViewReport.getSelectedIndex() == -1) {
+//            JOptionPane.showMessageDialog(null, "Please select one simulation in the list!", "Error", JOptionPane.ERROR_MESSAGE);
+//            return;
+//        }
+//        PageSimu pageSimu = (PageSimu) cbxChooseSimulationToViewReport.getSelectedItem();
+        PageSimu pageSimu = null;
+        ViewReportJPanel vrjp = new ViewReportJPanel(jplContainer, pageSimu);
         CardLayout cardLayout = (CardLayout) jplContainer.getLayout();
         jplContainer.add("ViewReportJPanel",vrjp);
         cardLayout.next(jplContainer);
@@ -114,7 +137,7 @@ public class ChooseSimuJPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify
     private javax.swing.JButton btnBack1;
     private javax.swing.JButton btnViewReport;
-    private javax.swing.JComboBox<String> cbxChooseSimulationToViewReport;
+    private javax.swing.JComboBox<Object> cbxChooseSimulationToViewReport;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     // End of variables declaration

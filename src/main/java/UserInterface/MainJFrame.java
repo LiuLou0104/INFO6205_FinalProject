@@ -1,8 +1,10 @@
 package UserInterface;
 
+import Business.Platform.Platform;
 import UserInterface.MultipleSimu.MultiSimuJPanel;
 import UserInterface.SingleSimu.SingleSimuJPanel;
 
+import javax.swing.*;
 import java.awt.*;
 
 /**
@@ -13,12 +15,19 @@ import java.awt.*;
  */
 public class MainJFrame extends javax.swing.JFrame {
 
+    private Platform platform;
+
     /**
      * Creates new form MainJFrame
      */
     public MainJFrame() {
         initComponents();
         this.setSize(1480, 700);
+        testInitialization();
+    }
+
+    private void testInitialization() {
+        this.platform = new Platform();
     }
 
     /**
@@ -110,7 +119,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void btnSingleSimuActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        SingleSimuJPanel ssjp = new SingleSimuJPanel(jplContainer);
+        SingleSimuJPanel ssjp = new SingleSimuJPanel(jplContainer, platform);
         CardLayout cardLayout = (CardLayout) jplContainer.getLayout();
         jplContainer.add("SingleSimuJPanel",ssjp);
         cardLayout.next(jplContainer);
@@ -118,7 +127,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void btnMultiSimuActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        MultiSimuJPanel msjp = new MultiSimuJPanel(jplContainer);
+        MultiSimuJPanel msjp = new MultiSimuJPanel(jplContainer, platform);
         CardLayout cardLayout = (CardLayout) jplContainer.getLayout();
         jplContainer.add("MultiSimuJPanel",msjp);
         cardLayout.next(jplContainer);
@@ -128,29 +137,6 @@ public class MainJFrame extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
