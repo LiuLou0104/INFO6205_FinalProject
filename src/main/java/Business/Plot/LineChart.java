@@ -1,55 +1,48 @@
 package Business.Plot;
 
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartUtils;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.title.TextTitle;
-import org.jfree.data.xy.XYSeries;
+import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.xy.XYSeriesCollection;
 
-import java.awt.*;
-import java.io.FileOutputStream;
+public class LineChart extends PlotAbstract {
+    private String title;
+    private String xAxisLable;
+    private String yAxisLable;
+    private boolean legend = false;
+    private boolean tooltips = false;
+    private boolean urls = false;
 
-public class LineChart {
+    public String getTitle() {
+        return title;
+    }
 
-    public static void main(String[] args) {
+    public LineChart() {
+        super();
+    }
 
-        XYSeries series = new XYSeries("xySeries");
-        for (int x = -100; x < 100; x++) {
-            int y = x * x;
-            series.add(x, y);
-        }
+    public LineChart(String title, String xLable, String yLable) {
+        this.title = title;
+        this.xAxisLable = xLable;
+        this.yAxisLable = yLable;
+    }
 
-        XYSeriesCollection dataset = new XYSeriesCollection();
-        dataset.addSeries(series);
-        JFreeChart chart = ChartFactory.createXYLineChart(
-                "y = x^2", // chart title
-                "x", // x axis label
-                "x^2", // y axis label
-                dataset, // data
-                PlotOrientation.VERTICAL,
-                false, // include legend
-                false, // tooltips
-                false // urls
-        );
+    public JFreeChart Plot(XYSeriesCollection dataset) {
+        JFreeChart chart = ChartFactory.createXYLineChart(this.title,
+                this.xAxisLable,  this.yAxisLable,
+                dataset, PlotOrientation.VERTICAL,
+                this.legend, this.tooltips, this.urls);
 
-        Font font = new Font("Arial",Font.CENTER_BASELINE,20);
-        TextTitle title = new TextTitle("test");
-        title.setFont(font);
-        chart.setTitle(title);
-        FileOutputStream fos_jpg = null;
-        try {
-            fos_jpg = new FileOutputStream("test.jpg");
-            ChartUtils.writeChartAsJPEG(fos_jpg,0.7f,chart,640,480,null);
-            fos_jpg.close();
-        } catch (Exception e) {
-        }
+        return chart;
+    }
 
-//        ChartFrame frame = new ChartFrame("my picture", chart);
-//        frame.pack();
-//        frame.setVisible(true);
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public JFreeChart Plot(CategoryDataset dataset) {
+        JFreeChart chart = ChartFactory.createLineChart(this.title,
+                this.xAxisLable,  this.yAxisLable,
+                dataset, PlotOrientation.VERTICAL,
+                this.legend, this.tooltips, this.urls);
 
+        return chart;
     }
 }

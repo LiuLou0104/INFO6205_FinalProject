@@ -3,6 +3,8 @@ package Business.Simulation;
 import Business.DrawArea.Area;
 import Business.DrawArea.AreaUnit;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -20,6 +22,7 @@ public class OnePathogenSimu extends Observable implements Runnable {
     private boolean numShowFlag = true;
     private boolean infectFlag = true;
     OnePathogenSimu onePathogenSimu = null;
+    private List<OnePathogenSimu> dataSetForPlot;
 
     /*
     * 构造器
@@ -27,6 +30,15 @@ public class OnePathogenSimu extends Observable implements Runnable {
     public OnePathogenSimu(){
        Area area = new Area(AREA_LENGTH,AREA_WIDTH);
        this.area = area.getArea();
+       this.dataSetForPlot = new ArrayList<>();
+    }
+
+    public AreaUnit[][] getArea() {
+        return area;
+    }
+
+    public List<OnePathogenSimu> getInfectNum() {
+        return this.dataSetForPlot;
     }
 
     //开始模拟
@@ -76,6 +88,7 @@ public class OnePathogenSimu extends Observable implements Runnable {
         calcOilSpread();
         setChanged();
         notifyObservers(this);
+        this.dataSetForPlot.add(this);
     }
     //计算存在感染者的Unit数量
     public int calcInfectedUnits(){
