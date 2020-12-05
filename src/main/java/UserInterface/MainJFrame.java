@@ -1,5 +1,6 @@
 package UserInterface;
 
+import Business.Pathogen.Pathogen;
 import Business.Platform.Platform;
 import UserInterface.MultipleSimu.MultiSimuJPanel;
 import UserInterface.SingleSimu.SingleSimuJPanel;
@@ -28,6 +29,9 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void testInitialization() {
         this.platform = new Platform();
+        //TODO initialize platform
+        platform.getPathogenDirectory().add(new Pathogen());
+        platform.getPathogenDirectory().add(new Pathogen("SARS", 2, 1));
     }
 
     /**

@@ -14,9 +14,14 @@ public class PageSimu {
     private ChartDirectory chartDirectory;
 
     public PageSimu(){
-        onePathogenSimuList = new ArrayList<>();
         date = new Date();
+        onePathogenSimuList = new ArrayList<>();
         chartDirectory = new ChartDirectory();
+    }
+
+    @Override
+    public String toString() {
+        return Business.Utilities.DateFormat.dateFormat1(date);
     }
 
     public String getDateString() {

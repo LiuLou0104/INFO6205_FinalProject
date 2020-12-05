@@ -36,28 +36,33 @@ public class SimuCanvasJPanel extends JPanel implements Observer {
 
         g2d.setColor(Color.black);
         g2d.fillRect(0, 0, size.width, size.height);
+//        System.out.println(size.width + " " + size.height);
 
-        drawOceanGrid(g2d);
+        if (mySimulation != null) {
+            drawOceanGrid(g2d);
+        }
     }
 
     private void drawOceanGrid(Graphics2D g2d) {
 
         int maxRows = OnePathogenSimu.AREA_WIDTH;
         int maxCols = OnePathogenSimu.AREA_LENGTH;
+//        int maxRows = getSize().width / lineSize;
+//        int maxCols = getSize().height / lineSize;
 
         for (int j = 0; j < maxRows; j++) {
             for (int i = 0; i < maxCols; i++) {
 
                 int startx = i * lineSize;
-                //TODO waiting for business code
                 AreaUnit[][] area = mySimulation.getAreaUnitArray();
+                System.out.println(area[j][i].getInfectNum());
                 if (area[j][i].getInfectNum() > 0) {
-                    int red = validColor((int) (135 - 200 * area[j][i].getInfectNum()));
-                    int green = validColor((int) (206 - 200 * area[j][i].getInfectNum()));
-                    int blue = validColor((int) (235 - 200 * area[j][i].getInfectNum()));
+                    int red = validColor((int) (255 - 200 * area[j][i].getInfectNum()));
+                    int green = validColor((int) (153 - 200 * area[j][i].getInfectNum()));
+                    int blue = validColor((int) (51 - 200 * area[j][i].getInfectNum()));
                     g2d.setColor(new Color(red, green, blue));
                 } else {
-                    g2d.setColor(new Color(135, 206, 235));
+                    g2d.setColor(new Color(255, 153, 51));
                 }
 
 
@@ -100,5 +105,13 @@ public class SimuCanvasJPanel extends JPanel implements Observer {
             mySimulation = (OnePathogenSimu) arg;
         }
         repaint(); // Tell the GUI thread that it should schedule a paint() call
+    }
+
+    public OnePathogenSimu getMySimulation() {
+        return mySimulation;
+    }
+
+    public void setMySimulation(OnePathogenSimu mySimulation) {
+        this.mySimulation = mySimulation;
     }
 }
