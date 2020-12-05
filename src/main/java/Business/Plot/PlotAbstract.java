@@ -12,7 +12,6 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 import java.awt.Font;
-import java.util.Date;
 import java.util.List;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -102,7 +101,7 @@ public class PlotAbstract {
         int seriesNum = 0;
 
         for (OnePathogenSimu pathogenSimu : pathogenSimus) {
-            AreaUnit[][] areaUnits = pathogenSimu.getArea();
+            AreaUnit[][] areaUnits = pathogenSimu.getAreaUnitArray();
             for (int i = 0; i < pathogenSimu.AREA_WIDTH; i++) {
                 for (int j = 0; j < pathogenSimu.AREA_LENGTH;i++) {
                     if(areaUnits[i][j].getInfectNum() / areaUnits[i][j].getHeadcount() > 0.3) {
