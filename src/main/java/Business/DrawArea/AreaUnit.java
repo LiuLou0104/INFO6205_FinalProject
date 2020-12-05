@@ -13,10 +13,24 @@ public class AreaUnit {
     private double popFlowSpeed = 0;//该地区的向外人口流动速度（单位时间的人口流出量）
     private boolean isQuarantine = false; //是否隔离（旅行限制）
     private boolean isMask = false; //是否使用口罩
+    private boolean isTest = false; //是否检测及溯源
     private Pathogen pathogen; //该地区的病毒种类（通过set方法传入）
     private Hospital hospital; //该地区的医院（通过set方法传入）
 
-    public AreaUnit(){
+    public AreaUnit(Pathogen pathogen){
+        this.pathogen = pathogen; // set pathogen
+        headcount = 5000; // set populationDensity
+        popFlowSpeed = 1000; // set popFlowSpeed
+        infectNum = 10; // set infectNum
+        calcInfectSpeed(); // set infectSpeed
+    }
+
+    public AreaUnit(Pathogen pathogen, double populationDensity, boolean isQuarantine, boolean isMask, boolean isTest) {
+        this.pathogen = pathogen;
+        this.populationDensity = populationDensity;
+        this.isQuarantine = isQuarantine;
+        this.isMask = isMask;
+        this.isTest = isTest;
     }
 
     public void calcInfectSpeed(){
@@ -68,6 +82,14 @@ public class AreaUnit {
 
     public void setMask(boolean mask) {
         isMask = mask;
+    }
+
+    public boolean isTest() {
+        return isTest;
+    }
+
+    public void setTest(boolean test) {
+        isTest = test;
     }
 
     public Pathogen getPathogen() {
