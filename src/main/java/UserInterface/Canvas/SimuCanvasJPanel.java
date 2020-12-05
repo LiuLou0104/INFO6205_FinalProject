@@ -51,10 +51,10 @@ public class SimuCanvasJPanel extends JPanel implements Observer {
                 int startx = i * lineSize;
                 //TODO waiting for business code
                 AreaUnit[][] area = mySimulation.getAreaUnitArray();
-                if (area[j][i].getOilCoverage() > 0) {
-                    int red = validColor((int) (135 - 200 * area[j][i].getOilCoverage()));
-                    int green = validColor((int) (206 - 200 * area[j][i].getOilCoverage()));
-                    int blue = validColor((int) (235 - 200 * area[j][i].getOilCoverage()));
+                if (area[j][i].getInfectNum() > 0) {
+                    int red = validColor((int) (135 - 200 * area[j][i].getInfectNum()));
+                    int green = validColor((int) (206 - 200 * area[j][i].getInfectNum()));
+                    int blue = validColor((int) (235 - 200 * area[j][i].getInfectNum()));
                     g2d.setColor(new Color(red, green, blue));
                 } else {
                     g2d.setColor(new Color(135, 206, 235));

@@ -3,6 +3,8 @@ package Business.DrawArea;
 import Business.Pathogen.Pathogen;
 import Business.Pathogen.Hospital;
 
+import java.util.Random;
+
 public class AreaUnit {
     public static int BLOCK_LENGTH = 1;
     public static int BLOCK_WIDTH = 1;
@@ -19,9 +21,19 @@ public class AreaUnit {
 
     public AreaUnit(Pathogen pathogen){
         this.pathogen = pathogen; // set pathogen
-        headcount = 5000; // set populationDensity
-        popFlowSpeed = 1000; // set popFlowSpeed
-        infectNum = 10; // set infectNum
+        Random random = new Random();
+        headcount = random.nextDouble()*10000;
+        //headcount = 5000; // set populationDensity
+        popFlowSpeed = random.nextDouble()*5000;
+        //popFlowSpeed = 1000; // set popFlowSpeed
+        infectNum = random.nextDouble()*30;
+        //infectNum = 10; // set infectNum
+        int r1 = random.nextInt();
+        if(r1 % 2 == 0) isQuarantine = true;
+        int r2 = random.nextInt();
+        if(r2 % 2 == 0) isMask = true;
+        int r3 = random.nextInt();
+        if(r3 % 2 == 0) isTest = true;
         calcInfectSpeed(); // set infectSpeed
     }
 
@@ -35,8 +47,16 @@ public class AreaUnit {
 
     public void calcInfectSpeed(){
         calcPopulationDensity();
-        // 0.1-16
-        this.infectSpeed = infectNum * (0.005 * populationDensity * pathogen.getR_FACTOR() * 0.3 / pathogen.getK_FACTOR() * 9);
+        //TODO 需要调整数值达到理想效果
+        if(this.isMask && !this.isTest){
+            this.infectSpeed = 0.6 * infectNum * (0.005 * populationDensity * pathogen.getR_FACTOR() * 0.3 / pathogen.getK_FACTOR() * 9);
+        } else if(!this.isMask && this.isTest){
+            this.infectSpeed = 0.4 * infectNum * (0.005 * populationDensity * pathogen.getR_FACTOR() * 0.3 / pathogen.getK_FACTOR() * 9);
+        } else if(this.isMask && this.isTest){
+            this.infectSpeed = 0.6 * 0.4 *  infectNum * (0.005 * populationDensity * pathogen.getR_FACTOR() * 0.3 / pathogen.getK_FACTOR() * 9);
+        } else {
+            this.infectSpeed = infectNum * (0.005 * populationDensity * pathogen.getR_FACTOR() * 0.3 / pathogen.getK_FACTOR() * 9);
+        }
         //this.infectSpeed = 1.0;
     }
   
