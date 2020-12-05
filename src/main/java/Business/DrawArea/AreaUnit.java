@@ -21,6 +21,7 @@ public class AreaUnit {
 
     public void calcInfectSpeed(){
         calcPopulationDensity();
+        // 0.1-16
         this.infectSpeed = infectNum * (0.005 * populationDensity * pathogen.getR_FACTOR() * 0.3 / pathogen.getK_FACTOR() * 9);
         //this.infectSpeed = 1.0;
     }

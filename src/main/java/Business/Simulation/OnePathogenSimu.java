@@ -6,6 +6,8 @@ import Business.DrawArea.AreaUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static java.lang.Thread.sleep;
 
@@ -47,6 +49,14 @@ public class OnePathogenSimu extends Observable implements Runnable {
         thread = new Thread(this);
         done = false;
         thread.start();
+        //TODO 运行n时间(s)停止
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                done = true;
+            }
+        },5000);
     }
 
     //结束模拟
