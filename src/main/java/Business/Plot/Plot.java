@@ -18,7 +18,7 @@ public class Plot {
         JFreeChart chart = lineChart.Plot(dataset);
 
         Date date = new Date();
-        String fileName = lineChart.getTitle() + "_" + DateFormat3(date);
+        String fileName = lineChart.getTitle() + "_" + dateFormat3(date);
         Chart outputChart = new Chart(date, fileName);
         /* add outputChart to ChartDirectory*/
         pageSimu.addChart(outputChart);
@@ -31,7 +31,7 @@ public class Plot {
         JFreeChart chart = lineChart.Plot(dataset);
 
         Date date = new Date();
-        String fileName = lineChart.getTitle() + "_" + DateFormat3(date);
+        String fileName = lineChart.getTitle() + "_" + dateFormat3(date);
         Chart outputChart = new Chart(date, fileName);
         /* add outputChart to ChartDirectory*/
         pageSimu.addChart(outputChart);

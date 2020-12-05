@@ -4,27 +4,27 @@ import Business.DrawArea.Area;
 import Business.DrawArea.AreaUnit;
 import Business.Pathogen.Pathogen;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Observable;
+import javax.swing.*;
+import java.util.*;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import static java.lang.Thread.sleep;
 
 public class OnePathogenSimu extends Observable implements Runnable {
     Thread thread = null;
-    public static final int AREA_LENGTH = 8; //The length of the area
-    public static final int AREA_WIDTH = 8; //The width of the area
+    public static final int AREA_LENGTH = 27; //The length of the area
+    public static final int AREA_WIDTH = 16; //The width of the area
     AreaUnit[][] areaUnitArray;
     public int time = 1;
-    private boolean done = false;
+//    private boolean done = false;
     private boolean paused = false;
     private boolean numShowFlag = true;
     private boolean infectFlag = true;
 //    OnePathogenSimu onePathogenSimu = null;
     private List<OnePathogenSimu> dataSetForPlot;
     private Area area;
+
+    private long simuStart;
 
     /*
     * 构造器
@@ -33,12 +33,14 @@ public class OnePathogenSimu extends Observable implements Runnable {
        area = new Area(AREA_LENGTH,AREA_WIDTH);
        this.areaUnitArray = area.getArea();
        this.dataSetForPlot = new ArrayList<>();
+       this.simuStart = new Date().getTime();
     }
 
     public OnePathogenSimu(Pathogen pathogen, double popuDensity, boolean isWearingMask, boolean isQuarantine, boolean isTest) {
         area = new Area(AREA_LENGTH, AREA_WIDTH, pathogen, popuDensity, isWearingMask, isQuarantine, isTest);
         this.areaUnitArray = area.getArea();
         this.dataSetForPlot = new ArrayList<>();
+        this.simuStart = new Date().getTime();
     }
 
     public AreaUnit[][] getAreaUnitArray() {
@@ -50,37 +52,46 @@ public class OnePathogenSimu extends Observable implements Runnable {
     }
 
     //开始模拟
-    public void startSim(){
-        System.out.println("Starting the simulation");
+    public void startSim(JButton btnStartSimu){
+//        System.out.println("Starting the simulation");
 //        onePathogenSimu = new OnePathogenSimu();
         if(thread != null) return;
         thread = new Thread(this);
-        done = false;
+//        done = false;
         thread.start();
-        //TODO 运行n时间(s)停止
+        // disable the StartSimu button
+        btnStartSimu.setEnabled(false);
+        // TODO 运行n时间(s)停止
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                done = true;
+//                done = true;
+                clearChanged();
+                // TODO generate the report of this simulation
+                // enable the StartSimu button
+                btnStartSimu.setEnabled(true);
+                System.out.println("Simulation[" + simuStart + "] ended");
             }
-        },5000);
+        },20000);
     }
 
     //结束模拟
-    public void stopSim(){
-        System.out.println("Stop the simulation");
-        if (thread == null) return;
-        done = true;
-    }
+//    public void stopSim(){
+//        System.out.println("Stop the simulation");
+//        if (thread == null) return;
+//        done = true;
+//    }
 
     @Override
     public void run() {
+        System.out.println("Simulation[" + this.simuStart + "] started");
+        setChanged();
         runSimLoop();
         thread = null;
     }
     private void runSimLoop(){
-        while(!done){
+        while(hasChanged()){
             updateSim();
             sleep(500);
         }
@@ -94,7 +105,7 @@ public class OnePathogenSimu extends Observable implements Runnable {
     }
     private void updateSim(){
         calcOilSpread();
-        setChanged();
+//        setChanged();
         notifyObservers(this);
         this.dataSetForPlot.add(this);
     }

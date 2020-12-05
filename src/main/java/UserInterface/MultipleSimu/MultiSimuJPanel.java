@@ -3,6 +3,7 @@ package UserInterface.MultipleSimu;
 import Business.Pathogen.Pathogen;
 import Business.Platform.Platform;
 import Business.Simulation.OnePathogenSimu;
+import Business.Simulation.PageSimu;
 import UserInterface.Canvas.SimuCanvasJPanel;
 import UserInterface.ViewReport.ChooseSimuJPanel;
 
@@ -51,16 +52,17 @@ public class MultiSimuJPanel extends javax.swing.JPanel {
         DefaultComboBoxModel<Object> dcbm1 = new DefaultComboBoxModel<>();
         DefaultComboBoxModel<Object> dcbm2 = new DefaultComboBoxModel<>();
         //TODO waiting for business code
-//        for (Pathogen pathogen : platform.getPathogenDirectory()) {
-//            dcbm.addElement(pathogen);
-//        }
-        List<Pathogen> list = new ArrayList<>();
-        list.add(new Pathogen());
-        list.add(new Pathogen("SARS", 2, 1));
-        for (Pathogen pathogen : list) {
+        for (Pathogen pathogen : platform.getPathogenDirectory().getPathogenList()) {
             dcbm1.addElement(pathogen);
             dcbm2.addElement(pathogen);
         }
+//        List<Pathogen> list = new ArrayList<>();
+//        list.add(new Pathogen());
+//        list.add(new Pathogen("SARS", 2, 1));
+//        for (Pathogen pathogen : list) {
+//            dcbm1.addElement(pathogen);
+//            dcbm2.addElement(pathogen);
+//        }
         cbxPathogen1.setModel(dcbm1);
         cbxPathogen1.setSelectedIndex(-1);
 
@@ -362,15 +364,22 @@ public class MultiSimuJPanel extends javax.swing.JPanel {
         }
         boolean isTest = rbtnTestYes.isSelected();
 
-        //TODO waiting for business code
+        // create one PageSimu
+        PageSimu ps = new PageSimu();
+        // create two OnePathogenSimu
         OnePathogenSimu ops1 = new OnePathogenSimu(pathogen1, popuDensity, isWearingMask, isQuarantine, isTest);
-        ops1.addObserver(jplCanvas1);
-        ops1.startSim();
-
         OnePathogenSimu ops2 = new OnePathogenSimu(pathogen2, popuDensity, isWearingMask, isQuarantine, isTest);
+        // add above two OnePathogenSimu to OnePathogenSimuList in PageSimu
+        ps.add(ops1);
+        ps.add(ops2);
+        // add above PageSimu to PageSimuDirectory in platform
+        platform.getPageSimuDirectory().add(ps);
+
+        ops1.addObserver(jplCanvas1);
+        ops1.startSim(btnStartSimu);
+
         ops2.addObserver(jplCanvas2);
-        ops2.startSim();
-//        System.out.println(pathogen1.getName() + pathogen2.getName() + popuDensity + isWearingMask + isQuarantine + isTest);
+        ops2.startSim(btnStartSimu);
     }
 
     private void rbtnMaskNoActionPerformed(java.awt.event.ActionEvent evt) {

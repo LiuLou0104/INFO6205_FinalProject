@@ -3,6 +3,7 @@ package UserInterface.SingleSimu;
 import Business.Pathogen.Pathogen;
 import Business.Platform.Platform;
 import Business.Simulation.OnePathogenSimu;
+import Business.Simulation.PageSimu;
 import UserInterface.Canvas.SimuCanvasJPanel;
 import UserInterface.ViewReport.ChooseSimuJPanel;
 
@@ -50,15 +51,15 @@ public class SingleSimuJPanel extends javax.swing.JPanel {
     private void populateCbxPathogen() {
         DefaultComboBoxModel<Object> dcbm = new DefaultComboBoxModel<>();
         //TODO waiting for business code
-//        for (Pathogen pathogen : platform.getPathogenDirectory().getPathogenList()) {
-//            dcbm.addElement(pathogen);
-//        }
-        List<Pathogen> list = new ArrayList<>();
-        list.add(new Pathogen());
-        list.add(new Pathogen("SARS", 2, 1));
-        for (Pathogen pathogen : list) {
+        for (Pathogen pathogen : platform.getPathogenDirectory().getPathogenList()) {
             dcbm.addElement(pathogen);
         }
+//        List<Pathogen> list = new ArrayList<>();
+//        list.add(new Pathogen());
+//        list.add(new Pathogen("SARS", 2, 1));
+//        for (Pathogen pathogen : list) {
+//            dcbm.addElement(pathogen);
+//        }
         cbxPathogen.setModel(dcbm);
         cbxPathogen.setSelectedIndex(-1);
     }
@@ -295,11 +296,17 @@ public class SingleSimuJPanel extends javax.swing.JPanel {
         }
         boolean isTest = rbtnTestYes.isSelected();
 
-        //TODO waiting for business code
+        // create PageSimu
+        PageSimu ps = new PageSimu();
+        // create OnePathogenSimu
         OnePathogenSimu ops = new OnePathogenSimu(pathogen, popuDensity, isWearingMask, isQuarantine, isTest);
+        // add above OnePathogenSimu to OnePathogenSimuList in PageSimu
+        ps.add(ops);
+        // add above PageSimu to PageSimuDirectory in platform
+        platform.getPageSimuDirectory().add(ps);
+
         ops.addObserver(jplCanvas);
-        ops.startSim();
-//        System.out.println(pathogen.getName() + popuDensity + isWearingMask + isQuarantine + isTest);
+        ops.startSim(btnStartSimu);
     }
 
     private void btnSeeAllReportActionPerformed(java.awt.event.ActionEvent evt) {
