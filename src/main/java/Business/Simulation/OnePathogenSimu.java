@@ -105,8 +105,8 @@ public class OnePathogenSimu extends Observable implements Runnable {
     }
     private void updateSim(){
         calcOilSpread();
-//        setChanged();
         notifyObservers(this);
+        setChanged();
         this.dataSetForPlot.add(this);
     }
     //计算存在感染者的Unit数量
@@ -141,6 +141,18 @@ public class OnePathogenSimu extends Observable implements Runnable {
         areaUnitArray[i+1][j].setHeadcount(areaUnitArray[i+1][j].getHeadcount()+ areaUnitArray[i][j].getPopFlowSpeed());
         areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()-infectOutNum);
         areaUnitArray[i+1][j].setInfectNum(areaUnitArray[i+1][j].getInfectNum()+infectOutNum);
+        if(areaUnitArray[i][j].getHeadcount() < 0){
+            areaUnitArray[i][j].setHeadcount(0);
+        }
+        if(areaUnitArray[i][j].getInfectNum() < 0){
+            areaUnitArray[i][j].setInfectNum(0);
+        }
+        if(areaUnitArray[i+1][j].getHeadcount() < 0){
+            areaUnitArray[i+1][j].setHeadcount(0);
+        }
+        if(areaUnitArray[i+1][j].getInfectNum() < 0){
+            areaUnitArray[i+1][j].setInfectNum(0);
+        }
     }
     //↑
     public void currToDownR(int i, int j){
@@ -150,6 +162,18 @@ public class OnePathogenSimu extends Observable implements Runnable {
         areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()+ areaUnitArray[i+1][j].getPopFlowSpeed());
         areaUnitArray[i+1][j].setInfectNum(areaUnitArray[i+1][j].getInfectNum()-infectOutNum);
         areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()+infectOutNum);
+        if(areaUnitArray[i][j].getHeadcount() < 0){
+            areaUnitArray[i][j].setHeadcount(0);
+        }
+        if(areaUnitArray[i][j].getInfectNum() < 0){
+            areaUnitArray[i][j].setInfectNum(0);
+        }
+        if(areaUnitArray[i+1][j].getHeadcount() < 0){
+            areaUnitArray[i+1][j].setHeadcount(0);
+        }
+        if(areaUnitArray[i+1][j].getInfectNum() < 0){
+            areaUnitArray[i+1][j].setInfectNum(0);
+        }
     }
     //→
     public void currToRight(int i, int j){
@@ -159,6 +183,18 @@ public class OnePathogenSimu extends Observable implements Runnable {
         areaUnitArray[i][j+1].setHeadcount(areaUnitArray[i][j+1].getHeadcount()+ areaUnitArray[i][j].getPopFlowSpeed());
         areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()-infectOutNum);
         areaUnitArray[i][j+1].setInfectNum(areaUnitArray[i][j+1].getInfectNum()+infectOutNum);
+        if(areaUnitArray[i][j].getHeadcount() < 0){
+            areaUnitArray[i][j].setHeadcount(0);
+        }
+        if(areaUnitArray[i][j].getInfectNum() < 0){
+            areaUnitArray[i][j].setInfectNum(0);
+        }
+        if(areaUnitArray[i][j+1].getHeadcount() < 0){
+            areaUnitArray[i][j+1].setHeadcount(0);
+        }
+        if(areaUnitArray[i][j+1].getInfectNum() < 0){
+            areaUnitArray[i][j+1].setInfectNum(0);
+        }
     }
     //←
     public void currToRightR(int i, int j){
@@ -168,6 +204,18 @@ public class OnePathogenSimu extends Observable implements Runnable {
         areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()+ areaUnitArray[i][j+1].getPopFlowSpeed());
         areaUnitArray[i][j+1].setInfectNum(areaUnitArray[i][j+1].getInfectNum()-infectOutNum);
         areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()+infectOutNum);
+        if(areaUnitArray[i][j].getHeadcount() < 0){
+            areaUnitArray[i][j].setHeadcount(0);
+        }
+        if(areaUnitArray[i][j].getInfectNum() < 0){
+            areaUnitArray[i][j].setInfectNum(0);
+        }
+        if(areaUnitArray[i][j+1].getHeadcount() < 0){
+            areaUnitArray[i][j+1].setHeadcount(0);
+        }
+        if(areaUnitArray[i][j+1].getInfectNum() < 0){
+            areaUnitArray[i][j+1].setInfectNum(0);
+        }
     }
     //↘
     public void currToRightBottom(int i, int j){
@@ -177,6 +225,18 @@ public class OnePathogenSimu extends Observable implements Runnable {
         areaUnitArray[i+1][j+1].setHeadcount(areaUnitArray[i+1][j+1].getHeadcount()+ areaUnitArray[i][j].getPopFlowSpeed());
         areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()-infectOutNum);
         areaUnitArray[i+1][j+1].setInfectNum(areaUnitArray[i+1][j+1].getInfectNum()+infectOutNum);
+        if(areaUnitArray[i][j].getHeadcount() < 0){
+            areaUnitArray[i][j].setHeadcount(0);
+        }
+        if(areaUnitArray[i][j].getInfectNum() < 0){
+            areaUnitArray[i][j].setInfectNum(0);
+        }
+        if(areaUnitArray[i+1][j+1].getHeadcount() < 0){
+            areaUnitArray[i+1][j+1].setHeadcount(0);
+        }
+        if(areaUnitArray[i+1][j+1].getInfectNum() < 0){
+            areaUnitArray[i+1][j+1].setInfectNum(0);
+        }
     }
     //↖
     public void currToRightBottomR(int i, int j){
@@ -186,6 +246,18 @@ public class OnePathogenSimu extends Observable implements Runnable {
         areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()+ areaUnitArray[i+1][j+1].getPopFlowSpeed());
         areaUnitArray[i+1][j+1].setInfectNum(areaUnitArray[i+1][j+1].getInfectNum()-infectOutNum);
         areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()+infectOutNum);
+        if(areaUnitArray[i][j].getHeadcount() < 0){
+            areaUnitArray[i][j].setHeadcount(0);
+        }
+        if(areaUnitArray[i][j].getInfectNum() < 0){
+            areaUnitArray[i][j].setInfectNum(0);
+        }
+        if(areaUnitArray[i+1][j+1].getHeadcount() < 0){
+            areaUnitArray[i+1][j+1].setHeadcount(0);
+        }
+        if(areaUnitArray[i+1][j+1].getInfectNum() < 0){
+            areaUnitArray[i+1][j+1].setInfectNum(0);
+        }
     }
     //↑
     public void currToUp(int i, int j){
@@ -195,6 +267,18 @@ public class OnePathogenSimu extends Observable implements Runnable {
         areaUnitArray[i-1][j].setHeadcount(areaUnitArray[i-1][j].getHeadcount()+ areaUnitArray[i][j].getPopFlowSpeed());
         areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()-infectOutNum);
         areaUnitArray[i-1][j].setInfectNum(areaUnitArray[i-1][j].getInfectNum()+infectOutNum);
+        if(areaUnitArray[i][j].getHeadcount() < 0){
+            areaUnitArray[i][j].setHeadcount(0);
+        }
+        if(areaUnitArray[i][j].getInfectNum() < 0){
+            areaUnitArray[i][j].setInfectNum(0);
+        }
+        if(areaUnitArray[i-1][j].getHeadcount() < 0){
+            areaUnitArray[i-1][j].setHeadcount(0);
+        }
+        if(areaUnitArray[i-1][j].getInfectNum() < 0){
+            areaUnitArray[i-1][j].setInfectNum(0);
+        }
     }
     //↓
     public void currToUpR(int i, int j){
@@ -204,6 +288,18 @@ public class OnePathogenSimu extends Observable implements Runnable {
         areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()+ areaUnitArray[i-1][j].getPopFlowSpeed());
         areaUnitArray[i-1][j].setInfectNum(areaUnitArray[i-1][j].getInfectNum()-infectOutNum);
         areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()+infectOutNum);
+        if(areaUnitArray[i][j].getHeadcount() < 0){
+            areaUnitArray[i][j].setHeadcount(0);
+        }
+        if(areaUnitArray[i][j].getInfectNum() < 0){
+            areaUnitArray[i][j].setInfectNum(0);
+        }
+        if(areaUnitArray[i-1][j].getHeadcount() < 0){
+            areaUnitArray[i-1][j].setHeadcount(0);
+        }
+        if(areaUnitArray[i-1][j].getInfectNum() < 0){
+            areaUnitArray[i-1][j].setInfectNum(0);
+        }
     }
     //↗
     public void currToRightTop(int i, int j){
@@ -213,6 +309,18 @@ public class OnePathogenSimu extends Observable implements Runnable {
         areaUnitArray[i-1][j+1].setHeadcount(areaUnitArray[i-1][j+1].getHeadcount()+ areaUnitArray[i][j].getPopFlowSpeed());
         areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()-infectOutNum);
         areaUnitArray[i-1][j+1].setInfectNum(areaUnitArray[i-1][j+1].getInfectNum()+infectOutNum);
+        if(areaUnitArray[i][j].getHeadcount() < 0){
+            areaUnitArray[i][j].setHeadcount(0);
+        }
+        if(areaUnitArray[i][j].getInfectNum() < 0){
+            areaUnitArray[i][j].setInfectNum(0);
+        }
+        if(areaUnitArray[i-1][j+1].getHeadcount() < 0){
+            areaUnitArray[i-1][j+1].setHeadcount(0);
+        }
+        if(areaUnitArray[i-1][j+1].getInfectNum() < 0){
+            areaUnitArray[i-1][j+1].setInfectNum(0);
+        }
     }
     //↙
     public void currToRightTopR(int i, int j){
@@ -222,6 +330,18 @@ public class OnePathogenSimu extends Observable implements Runnable {
         areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()+ areaUnitArray[i-1][j+1].getPopFlowSpeed());
         areaUnitArray[i-1][j+1].setInfectNum(areaUnitArray[i-1][j+1].getInfectNum()-infectOutNum);
         areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()+infectOutNum);
+        if(areaUnitArray[i][j].getHeadcount() < 0){
+            areaUnitArray[i][j].setHeadcount(0);
+        }
+        if(areaUnitArray[i][j].getInfectNum() < 0){
+            areaUnitArray[i][j].setInfectNum(0);
+        }
+        if(areaUnitArray[i-1][j+1].getHeadcount() < 0){
+            areaUnitArray[i-1][j+1].setHeadcount(0);
+        }
+        if(areaUnitArray[i-1][j+1].getInfectNum() < 0){
+            areaUnitArray[i-1][j+1].setInfectNum(0);
+        }
     }
     //←
     public void currToLeft(int i, int j){
@@ -231,6 +351,18 @@ public class OnePathogenSimu extends Observable implements Runnable {
         areaUnitArray[i][j-1].setHeadcount(areaUnitArray[i][j-1].getHeadcount()+ areaUnitArray[i][j].getPopFlowSpeed());
         areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()-infectOutNum);
         areaUnitArray[i][j-1].setInfectNum(areaUnitArray[i][j-1].getInfectNum()+infectOutNum);
+        if(areaUnitArray[i][j].getHeadcount() < 0){
+            areaUnitArray[i][j].setHeadcount(0);
+        }
+        if(areaUnitArray[i][j].getInfectNum() < 0){
+            areaUnitArray[i][j].setInfectNum(0);
+        }
+        if(areaUnitArray[i][j-1].getHeadcount() < 0){
+            areaUnitArray[i][j-1].setHeadcount(0);
+        }
+        if(areaUnitArray[i][j-1].getInfectNum() < 0){
+            areaUnitArray[i][j-1].setInfectNum(0);
+        }
     }
     //→
     public void currToLeftR(int i, int j){
@@ -240,6 +372,18 @@ public class OnePathogenSimu extends Observable implements Runnable {
         areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()+ areaUnitArray[i][j-1].getPopFlowSpeed());
         areaUnitArray[i][j-1].setInfectNum(areaUnitArray[i][j-1].getInfectNum()-infectOutNum);
         areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()+infectOutNum);
+        if(areaUnitArray[i][j].getHeadcount() < 0){
+            areaUnitArray[i][j].setHeadcount(0);
+        }
+        if(areaUnitArray[i][j].getInfectNum() < 0){
+            areaUnitArray[i][j].setInfectNum(0);
+        }
+        if(areaUnitArray[i][j-1].getHeadcount() < 0){
+            areaUnitArray[i][j-1].setHeadcount(0);
+        }
+        if(areaUnitArray[i][j-1].getInfectNum() < 0){
+            areaUnitArray[i][j-1].setInfectNum(0);
+        }
     }
     //↙
     public void currToLeftBottom(int i, int j){
@@ -249,6 +393,18 @@ public class OnePathogenSimu extends Observable implements Runnable {
         areaUnitArray[i+1][j-1].setHeadcount(areaUnitArray[i+1][j-1].getHeadcount()+ areaUnitArray[i][j].getPopFlowSpeed());
         areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()-infectOutNum);
         areaUnitArray[i+1][j-1].setInfectNum(areaUnitArray[i+1][j-1].getInfectNum()+infectOutNum);
+        if(areaUnitArray[i][j].getHeadcount() < 0){
+            areaUnitArray[i][j].setHeadcount(0);
+        }
+        if(areaUnitArray[i][j].getInfectNum() < 0){
+            areaUnitArray[i][j].setInfectNum(0);
+        }
+        if(areaUnitArray[i+1][j-1].getHeadcount() < 0){
+            areaUnitArray[i+1][j-1].setHeadcount(0);
+        }
+        if(areaUnitArray[i+1][j-1].getInfectNum() < 0){
+            areaUnitArray[i+1][j-1].setInfectNum(0);
+        }
     }
     //↗
     public void currToLeftBottomR(int i, int j){
@@ -258,6 +414,18 @@ public class OnePathogenSimu extends Observable implements Runnable {
         areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()+ areaUnitArray[i+1][j-1].getPopFlowSpeed());
         areaUnitArray[i+1][j-1].setInfectNum(areaUnitArray[i+1][j-1].getInfectNum()-infectOutNum);
         areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()+infectOutNum);
+        if(areaUnitArray[i][j].getHeadcount() < 0){
+            areaUnitArray[i][j].setHeadcount(0);
+        }
+        if(areaUnitArray[i][j].getInfectNum() < 0){
+            areaUnitArray[i][j].setInfectNum(0);
+        }
+        if(areaUnitArray[i+1][j-1].getHeadcount() < 0){
+            areaUnitArray[i+1][j-1].setHeadcount(0);
+        }
+        if(areaUnitArray[i+1][j-1].getInfectNum() < 0){
+            areaUnitArray[i+1][j-1].setInfectNum(0);
+        }
     }
     //↖
     public void currToLeftTop(int i, int j){
@@ -267,6 +435,18 @@ public class OnePathogenSimu extends Observable implements Runnable {
         areaUnitArray[i-1][j-1].setHeadcount(areaUnitArray[i-1][j-1].getHeadcount()+ areaUnitArray[i][j].getPopFlowSpeed());
         areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()-infectOutNum);
         areaUnitArray[i-1][j-1].setInfectNum(areaUnitArray[i-1][j-1].getInfectNum()+infectOutNum);
+        if(areaUnitArray[i][j].getHeadcount() < 0){
+            areaUnitArray[i][j].setHeadcount(0);
+        }
+        if(areaUnitArray[i][j].getInfectNum() < 0){
+            areaUnitArray[i][j].setInfectNum(0);
+        }
+        if(areaUnitArray[i-1][j-1].getHeadcount() < 0){
+            areaUnitArray[i-1][j-1].setHeadcount(0);
+        }
+        if(areaUnitArray[i-1][j-1].getInfectNum() < 0){
+            areaUnitArray[i-1][j-1].setInfectNum(0);
+        }
     }
     //↘
     public void currToLeftTopR(int i, int j){
@@ -276,6 +456,18 @@ public class OnePathogenSimu extends Observable implements Runnable {
         areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()+ areaUnitArray[i-1][j-1].getPopFlowSpeed());
         areaUnitArray[i-1][j-1].setInfectNum(areaUnitArray[i-1][j-1].getInfectNum()-infectOutNum);
         areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()+infectOutNum);
+        if(areaUnitArray[i][j].getHeadcount() < 0){
+            areaUnitArray[i][j].setHeadcount(0);
+        }
+        if(areaUnitArray[i][j].getInfectNum() < 0){
+            areaUnitArray[i][j].setInfectNum(0);
+        }
+        if(areaUnitArray[i-1][j-1].getHeadcount() < 0){
+            areaUnitArray[i-1][j-1].setHeadcount(0);
+        }
+        if(areaUnitArray[i-1][j-1].getInfectNum() < 0){
+            areaUnitArray[i-1][j-1].setInfectNum(0);
+        }
     }
 
 
@@ -402,6 +594,7 @@ public class OnePathogenSimu extends Observable implements Runnable {
     public void calcOilSpread() {
         for (int i = 0; i < AREA_WIDTH / AreaUnit.BLOCK_WIDTH; i++) {
             for (int j = 0; j < AREA_LENGTH / AreaUnit.BLOCK_LENGTH; j++) {
+
                 //TODO store data to draw chart
                 //每一次都要计算该地区的传染扩散情况
                 areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum() + areaUnitArray[i][j].getInfectSpeed());

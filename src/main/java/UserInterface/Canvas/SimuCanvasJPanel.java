@@ -55,7 +55,8 @@ public class SimuCanvasJPanel extends JPanel implements Observer {
 
                 int startx = i * lineSize;
                 AreaUnit[][] area = mySimulation.getAreaUnitArray();
-                System.out.println(area[j][i].getInfectNum());
+                System.out.println(area[j][i].getInfectNum() + "InfectNum");
+                System.out.println(i + "," + j + " " +area[j][i].getHeadcount() + "HeadCount");
                 if (area[j][i].getInfectNum() > 0) {
                     int red = validColor((int) (255 - 200 * area[j][i].getInfectNum()));
                     int green = validColor((int) (153 - 200 * area[j][i].getInfectNum()));
