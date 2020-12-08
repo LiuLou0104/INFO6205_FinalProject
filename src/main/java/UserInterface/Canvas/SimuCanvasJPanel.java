@@ -56,13 +56,14 @@ public class SimuCanvasJPanel extends JPanel implements Observer{
                 int startx = i * lineSize;
                 AreaUnit[][] area = mySimulation.getAreaUnitArray();
 
-                System.out.println(area[j][i].getInfectNum() + "InfectNum");
-                System.out.println(i + "," + j + " " +area[j][i].getHeadcount() + "HeadCount");
+//                System.out.println(area[j][i].getInfectNum() + "InfectNum");
+//                System.out.println(i + "," + j + " " +area[j][i].getHeadcount() + "HeadCount");
 
                 if (area[j][i].getInfectNum() > 0) {
-                    int red = validColor((int) (255 - 200 * area[j][i].getInfectNum()));
-                    int green = validColor((int) (153 - 200 * area[j][i].getInfectNum()));
-                    int blue = validColor((int) (51 - 200 * area[j][i].getInfectNum()));
+                    int red = validColor(255 - (int) (255 * area[j][i].getInfectNum() / area[j][i].getHeadcount()));
+                    int green = validColor(153 - (int) (153 * area[j][i].getInfectNum() / area[j][i].getHeadcount()));
+                    int blue = validColor(51 - (int) (51 * area[j][i].getInfectNum() / area[j][i].getHeadcount()));
+//                    System.out.println("i " + i +", j "+ j + " infectNum " + area[j][i].getInfectNum() + ", head count " + area[j][i].getHeadcount());
                     g2d.setColor(new Color(red, green, blue));
                 } else {
                     g2d.setColor(new Color(255, 153, 51));

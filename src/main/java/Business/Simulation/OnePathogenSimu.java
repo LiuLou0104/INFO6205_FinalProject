@@ -22,7 +22,8 @@ public class OnePathogenSimu extends Observable implements Runnable {
     private boolean numShowFlag = true;
     private boolean infectFlag = true;
 //    OnePathogenSimu onePathogenSimu = null;
-    private List<OnePathogenSimu> dataSetForPlot;
+    private List<Double> infectNumList;
+    private List<Integer> infectUnitsList;
     private Area area;
 
     private long simuStart;
@@ -33,23 +34,25 @@ public class OnePathogenSimu extends Observable implements Runnable {
     public OnePathogenSimu(){
        area = new Area(AREA_LENGTH,AREA_WIDTH);
        this.areaUnitArray = area.getArea();
-       this.dataSetForPlot = new ArrayList<>();
        this.simuStart = new Date().getTime();
+       this.infectUnitsList = new ArrayList<>();
+       this.infectNumList = new ArrayList<>();
     }
 
     public OnePathogenSimu(Pathogen pathogen, double popuDensity, boolean isWearingMask, boolean isQuarantine, boolean isTest) {
         area = new Area(AREA_LENGTH, AREA_WIDTH, pathogen, popuDensity, isWearingMask, isQuarantine, isTest);
         this.areaUnitArray = area.getArea();
-        this.dataSetForPlot = new ArrayList<>();
         this.simuStart = new Date().getTime();
+        this.infectNumList = new ArrayList<>();
+        this.infectUnitsList = new ArrayList<>();
     }
 
     public AreaUnit[][] getAreaUnitArray() {
         return areaUnitArray;
     }
 
-    public List<OnePathogenSimu> getdataSetForPlot() {
-        return this.dataSetForPlot;
+    public List<Double> getInfectNumList() {
+        return infectNumList;
     }
 
     //开始模拟
@@ -71,12 +74,12 @@ public class OnePathogenSimu extends Observable implements Runnable {
 //                done = true;
                 clearChanged();
                 // TODO generate the report of this simulation
-                Plot.drawLineChartInfectNum(pathSimu, "testforPlot");
+                Plot.drawLineChartInfectNum(pathSimu.getInfectNumList(), pathSimu.getAreaUnitArray()[0][0].getPathogen().getName());
                 // enable the StartSimu button
                 btnStartSimu.setEnabled(true);
                 System.out.println("Simulation[" + simuStart + "] ended");
             }
-        },20000);
+        },5000);
     }
 
     //结束模拟
@@ -96,7 +99,7 @@ public class OnePathogenSimu extends Observable implements Runnable {
     private void runSimLoop(){
         while(hasChanged()){
             updateSim();
-            sleep(2000);
+            sleep(500);
         }
     }
     private void sleep(long millis) {
@@ -110,7 +113,6 @@ public class OnePathogenSimu extends Observable implements Runnable {
         calcOilSpread();
         notifyObservers(this);
         setChanged();
-        this.dataSetForPlot.add(this);
     }
     //计算存在感染者的Unit数量
     public int calcInfectedUnits(){
@@ -134,349 +136,375 @@ public class OnePathogenSimu extends Observable implements Runnable {
         return counter;
     }
 
-
     //↓
-    public void currToDown(int i, int j){
-        //area[i][j]地区的感染率
-        double infectRate = areaUnitArray[i][j].getInfectNum() / areaUnitArray[i][j].getHeadcount();
-        double infectOutNum = areaUnitArray[i][j].getPopFlowSpeed() * infectRate; //流出的感染者数量
+    public void currToDown(int i, int j) {
+        double infectRate = areaUnitArray[i][j].getInfectNum() / areaUnitArray[i][j].getHeadcount(); //infect rate in area[i][j]
+        double headcountOutNum = areaUnitArray[i][j].getHeadcount() * areaUnitArray[i][j].getPopFlowSpeed(); // population of area[i][j]
+        double infectOutNum = headcountOutNum * infectRate; // infect number to flow out
 
-        areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()- areaUnitArray[i][j].getPopFlowSpeed());
-        areaUnitArray[i+1][j].setHeadcount(areaUnitArray[i+1][j].getHeadcount()+ areaUnitArray[i][j].getPopFlowSpeed());
-        areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()-infectOutNum);
-        areaUnitArray[i+1][j].setInfectNum(areaUnitArray[i+1][j].getInfectNum()+infectOutNum);
-        if(areaUnitArray[i][j].getHeadcount() < 0){
-            areaUnitArray[i][j].setHeadcount(0);
-        }
-        if(areaUnitArray[i][j].getInfectNum() < 0){
-            areaUnitArray[i][j].setInfectNum(0);
-        }
-        if(areaUnitArray[i+1][j].getHeadcount() < 0){
-            areaUnitArray[i+1][j].setHeadcount(0);
-        }
-        if(areaUnitArray[i+1][j].getInfectNum() < 0){
-            areaUnitArray[i+1][j].setInfectNum(0);
-        }
+        areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount() - headcountOutNum);
+        areaUnitArray[i + 1][j].setHeadcount(areaUnitArray[i + 1][j].getHeadcount() + headcountOutNum);
+
+        areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum() - infectOutNum);
+        areaUnitArray[i + 1][j].setInfectNum(areaUnitArray[i + 1][j].getInfectNum() + infectOutNum);
+//        if(areaUnitArray[i][j].getHeadcount() < 0){
+//            areaUnitArray[i][j].setHeadcount(0);
+//        }
+//        if(areaUnitArray[i][j].getInfectNum() < 0){
+//            areaUnitArray[i][j].setInfectNum(0);
+//        }
+//        if(areaUnitArray[i+1][j].getHeadcount() < 0){
+//            areaUnitArray[i+1][j].setHeadcount(0);
+//        }
+//        if(areaUnitArray[i+1][j].getInfectNum() < 0){
+//            areaUnitArray[i+1][j].setInfectNum(0);
+//        }
     }
+
     //↑
-    public void currToDownR(int i, int j){
-        double infectRate = areaUnitArray[i+1][j].getInfectNum() / areaUnitArray[i+1][j].getHeadcount();
-        double infectOutNum = areaUnitArray[i+1][j].getPopFlowSpeed() * infectRate; //流出的感染者数量
-        areaUnitArray[i+1][j].setHeadcount(areaUnitArray[i+1][j].getHeadcount()- areaUnitArray[i+1][j].getPopFlowSpeed());
-        areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()+ areaUnitArray[i+1][j].getPopFlowSpeed());
-        areaUnitArray[i+1][j].setInfectNum(areaUnitArray[i+1][j].getInfectNum()-infectOutNum);
-        areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()+infectOutNum);
-        if(areaUnitArray[i][j].getHeadcount() < 0){
-            areaUnitArray[i][j].setHeadcount(0);
-        }
-        if(areaUnitArray[i][j].getInfectNum() < 0){
-            areaUnitArray[i][j].setInfectNum(0);
-        }
-        if(areaUnitArray[i+1][j].getHeadcount() < 0){
-            areaUnitArray[i+1][j].setHeadcount(0);
-        }
-        if(areaUnitArray[i+1][j].getInfectNum() < 0){
-            areaUnitArray[i+1][j].setInfectNum(0);
-        }
+    public void currToDownR(int i, int j) {
+        double infectRate = areaUnitArray[i+1][j].getInfectNum() / areaUnitArray[i+1][j].getHeadcount(); //infect rate in area[i][j]
+        double headcountOutNum = areaUnitArray[i+1][j].getHeadcount() * areaUnitArray[i+1][j].getPopFlowSpeed(); // population of area[i][j]
+        double infectOutNum = headcountOutNum * infectRate; // infect number to flow out
+
+        areaUnitArray[i + 1][j].setHeadcount(areaUnitArray[i + 1][j].getHeadcount() - headcountOutNum);
+        areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount() + headcountOutNum);
+
+        areaUnitArray[i + 1][j].setInfectNum(areaUnitArray[i + 1][j].getInfectNum() - infectOutNum);
+        areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum() + infectOutNum);
+//        if(areaUnitArray[i][j].getHeadcount() < 0){
+//            areaUnitArray[i][j].setHeadcount(0);
+//        }
+//        if(areaUnitArray[i][j].getInfectNum() < 0){
+//            areaUnitArray[i][j].setInfectNum(0);
+//        }
+//        if(areaUnitArray[i+1][j].getHeadcount() < 0){
+//            areaUnitArray[i+1][j].setHeadcount(0);
+//        }
+//        if(areaUnitArray[i+1][j].getInfectNum() < 0){
+//            areaUnitArray[i+1][j].setInfectNum(0);
+//        }
     }
     //→
-    public void currToRight(int i, int j){
-        double infectRate = areaUnitArray[i][j].getInfectNum() / areaUnitArray[i][j].getHeadcount();
-        double infectOutNum = areaUnitArray[i][j].getPopFlowSpeed() * infectRate; //流出的感染者数量
-        areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()- areaUnitArray[i][j].getPopFlowSpeed());
-        areaUnitArray[i][j+1].setHeadcount(areaUnitArray[i][j+1].getHeadcount()+ areaUnitArray[i][j].getPopFlowSpeed());
-        areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()-infectOutNum);
-        areaUnitArray[i][j+1].setInfectNum(areaUnitArray[i][j+1].getInfectNum()+infectOutNum);
-        if(areaUnitArray[i][j].getHeadcount() < 0){
-            areaUnitArray[i][j].setHeadcount(0);
-        }
-        if(areaUnitArray[i][j].getInfectNum() < 0){
-            areaUnitArray[i][j].setInfectNum(0);
-        }
-        if(areaUnitArray[i][j+1].getHeadcount() < 0){
-            areaUnitArray[i][j+1].setHeadcount(0);
-        }
-        if(areaUnitArray[i][j+1].getInfectNum() < 0){
-            areaUnitArray[i][j+1].setInfectNum(0);
-        }
+    public void currToRight(int i, int j) {
+        double infectRate = areaUnitArray[i][j].getInfectNum() / areaUnitArray[i][j].getHeadcount(); //infect rate in area[i][j]
+        double headcountOutNum = areaUnitArray[i][j].getHeadcount() * areaUnitArray[i][j].getPopFlowSpeed(); // population of area[i][j]
+        double infectOutNum = headcountOutNum * infectRate; // infect number to flow out
+
+        areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount() - headcountOutNum);
+        areaUnitArray[i][j + 1].setHeadcount(areaUnitArray[i][j+1].getHeadcount() + headcountOutNum);
+        areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum() - infectOutNum);
+        areaUnitArray[i][j + 1].setInfectNum(areaUnitArray[i][j+1].getInfectNum() + infectOutNum);
+//        if(areaUnitArray[i][j].getHeadcount() < 0){
+//            areaUnitArray[i][j].setHeadcount(0);
+//        }
+//        if(areaUnitArray[i][j].getInfectNum() < 0){
+//            areaUnitArray[i][j].setInfectNum(0);
+//        }
+//        if(areaUnitArray[i][j+1].getHeadcount() < 0){
+//            areaUnitArray[i][j+1].setHeadcount(0);
+//        }
+//        if(areaUnitArray[i][j+1].getInfectNum() < 0){
+//            areaUnitArray[i][j+1].setInfectNum(0);
+//        }
     }
     //←
-    public void currToRightR(int i, int j){
-        double infectRate = areaUnitArray[i][j+1].getInfectNum() / areaUnitArray[i][j+1].getHeadcount();
-        double infectOutNum = areaUnitArray[i][j+1].getPopFlowSpeed() * infectRate; //流出的感染者数量
-        areaUnitArray[i][j+1].setHeadcount(areaUnitArray[i][j+1].getHeadcount()- areaUnitArray[i][j+1].getPopFlowSpeed());
-        areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()+ areaUnitArray[i][j+1].getPopFlowSpeed());
-        areaUnitArray[i][j+1].setInfectNum(areaUnitArray[i][j+1].getInfectNum()-infectOutNum);
-        areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()+infectOutNum);
-        if(areaUnitArray[i][j].getHeadcount() < 0){
-            areaUnitArray[i][j].setHeadcount(0);
-        }
-        if(areaUnitArray[i][j].getInfectNum() < 0){
-            areaUnitArray[i][j].setInfectNum(0);
-        }
-        if(areaUnitArray[i][j+1].getHeadcount() < 0){
-            areaUnitArray[i][j+1].setHeadcount(0);
-        }
-        if(areaUnitArray[i][j+1].getInfectNum() < 0){
-            areaUnitArray[i][j+1].setInfectNum(0);
-        }
+    public void currToRightR(int i, int j) {
+        double infectRate = areaUnitArray[i][j+1].getInfectNum() / areaUnitArray[i][j+1].getHeadcount(); //infect rate in area[i][j]
+        double headcountOutNum = areaUnitArray[i][j+1].getHeadcount() * areaUnitArray[i][j+1].getPopFlowSpeed(); // population of area[i][j]
+        double infectOutNum = headcountOutNum * infectRate; // infect number to flow out
+
+        areaUnitArray[i][j + 1].setHeadcount(areaUnitArray[i][j+1].getHeadcount() - headcountOutNum);
+        areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount() + headcountOutNum);
+        areaUnitArray[i][j + 1].setInfectNum(areaUnitArray[i][j+1].getInfectNum() - infectOutNum);
+        areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum() + infectOutNum);
+//        if(areaUnitArray[i][j].getHeadcount() < 0){
+//            areaUnitArray[i][j].setHeadcount(0);
+//        }
+//        if(areaUnitArray[i][j].getInfectNum() < 0){
+//            areaUnitArray[i][j].setInfectNum(0);
+//        }
+//        if(areaUnitArray[i][j+1].getHeadcount() < 0){
+//            areaUnitArray[i][j+1].setHeadcount(0);
+//        }
+//        if(areaUnitArray[i][j+1].getInfectNum() < 0){
+//            areaUnitArray[i][j+1].setInfectNum(0);
+//        }
     }
     //↘
-    public void currToRightBottom(int i, int j){
-        double infectRate = areaUnitArray[i][j].getInfectNum() / areaUnitArray[i][j].getHeadcount();
-        double infectOutNum = areaUnitArray[i][j].getPopFlowSpeed() * infectRate; //流出的感染者数量
-        areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()- areaUnitArray[i][j].getPopFlowSpeed());
-        areaUnitArray[i+1][j+1].setHeadcount(areaUnitArray[i+1][j+1].getHeadcount()+ areaUnitArray[i][j].getPopFlowSpeed());
-        areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()-infectOutNum);
-        areaUnitArray[i+1][j+1].setInfectNum(areaUnitArray[i+1][j+1].getInfectNum()+infectOutNum);
-        if(areaUnitArray[i][j].getHeadcount() < 0){
-            areaUnitArray[i][j].setHeadcount(0);
-        }
-        if(areaUnitArray[i][j].getInfectNum() < 0){
-            areaUnitArray[i][j].setInfectNum(0);
-        }
-        if(areaUnitArray[i+1][j+1].getHeadcount() < 0){
-            areaUnitArray[i+1][j+1].setHeadcount(0);
-        }
-        if(areaUnitArray[i+1][j+1].getInfectNum() < 0){
-            areaUnitArray[i+1][j+1].setInfectNum(0);
-        }
+    public void currToRightBottom(int i, int j) {
+        double infectRate = areaUnitArray[i][j].getInfectNum() / areaUnitArray[i][j].getHeadcount(); //infect rate in area[i][j]
+        double headcountOutNum = areaUnitArray[i][j].getHeadcount() * areaUnitArray[i][j].getPopFlowSpeed(); // population of area[i][j]
+        double infectOutNum = headcountOutNum * infectRate; // infect number to flow out
+
+        areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount() - headcountOutNum);
+        areaUnitArray[i + 1][j + 1].setHeadcount(areaUnitArray[i + 1][j + 1].getHeadcount() + headcountOutNum);
+        areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum() -infectOutNum);
+        areaUnitArray[i + 1][j + 1].setInfectNum(areaUnitArray[i + 1][j + 1].getInfectNum() + infectOutNum);
+//        if(areaUnitArray[i][j].getHeadcount() < 0){
+//            areaUnitArray[i][j].setHeadcount(0);
+//        }
+//        if(areaUnitArray[i][j].getInfectNum() < 0){
+//            areaUnitArray[i][j].setInfectNum(0);
+//        }
+//        if(areaUnitArray[i+1][j+1].getHeadcount() < 0){
+//            areaUnitArray[i+1][j+1].setHeadcount(0);
+//        }
+//        if(areaUnitArray[i+1][j+1].getInfectNum() < 0){
+//            areaUnitArray[i+1][j+1].setInfectNum(0);
+//        }
     }
     //↖
-    public void currToRightBottomR(int i, int j){
-        double infectRate = areaUnitArray[i+1][j+1].getInfectNum() / areaUnitArray[i+1][j+1].getHeadcount();
-        double infectOutNum = areaUnitArray[i+1][j+1].getPopFlowSpeed() * infectRate; //流出的感染者数量
-        areaUnitArray[i+1][j+1].setHeadcount(areaUnitArray[i+1][j+1].getHeadcount()- areaUnitArray[i+1][j+1].getPopFlowSpeed());
-        areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()+ areaUnitArray[i+1][j+1].getPopFlowSpeed());
+    public void currToRightBottomR(int i, int j) {
+        double infectRate = areaUnitArray[i+1][j+1].getInfectNum() / areaUnitArray[i+1][j+1].getHeadcount(); //infect rate in area[i][j]
+        double headcountOutNum = areaUnitArray[i+1][j+1].getHeadcount() * areaUnitArray[i+1][j+1].getPopFlowSpeed(); // population of area[i][j]
+        double infectOutNum = headcountOutNum * infectRate; // infect number to flow out
+
+        areaUnitArray[i + 1][j+1].setHeadcount(areaUnitArray[i + 1][j + 1].getHeadcount() - headcountOutNum);
+        areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount() + headcountOutNum);
         areaUnitArray[i+1][j+1].setInfectNum(areaUnitArray[i+1][j+1].getInfectNum()-infectOutNum);
         areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()+infectOutNum);
-        if(areaUnitArray[i][j].getHeadcount() < 0){
-            areaUnitArray[i][j].setHeadcount(0);
-        }
-        if(areaUnitArray[i][j].getInfectNum() < 0){
-            areaUnitArray[i][j].setInfectNum(0);
-        }
-        if(areaUnitArray[i+1][j+1].getHeadcount() < 0){
-            areaUnitArray[i+1][j+1].setHeadcount(0);
-        }
-        if(areaUnitArray[i+1][j+1].getInfectNum() < 0){
-            areaUnitArray[i+1][j+1].setInfectNum(0);
-        }
+//        if(areaUnitArray[i][j].getHeadcount() < 0){
+//            areaUnitArray[i][j].setHeadcount(0);
+//        }
+//        if(areaUnitArray[i][j].getInfectNum() < 0){
+//            areaUnitArray[i][j].setInfectNum(0);
+//        }
+//        if(areaUnitArray[i+1][j+1].getHeadcount() < 0){
+//            areaUnitArray[i+1][j+1].setHeadcount(0);
+//        }
+//        if(areaUnitArray[i+1][j+1].getInfectNum() < 0){
+//            areaUnitArray[i+1][j+1].setInfectNum(0);
+//        }
     }
     //↑
-    public void currToUp(int i, int j){
-        double infectRate = areaUnitArray[i][j].getInfectNum() / areaUnitArray[i][j].getHeadcount();
-        double infectOutNum = areaUnitArray[i][j].getPopFlowSpeed() * infectRate; //流出的感染者数量
-        areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()- areaUnitArray[i][j].getPopFlowSpeed());
-        areaUnitArray[i-1][j].setHeadcount(areaUnitArray[i-1][j].getHeadcount()+ areaUnitArray[i][j].getPopFlowSpeed());
-        areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()-infectOutNum);
-        areaUnitArray[i-1][j].setInfectNum(areaUnitArray[i-1][j].getInfectNum()+infectOutNum);
-        if(areaUnitArray[i][j].getHeadcount() < 0){
-            areaUnitArray[i][j].setHeadcount(0);
-        }
-        if(areaUnitArray[i][j].getInfectNum() < 0){
-            areaUnitArray[i][j].setInfectNum(0);
-        }
-        if(areaUnitArray[i-1][j].getHeadcount() < 0){
-            areaUnitArray[i-1][j].setHeadcount(0);
-        }
-        if(areaUnitArray[i-1][j].getInfectNum() < 0){
-            areaUnitArray[i-1][j].setInfectNum(0);
-        }
+    public void currToUp(int i, int j) {
+        double infectRate = areaUnitArray[i][j].getInfectNum() / areaUnitArray[i][j].getHeadcount(); //infect rate in area[i][j]
+        double headcountOutNum = areaUnitArray[i][j].getHeadcount() * areaUnitArray[i][j].getPopFlowSpeed(); // population of area[i][j]
+        double infectOutNum = headcountOutNum * infectRate; // infect number to flow out
+
+        areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount() - headcountOutNum);
+        areaUnitArray[i-1][j].setHeadcount(areaUnitArray[i-1][j].getHeadcount() + headcountOutNum);
+        areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum() - infectOutNum);
+        areaUnitArray[i-1][j].setInfectNum(areaUnitArray[i-1][j].getInfectNum() + infectOutNum);
+//        if(areaUnitArray[i][j].getHeadcount() < 0){
+//            areaUnitArray[i][j].setHeadcount(0);
+//        }
+//        if(areaUnitArray[i][j].getInfectNum() < 0){
+//            areaUnitArray[i][j].setInfectNum(0);
+//        }
+//        if(areaUnitArray[i-1][j].getHeadcount() < 0){
+//            areaUnitArray[i-1][j].setHeadcount(0);
+//        }
+//        if(areaUnitArray[i-1][j].getInfectNum() < 0){
+//            areaUnitArray[i-1][j].setInfectNum(0);
+//        }
     }
     //↓
     public void currToUpR(int i, int j){
-        double infectRate = areaUnitArray[i-1][j].getInfectNum() / areaUnitArray[i-1][j].getHeadcount();
-        double infectOutNum = areaUnitArray[i-1][j].getPopFlowSpeed() * infectRate; //流出的感染者数量
-        areaUnitArray[i-1][j].setHeadcount(areaUnitArray[i-1][j].getHeadcount()- areaUnitArray[i-1][j].getPopFlowSpeed());
-        areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()+ areaUnitArray[i-1][j].getPopFlowSpeed());
+        double infectRate = areaUnitArray[i-1][j].getInfectNum() / areaUnitArray[i-1][j].getHeadcount(); //infect rate in area[i][j]
+        double headcountOutNum = areaUnitArray[i-1][j].getHeadcount() * areaUnitArray[i-1][j].getPopFlowSpeed(); // population of area[i][j]
+        double infectOutNum = headcountOutNum * infectRate; // infect number to flow out
+        areaUnitArray[i-1][j].setHeadcount(areaUnitArray[i-1][j].getHeadcount()- headcountOutNum);
+        areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()+ headcountOutNum);
         areaUnitArray[i-1][j].setInfectNum(areaUnitArray[i-1][j].getInfectNum()-infectOutNum);
         areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()+infectOutNum);
-        if(areaUnitArray[i][j].getHeadcount() < 0){
-            areaUnitArray[i][j].setHeadcount(0);
-        }
-        if(areaUnitArray[i][j].getInfectNum() < 0){
-            areaUnitArray[i][j].setInfectNum(0);
-        }
-        if(areaUnitArray[i-1][j].getHeadcount() < 0){
-            areaUnitArray[i-1][j].setHeadcount(0);
-        }
-        if(areaUnitArray[i-1][j].getInfectNum() < 0){
-            areaUnitArray[i-1][j].setInfectNum(0);
-        }
+//        if(areaUnitArray[i][j].getHeadcount() < 0){
+//            areaUnitArray[i][j].setHeadcount(0);
+//        }
+//        if(areaUnitArray[i][j].getInfectNum() < 0){
+//            areaUnitArray[i][j].setInfectNum(0);
+//        }
+//        if(areaUnitArray[i-1][j].getHeadcount() < 0){
+//            areaUnitArray[i-1][j].setHeadcount(0);
+//        }
+//        if(areaUnitArray[i-1][j].getInfectNum() < 0){
+//            areaUnitArray[i-1][j].setInfectNum(0);
+//        }
     }
     //↗
     public void currToRightTop(int i, int j){
-        double infectRate = areaUnitArray[i][j].getInfectNum() / areaUnitArray[i][j].getHeadcount();
-        double infectOutNum = areaUnitArray[i][j].getPopFlowSpeed() * infectRate; //流出的感染者数量
-        areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()- areaUnitArray[i][j].getPopFlowSpeed());
-        areaUnitArray[i-1][j+1].setHeadcount(areaUnitArray[i-1][j+1].getHeadcount()+ areaUnitArray[i][j].getPopFlowSpeed());
+        double infectRate = areaUnitArray[i][j].getInfectNum() / areaUnitArray[i][j].getHeadcount(); //infect rate in area[i][j]
+        double headcountOutNum = areaUnitArray[i][j].getHeadcount() * areaUnitArray[i][j].getPopFlowSpeed(); // population of area[i][j]
+        double infectOutNum = headcountOutNum * infectRate; // infect number to flow out
+
+        areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()- headcountOutNum);
+        areaUnitArray[i-1][j+1].setHeadcount(areaUnitArray[i-1][j+1].getHeadcount()+ headcountOutNum);
         areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()-infectOutNum);
         areaUnitArray[i-1][j+1].setInfectNum(areaUnitArray[i-1][j+1].getInfectNum()+infectOutNum);
-        if(areaUnitArray[i][j].getHeadcount() < 0){
-            areaUnitArray[i][j].setHeadcount(0);
-        }
-        if(areaUnitArray[i][j].getInfectNum() < 0){
-            areaUnitArray[i][j].setInfectNum(0);
-        }
-        if(areaUnitArray[i-1][j+1].getHeadcount() < 0){
-            areaUnitArray[i-1][j+1].setHeadcount(0);
-        }
-        if(areaUnitArray[i-1][j+1].getInfectNum() < 0){
-            areaUnitArray[i-1][j+1].setInfectNum(0);
-        }
+//        if(areaUnitArray[i][j].getHeadcount() < 0){
+//            areaUnitArray[i][j].setHeadcount(0);
+//        }
+//        if(areaUnitArray[i][j].getInfectNum() < 0){
+//            areaUnitArray[i][j].setInfectNum(0);
+//        }
+//        if(areaUnitArray[i-1][j+1].getHeadcount() < 0){
+//            areaUnitArray[i-1][j+1].setHeadcount(0);
+//        }
+//        if(areaUnitArray[i-1][j+1].getInfectNum() < 0){
+//            areaUnitArray[i-1][j+1].setInfectNum(0);
+//        }
     }
     //↙
     public void currToRightTopR(int i, int j){
-        double infectRate = areaUnitArray[i-1][j+1].getInfectNum() / areaUnitArray[i-1][j+1].getHeadcount();
-        double infectOutNum = areaUnitArray[i-1][j+1].getPopFlowSpeed() * infectRate; //流出的感染者数量
-        areaUnitArray[i-1][j+1].setHeadcount(areaUnitArray[i-1][j+1].getHeadcount()- areaUnitArray[i-1][j+1].getPopFlowSpeed());
-        areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()+ areaUnitArray[i-1][j+1].getPopFlowSpeed());
+        double infectRate = areaUnitArray[i-1][j+1].getInfectNum() / areaUnitArray[i-1][j+1].getHeadcount(); //infect rate in area[i][j]
+        double headcountOutNum = areaUnitArray[i-1][j+1].getHeadcount() * areaUnitArray[i-1][j+1].getPopFlowSpeed(); // population of area[i][j]
+        double infectOutNum = headcountOutNum * infectRate; // infect number to flow out
+
+        areaUnitArray[i-1][j+1].setHeadcount(areaUnitArray[i-1][j+1].getHeadcount()- headcountOutNum);
+        areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()+ headcountOutNum);
         areaUnitArray[i-1][j+1].setInfectNum(areaUnitArray[i-1][j+1].getInfectNum()-infectOutNum);
         areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()+infectOutNum);
-        if(areaUnitArray[i][j].getHeadcount() < 0){
-            areaUnitArray[i][j].setHeadcount(0);
-        }
-        if(areaUnitArray[i][j].getInfectNum() < 0){
-            areaUnitArray[i][j].setInfectNum(0);
-        }
-        if(areaUnitArray[i-1][j+1].getHeadcount() < 0){
-            areaUnitArray[i-1][j+1].setHeadcount(0);
-        }
-        if(areaUnitArray[i-1][j+1].getInfectNum() < 0){
-            areaUnitArray[i-1][j+1].setInfectNum(0);
-        }
+//        if(areaUnitArray[i][j].getHeadcount() < 0){
+//            areaUnitArray[i][j].setHeadcount(0);
+//        }
+//        if(areaUnitArray[i][j].getInfectNum() < 0){
+//            areaUnitArray[i][j].setInfectNum(0);
+//        }
+//        if(areaUnitArray[i-1][j+1].getHeadcount() < 0){
+//            areaUnitArray[i-1][j+1].setHeadcount(0);
+//        }
+//        if(areaUnitArray[i-1][j+1].getInfectNum() < 0){
+//            areaUnitArray[i-1][j+1].setInfectNum(0);
+//        }
     }
     //←
     public void currToLeft(int i, int j){
-        double infectRate = areaUnitArray[i][j].getInfectNum() / areaUnitArray[i][j].getHeadcount();
-        double infectOutNum = areaUnitArray[i][j].getPopFlowSpeed() * infectRate; //流出的感染者数量
-        areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()- areaUnitArray[i][j].getPopFlowSpeed());
-        areaUnitArray[i][j-1].setHeadcount(areaUnitArray[i][j-1].getHeadcount()+ areaUnitArray[i][j].getPopFlowSpeed());
+        double infectRate = areaUnitArray[i][j].getInfectNum() / areaUnitArray[i][j].getHeadcount(); //infect rate in area[i][j]
+        double headcountOutNum = areaUnitArray[i][j].getHeadcount() * areaUnitArray[i][j].getPopFlowSpeed(); // population of area[i][j]
+        double infectOutNum = headcountOutNum * infectRate; // infect number to flow out
+
+        areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()- headcountOutNum);
+        areaUnitArray[i][j-1].setHeadcount(areaUnitArray[i][j-1].getHeadcount()+ headcountOutNum);
         areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()-infectOutNum);
         areaUnitArray[i][j-1].setInfectNum(areaUnitArray[i][j-1].getInfectNum()+infectOutNum);
-        if(areaUnitArray[i][j].getHeadcount() < 0){
-            areaUnitArray[i][j].setHeadcount(0);
-        }
-        if(areaUnitArray[i][j].getInfectNum() < 0){
-            areaUnitArray[i][j].setInfectNum(0);
-        }
-        if(areaUnitArray[i][j-1].getHeadcount() < 0){
-            areaUnitArray[i][j-1].setHeadcount(0);
-        }
-        if(areaUnitArray[i][j-1].getInfectNum() < 0){
-            areaUnitArray[i][j-1].setInfectNum(0);
-        }
+//        if(areaUnitArray[i][j].getHeadcount() < 0){
+//            areaUnitArray[i][j].setHeadcount(0);
+//        }
+//        if(areaUnitArray[i][j].getInfectNum() < 0){
+//            areaUnitArray[i][j].setInfectNum(0);
+//        }
+//        if(areaUnitArray[i][j-1].getHeadcount() < 0){
+//            areaUnitArray[i][j-1].setHeadcount(0);
+//        }
+//        if(areaUnitArray[i][j-1].getInfectNum() < 0){
+//            areaUnitArray[i][j-1].setInfectNum(0);
+//        }
     }
     //→
     public void currToLeftR(int i, int j){
-        double infectRate = areaUnitArray[i][j-1].getInfectNum() / areaUnitArray[i][j-1].getHeadcount();
-        double infectOutNum = areaUnitArray[i][j-1].getPopFlowSpeed() * infectRate; //流出的感染者数量
-        areaUnitArray[i][j-1].setHeadcount(areaUnitArray[i][j-1].getHeadcount()- areaUnitArray[i][j-1].getPopFlowSpeed());
-        areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()+ areaUnitArray[i][j-1].getPopFlowSpeed());
+        double infectRate = areaUnitArray[i][j-1].getInfectNum() / areaUnitArray[i][j-1].getHeadcount(); //infect rate in area[i][j]
+        double headcountOutNum = areaUnitArray[i][j-1].getHeadcount() * areaUnitArray[i][j-1].getPopFlowSpeed(); // population of area[i][j]
+        double infectOutNum = headcountOutNum * infectRate; // infect number to flow out
+
+        areaUnitArray[i][j-1].setHeadcount(areaUnitArray[i][j-1].getHeadcount()- headcountOutNum);
+        areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()+ headcountOutNum);
         areaUnitArray[i][j-1].setInfectNum(areaUnitArray[i][j-1].getInfectNum()-infectOutNum);
         areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()+infectOutNum);
-        if(areaUnitArray[i][j].getHeadcount() < 0){
-            areaUnitArray[i][j].setHeadcount(0);
-        }
-        if(areaUnitArray[i][j].getInfectNum() < 0){
-            areaUnitArray[i][j].setInfectNum(0);
-        }
-        if(areaUnitArray[i][j-1].getHeadcount() < 0){
-            areaUnitArray[i][j-1].setHeadcount(0);
-        }
-        if(areaUnitArray[i][j-1].getInfectNum() < 0){
-            areaUnitArray[i][j-1].setInfectNum(0);
-        }
+//        if(areaUnitArray[i][j].getHeadcount() < 0){
+//            areaUnitArray[i][j].setHeadcount(0);
+//        }
+//        if(areaUnitArray[i][j].getInfectNum() < 0){
+//            areaUnitArray[i][j].setInfectNum(0);
+//        }
+//        if(areaUnitArray[i][j-1].getHeadcount() < 0){
+//            areaUnitArray[i][j-1].setHeadcount(0);
+//        }
+//        if(areaUnitArray[i][j-1].getInfectNum() < 0){
+//            areaUnitArray[i][j-1].setInfectNum(0);
+//        }
     }
     //↙
     public void currToLeftBottom(int i, int j){
-        double infectRate = areaUnitArray[i][j].getInfectNum() / areaUnitArray[i][j].getHeadcount();
-        double infectOutNum = areaUnitArray[i][j].getPopFlowSpeed() * infectRate; //流出的感染者数量
-        areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()- areaUnitArray[i][j].getPopFlowSpeed());
-        areaUnitArray[i+1][j-1].setHeadcount(areaUnitArray[i+1][j-1].getHeadcount()+ areaUnitArray[i][j].getPopFlowSpeed());
-        areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()-infectOutNum);
-        areaUnitArray[i+1][j-1].setInfectNum(areaUnitArray[i+1][j-1].getInfectNum()+infectOutNum);
-        if(areaUnitArray[i][j].getHeadcount() < 0){
-            areaUnitArray[i][j].setHeadcount(0);
-        }
-        if(areaUnitArray[i][j].getInfectNum() < 0){
-            areaUnitArray[i][j].setInfectNum(0);
-        }
-        if(areaUnitArray[i+1][j-1].getHeadcount() < 0){
-            areaUnitArray[i+1][j-1].setHeadcount(0);
-        }
-        if(areaUnitArray[i+1][j-1].getInfectNum() < 0){
-            areaUnitArray[i+1][j-1].setInfectNum(0);
-        }
+        double infectRate = areaUnitArray[i][j].getInfectNum() / areaUnitArray[i][j].getHeadcount(); //infect rate in area[i][j]
+        double headcountOutNum = areaUnitArray[i][j].getHeadcount() * areaUnitArray[i][j].getPopFlowSpeed(); // population of area[i][j]
+        double infectOutNum = headcountOutNum * infectRate; // infect number to flow out
+        areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount() - headcountOutNum);
+        areaUnitArray[i+1][j-1].setHeadcount(areaUnitArray[i+1][j-1].getHeadcount()+ headcountOutNum);
+        areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum() - infectOutNum);
+        areaUnitArray[i+1][j-1].setInfectNum(areaUnitArray[i+1][j-1].getInfectNum() + infectOutNum);
+//        if(areaUnitArray[i][j].getHeadcount() < 0){
+//            areaUnitArray[i][j].setHeadcount(0);
+//        }
+//        if(areaUnitArray[i][j].getInfectNum() < 0){
+//            areaUnitArray[i][j].setInfectNum(0);
+//        }
+//        if(areaUnitArray[i+1][j-1].getHeadcount() < 0){
+//            areaUnitArray[i+1][j-1].setHeadcount(0);
+//        }
+//        if(areaUnitArray[i+1][j-1].getInfectNum() < 0){
+//            areaUnitArray[i+1][j-1].setInfectNum(0);
+//        }
     }
     //↗
     public void currToLeftBottomR(int i, int j){
-        double infectRate = areaUnitArray[i+1][j-1].getInfectNum() / areaUnitArray[i+1][j-1].getHeadcount();
-        double infectOutNum = areaUnitArray[i+1][j-1].getPopFlowSpeed() * infectRate; //流出的感染者数量
-        areaUnitArray[i+1][j-1].setHeadcount(areaUnitArray[i+1][j-1].getHeadcount()- areaUnitArray[i+1][j-1].getPopFlowSpeed());
-        areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()+ areaUnitArray[i+1][j-1].getPopFlowSpeed());
+        double infectRate = areaUnitArray[i+1][j-1].getInfectNum() / areaUnitArray[i+1][j-1].getHeadcount(); //infect rate in area[i][j]
+        double headcountOutNum = areaUnitArray[i+1][j-1].getHeadcount() * areaUnitArray[i+1][j-1].getPopFlowSpeed(); // population of area[i][j]
+        double infectOutNum = headcountOutNum * infectRate; // infect number to flow out
+
+        areaUnitArray[i+1][j-1].setHeadcount(areaUnitArray[i+1][j-1].getHeadcount()- headcountOutNum);
+        areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()+ headcountOutNum);
         areaUnitArray[i+1][j-1].setInfectNum(areaUnitArray[i+1][j-1].getInfectNum()-infectOutNum);
         areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()+infectOutNum);
-        if(areaUnitArray[i][j].getHeadcount() < 0){
-            areaUnitArray[i][j].setHeadcount(0);
-        }
-        if(areaUnitArray[i][j].getInfectNum() < 0){
-            areaUnitArray[i][j].setInfectNum(0);
-        }
-        if(areaUnitArray[i+1][j-1].getHeadcount() < 0){
-            areaUnitArray[i+1][j-1].setHeadcount(0);
-        }
-        if(areaUnitArray[i+1][j-1].getInfectNum() < 0){
-            areaUnitArray[i+1][j-1].setInfectNum(0);
-        }
+//        if(areaUnitArray[i][j].getHeadcount() < 0){
+//            areaUnitArray[i][j].setHeadcount(0);
+//        }
+//        if(areaUnitArray[i][j].getInfectNum() < 0){
+//            areaUnitArray[i][j].setInfectNum(0);
+//        }
+//        if(areaUnitArray[i+1][j-1].getHeadcount() < 0){
+//            areaUnitArray[i+1][j-1].setHeadcount(0);
+//        }
+//        if(areaUnitArray[i+1][j-1].getInfectNum() < 0){
+//            areaUnitArray[i+1][j-1].setInfectNum(0);
+//        }
     }
     //↖
     public void currToLeftTop(int i, int j){
-        double infectRate = areaUnitArray[i][j].getInfectNum() / areaUnitArray[i][j].getHeadcount();
-        double infectOutNum = areaUnitArray[i][j].getPopFlowSpeed() * infectRate; //流出的感染者数量
-        areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()- areaUnitArray[i][j].getPopFlowSpeed());
-        areaUnitArray[i-1][j-1].setHeadcount(areaUnitArray[i-1][j-1].getHeadcount()+ areaUnitArray[i][j].getPopFlowSpeed());
+        double infectRate = areaUnitArray[i][j].getInfectNum() / areaUnitArray[i][j].getHeadcount(); //infect rate in area[i][j]
+        double headcountOutNum = areaUnitArray[i][j].getHeadcount() * areaUnitArray[i][j].getPopFlowSpeed(); // population of area[i][j]
+        double infectOutNum = headcountOutNum * infectRate; // infect number to flow out
+
+        areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()- headcountOutNum);
+        areaUnitArray[i-1][j-1].setHeadcount(areaUnitArray[i-1][j-1].getHeadcount()+ headcountOutNum);
         areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()-infectOutNum);
         areaUnitArray[i-1][j-1].setInfectNum(areaUnitArray[i-1][j-1].getInfectNum()+infectOutNum);
-        if(areaUnitArray[i][j].getHeadcount() < 0){
-            areaUnitArray[i][j].setHeadcount(0);
-        }
-        if(areaUnitArray[i][j].getInfectNum() < 0){
-            areaUnitArray[i][j].setInfectNum(0);
-        }
-        if(areaUnitArray[i-1][j-1].getHeadcount() < 0){
-            areaUnitArray[i-1][j-1].setHeadcount(0);
-        }
-        if(areaUnitArray[i-1][j-1].getInfectNum() < 0){
-            areaUnitArray[i-1][j-1].setInfectNum(0);
-        }
+//        if(areaUnitArray[i][j].getHeadcount() < 0){
+//            areaUnitArray[i][j].setHeadcount(0);
+//        }
+//        if(areaUnitArray[i][j].getInfectNum() < 0){
+//            areaUnitArray[i][j].setInfectNum(0);
+//        }
+//        if(areaUnitArray[i-1][j-1].getHeadcount() < 0){
+//            areaUnitArray[i-1][j-1].setHeadcount(0);
+//        }
+//        if(areaUnitArray[i-1][j-1].getInfectNum() < 0){
+//            areaUnitArray[i-1][j-1].setInfectNum(0);
+//        }
     }
     //↘
     public void currToLeftTopR(int i, int j){
-        double infectRate = areaUnitArray[i-1][j-1].getInfectNum() / areaUnitArray[i-1][j-1].getHeadcount();
-        double infectOutNum = areaUnitArray[i-1][j-1].getPopFlowSpeed() * infectRate; //流出的感染者数量
-        areaUnitArray[i-1][j-1].setHeadcount(areaUnitArray[i-1][j-1].getHeadcount()- areaUnitArray[i-1][j-1].getPopFlowSpeed());
-        areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()+ areaUnitArray[i-1][j-1].getPopFlowSpeed());
+        double infectRate = areaUnitArray[i-1][j-1].getInfectNum() / areaUnitArray[i-1][j-1].getHeadcount(); //infect rate in area[i][j]
+        double headcountOutNum = areaUnitArray[i-1][j-1].getHeadcount() * areaUnitArray[i-1][j-1].getPopFlowSpeed(); // population of area[i][j]
+        double infectOutNum = headcountOutNum * infectRate; // infect number to flow out
+
+        areaUnitArray[i-1][j-1].setHeadcount(areaUnitArray[i-1][j-1].getHeadcount()- headcountOutNum);
+        areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()+ headcountOutNum);
         areaUnitArray[i-1][j-1].setInfectNum(areaUnitArray[i-1][j-1].getInfectNum()-infectOutNum);
         areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()+infectOutNum);
-        if(areaUnitArray[i][j].getHeadcount() < 0){
-            areaUnitArray[i][j].setHeadcount(0);
-        }
-        if(areaUnitArray[i][j].getInfectNum() < 0){
-            areaUnitArray[i][j].setInfectNum(0);
-        }
-        if(areaUnitArray[i-1][j-1].getHeadcount() < 0){
-            areaUnitArray[i-1][j-1].setHeadcount(0);
-        }
-        if(areaUnitArray[i-1][j-1].getInfectNum() < 0){
-            areaUnitArray[i-1][j-1].setInfectNum(0);
-        }
+//        if(areaUnitArray[i][j].getHeadcount() < 0){
+//            areaUnitArray[i][j].setHeadcount(0);
+//        }
+//        if(areaUnitArray[i][j].getInfectNum() < 0){
+//            areaUnitArray[i][j].setInfectNum(0);
+//        }
+//        if(areaUnitArray[i-1][j-1].getHeadcount() < 0){
+//            areaUnitArray[i-1][j-1].setHeadcount(0);
+//        }
+//        if(areaUnitArray[i-1][j-1].getInfectNum() < 0){
+//            areaUnitArray[i-1][j-1].setInfectNum(0);
+//        }
     }
-
-
-
-
 
     //计算左上角的传染扩散
     public void calcOilSpreadAtTopLeftCorner(int i, int j) {
@@ -596,12 +624,21 @@ public class OnePathogenSimu extends Observable implements Runnable {
 
     //计算传染扩散
     public void calcOilSpread() {
+        double counter = 0;
         for (int i = 0; i < AREA_WIDTH / AreaUnit.BLOCK_WIDTH; i++) {
             for (int j = 0; j < AREA_LENGTH / AreaUnit.BLOCK_LENGTH; j++) {
 
+//                System.out.println("i " + i +", j "+ j + " infectNum " + areaUnitArray[i][j].getInfectNum() + ", head count " + areaUnitArray[i][j].getHeadcount());
+
+                counter += areaUnitArray[i][j].getInfectNum();
                 //TODO store data to draw chart
                 //每一次都要计算该地区的传染扩散情况
-                areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum() + areaUnitArray[i][j].getInfectSpeed());
+                double updateInfect = areaUnitArray[i][j].getInfectNum() + areaUnitArray[i][j].getInfectSpeed();
+                if (updateInfect > areaUnitArray[i][j].getHeadcount()) {
+                    areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getHeadcount());
+                } else {
+                    areaUnitArray[i][j].setInfectNum(updateInfect);
+                }
                 if(i == 0 && j == 0){
                     calcOilSpreadAtTopLeftCorner(i,j);
                 } else if(i == AREA_WIDTH / AreaUnit.BLOCK_WIDTH - 1 && j == 0){
@@ -716,6 +753,8 @@ public class OnePathogenSimu extends Observable implements Runnable {
                 }
             }
         }
+
+        this.infectNumList.add(counter);
     }
 
 
