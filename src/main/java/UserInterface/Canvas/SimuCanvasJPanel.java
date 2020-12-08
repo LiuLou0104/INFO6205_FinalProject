@@ -14,7 +14,7 @@ import java.util.Observer;
  * @Date: Created in 2:39 2020/11/30
  * @Modified By:
  */
-public class SimuCanvasJPanel extends JPanel implements Observer {
+public class SimuCanvasJPanel extends JPanel implements Observer{
     private int ctr = 0;
     private OnePathogenSimu mySimulation;
     private int lineSize = 20; // How big each cell should be
@@ -55,7 +55,9 @@ public class SimuCanvasJPanel extends JPanel implements Observer {
 
                 int startx = i * lineSize;
                 AreaUnit[][] area = mySimulation.getAreaUnitArray();
-                System.out.println(area[j][i].getInfectNum());
+                // TODO system.out
+                System.out.println("area[j][i]:" + area[j][i].getHeadcount());
+                System.out.println("getInfectNum():" + area[j][i].getInfectNum());
                 if (area[j][i].getInfectNum() > 0) {
                     int red = validColor((int) (255 - 200 * area[j][i].getInfectNum()));
                     int green = validColor((int) (153 - 200 * area[j][i].getInfectNum()));

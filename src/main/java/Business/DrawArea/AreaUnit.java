@@ -35,6 +35,7 @@ public class AreaUnit {
         int r3 = random.nextInt();
         if(r3 % 2 == 0) isTest = true;
         calcInfectSpeed(); // set infectSpeed
+        System.out.println(this.toString());
     }
 
     public AreaUnit(Pathogen pathogen, double populationDensity, boolean isQuarantine, boolean isMask, boolean isTest) {
@@ -43,6 +44,22 @@ public class AreaUnit {
         this.isQuarantine = isQuarantine;
         this.isMask = isMask;
         this.isTest = isTest;
+    }
+
+    @Override
+    public String toString() {
+        return "AreaUnit{" +
+                "populationDensity=" + populationDensity +
+                ", infectSpeed=" + infectSpeed +
+                ", infectNum=" + infectNum +
+                ", headcount=" + headcount +
+                ", popFlowSpeed=" + popFlowSpeed +
+                ", isQuarantine=" + isQuarantine +
+                ", isMask=" + isMask +
+                ", isTest=" + isTest +
+                ", pathogen=" + pathogen +
+                ", hospital=" + hospital +
+                '}';
     }
 
     public void calcInfectSpeed(){
