@@ -12,17 +12,17 @@ public class DateFormat {
     }
 
     public static String dateFormat1(Date date) {
-        SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh-mm-ss");
         return ft.format(date);
     }
 
     public static String dateFormat2(Date date) {
-        SimpleDateFormat ft = new SimpleDateFormat("DD hh:mm:ss");
+        SimpleDateFormat ft = new SimpleDateFormat("DD hh-mm-ss");
         return ft.format(date);
     }
 
     public static String dateFormat3(Date date) {
-        SimpleDateFormat ft = new SimpleDateFormat("hh:mm:ss");
+        SimpleDateFormat ft = new SimpleDateFormat("hh-mm-ss");
         return ft.format(date);
     }
 }
