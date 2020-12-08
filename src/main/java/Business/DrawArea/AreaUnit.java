@@ -12,22 +12,26 @@ public class AreaUnit {
     private double infectSpeed = 0; //传染速度 = 人口密度 * ???  infectNum * 2^t
     private double infectNum = 0; //该地区感染人数
     private double headcount = 0; //该地区的总人数
-    private double popFlowSpeed = 0;//该地区的向外人口流动速度（单位时间的人口流出量）
+    private double popFlowSpeed = 0;// percentage of flow speed (aka: number of people move out / total head count) [0, 1)
     private boolean isQuarantine = false; //是否隔离（旅行限制）
     private boolean isMask = false; //是否使用口罩
     private boolean isTest = false; //是否检测及溯源
     private Pathogen pathogen; //该地区的病毒种类（通过set方法传入）
     private Hospital hospital; //该地区的医院（通过set方法传入）
 
+    public AreaUnit() {
+        super();
+    }
+
     public AreaUnit(Pathogen pathogen){
         this.pathogen = pathogen; // set pathogen
         Random random = new Random();
-        headcount = random.nextDouble()*10000;
-        //headcount = 5000; // set populationDensity
-        popFlowSpeed = random.nextDouble()*5000;
+        headcount = random.nextDouble() * 10000;
+//        headcount = 5000; // set populationDensity
+        popFlowSpeed = random.nextDouble();
         //popFlowSpeed = 1000; // set popFlowSpeed
-        infectNum = random.nextDouble()*30;
-        //infectNum = 10; // set infectNum
+        infectNum = random.nextDouble() * 30;
+//        infectNum = 50; // set infectNum
         int r1 = random.nextInt();
         if(r1 % 2 == 0) isQuarantine = true;
         int r2 = random.nextInt();
@@ -35,7 +39,7 @@ public class AreaUnit {
         int r3 = random.nextInt();
         if(r3 % 2 == 0) isTest = true;
         calcInfectSpeed(); // set infectSpeed
-        System.out.println(this.toString());
+//        System.out.println(this.toString());
 
     }
 
@@ -75,6 +79,7 @@ public class AreaUnit {
         } else {
             this.infectSpeed = infectNum * (0.005 * populationDensity * pathogen.getR_FACTOR() * 0.3 / pathogen.getK_FACTOR() * 9);
         }
+        this.infectSpeed *= 0.01;
         //this.infectSpeed = 1.0;
     }
   
