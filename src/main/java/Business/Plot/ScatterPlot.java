@@ -12,8 +12,12 @@ public class ScatterPlot extends PlotAbstract {
     private String xAxisLable;
     private String yAxisLable;
     private boolean legend = true;
-    private boolean tooltips = false;
+    private boolean tooltips = true;
     private boolean urls = false;
+
+    public String getTitle() {
+        return title;
+    }
 
     public ScatterPlot() {
         super();

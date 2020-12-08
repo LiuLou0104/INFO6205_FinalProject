@@ -3,6 +3,7 @@ package Business.Simulation;
 import Business.DrawArea.Area;
 import Business.DrawArea.AreaUnit;
 import Business.Pathogen.Pathogen;
+import Business.Plot.Plot;
 
 import javax.swing.*;
 import java.util.*;
@@ -47,7 +48,7 @@ public class OnePathogenSimu extends Observable implements Runnable {
         return areaUnitArray;
     }
 
-    public List<OnePathogenSimu> getInfectNum() {
+    public List<OnePathogenSimu> getdataSetForPlot() {
         return this.dataSetForPlot;
     }
 
@@ -55,6 +56,7 @@ public class OnePathogenSimu extends Observable implements Runnable {
     public void startSim(JButton btnStartSimu){
 //        System.out.println("Starting the simulation");
 //        onePathogenSimu = new OnePathogenSimu();
+        OnePathogenSimu pathSimu = this;
         if(thread != null) return;
         thread = new Thread(this);
 //        done = false;
@@ -69,6 +71,7 @@ public class OnePathogenSimu extends Observable implements Runnable {
 //                done = true;
                 clearChanged();
                 // TODO generate the report of this simulation
+                Plot.drawLineChartInfectNum(pathSimu, "testforPlot");
                 // enable the StartSimu button
                 btnStartSimu.setEnabled(true);
                 System.out.println("Simulation[" + simuStart + "] ended");
@@ -93,7 +96,7 @@ public class OnePathogenSimu extends Observable implements Runnable {
     private void runSimLoop(){
         while(hasChanged()){
             updateSim();
-            sleep(500);
+            sleep(2000);
         }
     }
     private void sleep(long millis) {
@@ -137,6 +140,7 @@ public class OnePathogenSimu extends Observable implements Runnable {
         //area[i][j]地区的感染率
         double infectRate = areaUnitArray[i][j].getInfectNum() / areaUnitArray[i][j].getHeadcount();
         double infectOutNum = areaUnitArray[i][j].getPopFlowSpeed() * infectRate; //流出的感染者数量
+
         areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()- areaUnitArray[i][j].getPopFlowSpeed());
         areaUnitArray[i+1][j].setHeadcount(areaUnitArray[i+1][j].getHeadcount()+ areaUnitArray[i][j].getPopFlowSpeed());
         areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()-infectOutNum);

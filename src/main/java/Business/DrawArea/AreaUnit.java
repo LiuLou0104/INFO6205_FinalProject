@@ -36,6 +36,15 @@ public class AreaUnit {
         if(r3 % 2 == 0) isTest = true;
         calcInfectSpeed(); // set infectSpeed
         System.out.println(this.toString());
+
+    }
+
+    public AreaUnit(Pathogen pathogen, double populationDensity, boolean isQuarantine, boolean isMask, boolean isTest) {
+        this.pathogen = pathogen;
+        this.populationDensity = populationDensity;
+        this.isQuarantine = isQuarantine;
+        this.isMask = isMask;
+        this.isTest = isTest;
     }
 
     @Override
@@ -52,14 +61,6 @@ public class AreaUnit {
                 ", pathogen=" + pathogen +
                 ", hospital=" + hospital +
                 '}';
-    }
-
-    public AreaUnit(Pathogen pathogen, double populationDensity, boolean isQuarantine, boolean isMask, boolean isTest) {
-        this.pathogen = pathogen;
-        this.populationDensity = populationDensity;
-        this.isQuarantine = isQuarantine;
-        this.isMask = isMask;
-        this.isTest = isTest;
     }
 
     public void calcInfectSpeed(){
