@@ -2,6 +2,7 @@
 .idea/
 out/
 target/
+src/main/resources/
 
 # ignore file
 *.iml

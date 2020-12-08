@@ -9,8 +9,6 @@ import UserInterface.ViewReport.ChooseSimuJPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @Author: LiuLou
@@ -99,7 +97,7 @@ public class MultiSimuJPanel extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         jplCanvas2 = new SimuCanvasJPanel();
         lblPathogen1 = new javax.swing.JLabel();
-        jblPathogen2 = new javax.swing.JLabel();
+        lblPathogen2 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         cbxPathogen2 = new javax.swing.JComboBox<>();
 
@@ -113,14 +111,14 @@ public class MultiSimuJPanel extends javax.swing.JPanel {
         jplCanvas1.setBackground(new java.awt.Color(255, 255, 255));
         jplCanvas1.setPreferredSize(new java.awt.Dimension(340, 340));
 
-        javax.swing.GroupLayout jplCanvasLayout = new javax.swing.GroupLayout(jplCanvas1);
-        jplCanvas1.setLayout(jplCanvasLayout);
-        jplCanvasLayout.setHorizontalGroup(
-                jplCanvasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout jplCanvas1Layout = new javax.swing.GroupLayout(jplCanvas1);
+        jplCanvas1.setLayout(jplCanvas1Layout);
+        jplCanvas1Layout.setHorizontalGroup(
+                jplCanvas1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGap(0, 340, Short.MAX_VALUE)
         );
-        jplCanvasLayout.setVerticalGroup(
-                jplCanvasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        jplCanvas1Layout.setVerticalGroup(
+                jplCanvas1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGap(0, 340, Short.MAX_VALUE)
         );
 
@@ -198,22 +196,24 @@ public class MultiSimuJPanel extends javax.swing.JPanel {
         jplCanvas2.setBackground(new java.awt.Color(255, 255, 255));
         jplCanvas2.setPreferredSize(new java.awt.Dimension(340, 340));
 
-        javax.swing.GroupLayout jplCanvas1Layout = new javax.swing.GroupLayout(jplCanvas2);
-        jplCanvas2.setLayout(jplCanvas1Layout);
-        jplCanvas1Layout.setHorizontalGroup(
-                jplCanvas1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout jplCanvas2Layout = new javax.swing.GroupLayout(jplCanvas2);
+        jplCanvas2.setLayout(jplCanvas2Layout);
+        jplCanvas2Layout.setHorizontalGroup(
+                jplCanvas2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGap(0, 340, Short.MAX_VALUE)
         );
-        jplCanvas1Layout.setVerticalGroup(
-                jplCanvas1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        jplCanvas2Layout.setVerticalGroup(
+                jplCanvas2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGap(0, 0, Short.MAX_VALUE)
         );
 
         lblPathogen1.setFont(new java.awt.Font("微软雅黑", 3, 14)); // NOI18N
+        lblPathogen1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblPathogen1.setText("Pathogen1");
 
-        jblPathogen2.setFont(new java.awt.Font("微软雅黑", 3, 14)); // NOI18N
-        jblPathogen2.setText("Pathogen2");
+        lblPathogen2.setFont(new java.awt.Font("微软雅黑", 3, 14)); // NOI18N
+        lblPathogen2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPathogen2.setText("Pathogen2");
 
         jLabel7.setFont(new java.awt.Font("微软雅黑", 1, 12)); // NOI18N
         jLabel7.setText("Pathogen2 Type");
@@ -226,24 +226,19 @@ public class MultiSimuJPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGap(26, 26, 26)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel6)
                                         .addGroup(layout.createSequentialGroup()
-                                                .addGap(26, 26, 26)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(jLabel6)
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(jplCanvas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(34, 34, 34)
-                                                                .addComponent(jplCanvas2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                                .addGap(40, 40, 40))
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGap(175, 175, 175)
-                                                .addComponent(lblPathogen1)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jblPathogen2)
-                                                .addGap(200, 200, 200)))
-                                .addGap(0, 0, Short.MAX_VALUE)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                        .addComponent(lblPathogen1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(jplCanvas1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                .addGap(34, 34, 34)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(jplCanvas2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(lblPathogen2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addGap(23, 23, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                         .addGroup(layout.createSequentialGroup()
                                                 .addComponent(rbtnQuarantineYes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -268,7 +263,7 @@ public class MultiSimuJPanel extends javax.swing.JPanel {
                                         .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(cbxPathogen2, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addContainerGap(30, Short.MAX_VALUE))
+                                .addContainerGap(47, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -316,7 +311,7 @@ public class MultiSimuJPanel extends javax.swing.JPanel {
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                                         .addComponent(lblPathogen1)
-                                                        .addComponent(jblPathogen2))
+                                                        .addComponent(lblPathogen2))
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addComponent(btnBack))
                                         .addComponent(btnStartSimu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -366,6 +361,9 @@ public class MultiSimuJPanel extends javax.swing.JPanel {
 
         // create one PageSimu
         PageSimu ps = new PageSimu();
+        // change label text
+        lblPathogen1.setText(pathogen1.getName());
+        lblPathogen2.setText(pathogen2.getName());
         // create two OnePathogenSimu
         OnePathogenSimu ops1 = new OnePathogenSimu(pathogen1, popuDensity, isWearingMask, isQuarantine, isTest);
         OnePathogenSimu ops2 = new OnePathogenSimu(pathogen2, popuDensity, isWearingMask, isQuarantine, isTest);
@@ -423,7 +421,7 @@ public class MultiSimuJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jblPathogen2;
+    private javax.swing.JLabel lblPathogen2;
     private SimuCanvasJPanel jplCanvas1;
     private SimuCanvasJPanel jplCanvas2;
     private javax.swing.JLabel lblPathogen1;

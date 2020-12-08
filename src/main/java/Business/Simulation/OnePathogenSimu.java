@@ -14,7 +14,7 @@ import static java.lang.Thread.sleep;
 public class OnePathogenSimu extends Observable implements Runnable {
     Thread thread = null;
     public static final int AREA_LENGTH = 27; //The length of the area
-    public static final int AREA_WIDTH = 16; //The width of the area
+    public static final int AREA_WIDTH = 18; //The width of the area
     AreaUnit[][] areaUnitArray;
     public int time = 1;
 //    private boolean done = false;
@@ -60,12 +60,15 @@ public class OnePathogenSimu extends Observable implements Runnable {
 //        System.out.println("Starting the simulation");
 //        onePathogenSimu = new OnePathogenSimu();
         OnePathogenSimu pathSimu = this;
+
         if(thread != null) return;
         thread = new Thread(this);
 //        done = false;
         thread.start();
+
         // disable the StartSimu button
         btnStartSimu.setEnabled(false);
+
         // TODO 运行n时间(s)停止
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
