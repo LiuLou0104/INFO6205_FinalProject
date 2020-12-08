@@ -93,7 +93,7 @@ public class OnePathogenSimu extends Observable implements Runnable {
     private void runSimLoop(){
         while(hasChanged()){
             updateSim();
-            sleep(500);
+            sleep(2000);
         }
     }
     private void sleep(long millis) {
@@ -105,8 +105,8 @@ public class OnePathogenSimu extends Observable implements Runnable {
     }
     private void updateSim(){
         calcOilSpread();
-//        setChanged();
         notifyObservers(this);
+        setChanged();
         this.dataSetForPlot.add(this);
     }
     //计算存在感染者的Unit数量
@@ -137,10 +137,10 @@ public class OnePathogenSimu extends Observable implements Runnable {
         //area[i][j]地区的感染率
         double infectRate = areaUnitArray[i][j].getInfectNum() / areaUnitArray[i][j].getHeadcount();
         double infectOutNum = areaUnitArray[i][j].getPopFlowSpeed() * infectRate; //流出的感染者数量
-        areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()- areaUnitArray[i][j].getPopFlowSpeed());
-        areaUnitArray[i+1][j].setHeadcount(areaUnitArray[i+1][j].getHeadcount()+ areaUnitArray[i][j].getPopFlowSpeed());
-        areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()-infectOutNum);
-        areaUnitArray[i+1][j].setInfectNum(areaUnitArray[i+1][j].getInfectNum()+infectOutNum);
+        areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount() - areaUnitArray[i][j].getPopFlowSpeed());
+        areaUnitArray[i+1][j].setHeadcount(areaUnitArray[i+1][j].getHeadcount() + areaUnitArray[i][j].getPopFlowSpeed());
+        areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum() - infectOutNum);
+        areaUnitArray[i+1][j].setInfectNum(areaUnitArray[i+1][j].getInfectNum() + infectOutNum);
     }
     //↑
     public void currToDownR(int i, int j){
