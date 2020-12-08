@@ -36,6 +36,7 @@ public class AreaUnit {
         if(r3 % 2 == 0) isTest = true;
         calcInfectSpeed(); // set infectSpeed
         System.out.println(this.toString());
+
     }
 
     public AreaUnit(Pathogen pathogen, double populationDensity, boolean isQuarantine, boolean isMask, boolean isTest) {
