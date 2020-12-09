@@ -47,14 +47,6 @@ public class OnePathogenSimu extends Observable implements Runnable {
         this.infectUnitsList = new ArrayList<>();
     }
 
-    public AreaUnit[][] getAreaUnitArray() {
-        return areaUnitArray;
-    }
-
-    public List<Double> getInfectNumList() {
-        return infectNumList;
-    }
-
     //开始模拟
     public void startSim(JButton btnStartSimu){
 //        System.out.println("Starting the simulation");
@@ -82,7 +74,7 @@ public class OnePathogenSimu extends Observable implements Runnable {
                 btnStartSimu.setEnabled(true);
                 System.out.println("Simulation[" + simuStart + "] ended");
             }
-        },5000);
+        },20000);
     }
 
     //结束模拟
@@ -760,5 +752,23 @@ public class OnePathogenSimu extends Observable implements Runnable {
         this.infectNumList.add(counter);
     }
 
+    public List<Double> getInfectNumList() {
+        return infectNumList;
+    }
 
+    public AreaUnit[][] getAreaUnitArray() {
+        return areaUnitArray;
+    }
+
+    public void setAreaUnitArray(AreaUnit[][] areaUnitArray) {
+        this.areaUnitArray = areaUnitArray;
+    }
+
+    public Area getArea() {
+        return area;
+    }
+
+    public void setArea(Area area) {
+        this.area = area;
+    }
 }

@@ -327,7 +327,7 @@ public class OnePathogenSimuTest {
         onePathogenSimu.areaUnitArray[7][6].setInfectNum(10);
         onePathogenSimu.areaUnitArray[7][6].setHeadcount(10);
         onePathogenSimu.areaUnitArray[7][6].setPopFlowSpeed(.4);
-        onePathogenSimu.calcOilSpreadAtTopRightCorner(0,7);
+        onePathogenSimu.calcOilSpreadAtRightBottom(7,7);
         assertEquals(10,onePathogenSimu.areaUnitArray[7][7].getHeadcount(),0);
         assertEquals(10,onePathogenSimu.areaUnitArray[7][7].getInfectNum(),0);
         assertEquals(10,onePathogenSimu.areaUnitArray[6][7].getHeadcount(),0);
