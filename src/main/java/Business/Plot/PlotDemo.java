@@ -1,7 +1,6 @@
 package Business.Plot;
 
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartFrame;
 import org.jfree.chart.ChartUtils;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.annotations.XYTextAnnotation;
@@ -82,12 +81,6 @@ public class PlotDemo {
         String[] a = {"7","2","4"};
         String[] b = {"5","2","4"};
         data("scattertest",a, b);
-
-//        ChartFrame frame = new ChartFrame("my picture", chart);
-//        frame.pack();
-//        frame.setVisible(true);
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
     }
 
     private static CategoryDataset createDataset()
@@ -108,42 +101,39 @@ public class PlotDemo {
     private static JFreeChart createChart(CategoryDataset categorydataset)
     {
         JFreeChart jfreechart = ChartFactory.createBarChart(
-                "Bar Chart Demo", //图形标题名称
-                "Category",//domain 轴 Lable这里先简单理解为横坐标Lable好了
-                "Value", //range 轴 Lable这里也先简单理解为纵坐标Lable好了
+                "Bar Chart Demo",
+                "Category",
+                "Value",
                 categorydataset, // dataset
-                PlotOrientation.VERTICAL, //垂直显示
-                true, // legend?
+                PlotOrientation.VERTICAL,
+                true,
                 true, // tooltips?
                 false); //URLs?
-        jfreechart.setBackgroundPaint(Color.white); //设定背景色为白色
-        CategoryPlot categoryplot = jfreechart.getCategoryPlot(); //获得 plot：CategoryPlot！！
-        categoryplot.setBackgroundPaint(Color.lightGray); //设定图表数据显示部分背景色
-        categoryplot.setDomainGridlinePaint(Color.white); //横坐标网格线白色
-        categoryplot.setDomainGridlinesVisible(true); //可见
-        categoryplot.setRangeGridlinePaint(Color.white); //纵坐标网格线白色
-//设置series1与category的显示位置；类似效果图http://www.chinabs.net/webimages/PieChart7.png
+        jfreechart.setBackgroundPaint(Color.white);
+        CategoryPlot categoryplot = jfreechart.getCategoryPlot();
+        categoryplot.setBackgroundPaint(Color.lightGray);
+        categoryplot.setDomainGridlinePaint(Color.white);
+        categoryplot.setDomainGridlinesVisible(true);
+        categoryplot.setRangeGridlinePaint(Color.white);
         categoryplot.setDomainAxisLocation(AxisLocation.TOP_OR_RIGHT);
         categoryplot.setRangeAxisLocation(AxisLocation.BOTTOM_OR_RIGHT);
 
-//使纵坐标的最小单位格为整数
         NumberAxis numberaxis = (NumberAxis)categoryplot.getRangeAxis();
         numberaxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 
-        BarRenderer barrenderer = (BarRenderer)categoryplot.getRenderer(); //获得renderer 注意这里是下嗍造型到BarRenderer！！
-//显示每个柱的数值，并修改该数值的字体属性;类似效果图http://www.chinabs.net/webimages/PieChart6.png
+        BarRenderer barrenderer = (BarRenderer)categoryplot.getRenderer();
         barrenderer.setDefaultItemLabelGenerator(new StandardCategoryItemLabelGenerator());
-        barrenderer.setDefaultItemLabelFont(new Font("黑体",Font.PLAIN,12));
+        barrenderer.setDefaultItemLabelFont(new Font("Arial",Font.PLAIN,12));
         barrenderer.setDefaultItemLabelsVisible(true);
 
-        barrenderer.setDrawBarOutline(false); // Bar的外轮廓线不画
-        GradientPaint gradientpaint = new GradientPaint(0.0F, 0.0F, Color.blue,0.0F, 0.0F, new Color(0, 0, 64)); //设定特定颜色
+        barrenderer.setDrawBarOutline(false);
+        GradientPaint gradientpaint = new GradientPaint(0.0F, 0.0F, Color.blue,0.0F, 0.0F, new Color(0, 0, 64));
         GradientPaint gradientpaint1 = new GradientPaint(0.0F, 0.0F, Color.green,0.0F, 0.0F, new Color(0, 64, 0));
         GradientPaint gradientpaint2 = new GradientPaint(0.0F, 0.0F, Color.red,0.0F, 0.0F, new Color(64, 0, 0));
-        barrenderer.setSeriesPaint(0, gradientpaint); //给series1 Bar设定上面定义的颜色
-        barrenderer.setSeriesPaint(1, gradientpaint1); //给series2 Bar 设定上面定义的颜色
-        barrenderer.setSeriesPaint(2, gradientpaint2); //给series3 Bar 设定上面定义的颜色
-        CategoryAxis categoryaxis = categoryplot.getDomainAxis(); //横轴上的 Lable 45度倾斜
+        barrenderer.setSeriesPaint(0, gradientpaint);
+        barrenderer.setSeriesPaint(1, gradientpaint1);
+        barrenderer.setSeriesPaint(2, gradientpaint2);
+        CategoryAxis categoryaxis = categoryplot.getDomainAxis();
         categoryaxis.setCategoryLabelPositions(CategoryLabelPositions.UP_45);
         return jfreechart;
     }

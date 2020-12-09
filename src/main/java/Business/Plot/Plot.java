@@ -1,12 +1,8 @@
 package Business.Plot;
 
-import Business.DrawArea.AreaUnit;
 import Business.Report.Chart;
 import Business.Simulation.OnePathogenSimu;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.annotations.XYTextAnnotation;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.xy.DefaultXYDataset;
 import org.jfree.data.xy.XYSeriesCollection;
 

@@ -39,7 +39,7 @@ public class AreaUnit {
         int r3 = random.nextInt();
         if(r3 % 2 == 0) isTest = true;
         calcInfectSpeed(); // set infectSpeed
-        System.out.println(this.toString());
+//        System.out.println(this.toString());
     }
 
     public AreaUnit(Pathogen pathogen, double populationDensity, boolean isQuarantine, boolean isMask, boolean isTest) {
@@ -77,7 +77,7 @@ public class AreaUnit {
         } else {
             this.infectSpeed = infectNum * (0.005 * populationDensity * pathogen.getR_FACTOR() * 0.3 / pathogen.getK_FACTOR() * 9);
         }
-//        this.infectSpeed *= 0.01;
+        this.infectSpeed *= 0.01;
         //this.infectSpeed = 1.0;
     }
   

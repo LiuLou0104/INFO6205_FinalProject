@@ -8,7 +8,7 @@ public class DateFormat {
     public static void main(String args[]) {
 
         Date dNow = new Date( );
-        System.out.println("当前时间为: " + dateFormat2(dNow));
+        System.out.println("Current Time is: " + dateFormat2(dNow));
     }
 
     public static String dateFormat1(Date date) {
