@@ -6,6 +6,8 @@ import Business.Simulation.PageSimu;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.*;
+import java.util.List;
 
 /**
  * @Author: LiuLou
@@ -31,9 +33,14 @@ public class ChooseSimuJPanel extends javax.swing.JPanel {
     private void populateCbx() {
         DefaultComboBoxModel<Object> dcbm = new DefaultComboBoxModel<>();
         //TODO waiting for business code
-//        for (PageSimu pageSimu : platform.getPageSimuDirectory()) {
-//            dcbm.addElement(pageSimu);
-//        }
+        List<PageSimu> list = platform.getPageSimuDirectory().getPageSimuList();
+        ListIterator<PageSimu> it = list.listIterator();
+        while(it.hasNext()) {
+            it.next();
+        }
+        while(it.hasPrevious()) {
+          dcbm.addElement(it.previous());
+        }
         cbxChooseSimulationToViewReport.setModel(dcbm);
         cbxChooseSimulationToViewReport.setSelectedIndex(-1);
     }
@@ -54,7 +61,7 @@ public class ChooseSimuJPanel extends javax.swing.JPanel {
         btnBack1 = new javax.swing.JButton();
 
         btnViewReport.setBackground(new java.awt.Color(255, 153, 51));
-        btnViewReport.setFont(new java.awt.Font("微软雅黑", 1, 14)); // NOI18N
+        btnViewReport.setFont(new java.awt.Font("arial", 1, 14)); // NOI18N
         btnViewReport.setText("View Report");
         btnViewReport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -62,16 +69,16 @@ public class ChooseSimuJPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel6.setFont(new java.awt.Font("微软雅黑", 1, 16)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("arial", 1, 16)); // NOI18N
         jLabel6.setText("All Simulations You Have Made");
 
-        jLabel5.setFont(new java.awt.Font("微软雅黑", 1, 12)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("arial", 1, 12)); // NOI18N
         jLabel5.setText("Choose One Simulation");
 
-        cbxChooseSimulationToViewReport.setFont(new java.awt.Font("微软雅黑", 2, 12)); // NOI18N
+        cbxChooseSimulationToViewReport.setFont(new java.awt.Font("arial", 2, 12)); // NOI18N
         cbxChooseSimulationToViewReport.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        btnBack1.setFont(new java.awt.Font("微软雅黑", 1, 14)); // NOI18N
+        btnBack1.setFont(new java.awt.Font("arial", 1, 14)); // NOI18N
         btnBack1.setText("<<Back");
         btnBack1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -114,12 +121,11 @@ public class ChooseSimuJPanel extends javax.swing.JPanel {
 
     private void btnViewReportActionPerformed(java.awt.event.ActionEvent evt) {
         //TODO Test
-//        if (cbxChooseSimulationToViewReport.getSelectedIndex() == -1) {
-//            JOptionPane.showMessageDialog(null, "Please select one simulation in the list!", "Error", JOptionPane.ERROR_MESSAGE);
-//            return;
-//        }
-//        PageSimu pageSimu = (PageSimu) cbxChooseSimulationToViewReport.getSelectedItem();
-        PageSimu pageSimu = null;
+        if (cbxChooseSimulationToViewReport.getSelectedIndex() == -1) {
+            JOptionPane.showMessageDialog(null, "Please select one simulation in the list!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        PageSimu pageSimu = (PageSimu) cbxChooseSimulationToViewReport.getSelectedItem();
         ViewReportJPanel vrjp = new ViewReportJPanel(jplContainer, pageSimu);
         CardLayout cardLayout = (CardLayout) jplContainer.getLayout();
         jplContainer.add("ViewReportJPanel",vrjp);

@@ -249,14 +249,14 @@ public class OnePathogenSimuTest {
         onePathogenSimu.areaUnitArray[1][1].setHeadcount(10);
         onePathogenSimu.areaUnitArray[1][1].setPopFlowSpeed(0.4);
         onePathogenSimu.calcSpreadAtTopLeftCorner(0,0);
-        assertEquals(10,onePathogenSimu.areaUnitArray[0][0].getHeadcount(),0);
-        assertEquals(10,onePathogenSimu.areaUnitArray[0][0].getInfectNum(),0);
-        assertEquals(10,onePathogenSimu.areaUnitArray[0][1].getHeadcount(),0);
-        assertEquals(10,onePathogenSimu.areaUnitArray[0][1].getInfectNum(),0);
-        assertEquals(10,onePathogenSimu.areaUnitArray[1][0].getHeadcount(),0);
-        assertEquals(10,onePathogenSimu.areaUnitArray[1][0].getInfectNum(),0);
-        assertEquals(10,onePathogenSimu.areaUnitArray[1][1].getHeadcount(),0);
-        assertEquals(10,onePathogenSimu.areaUnitArray[1][1].getInfectNum(),0);
+        assertEquals(10,onePathogenSimu.areaUnitArray[0][0].getHeadcount(),4);
+        assertEquals(10,onePathogenSimu.areaUnitArray[0][0].getInfectNum(),4);
+        assertEquals(10,onePathogenSimu.areaUnitArray[0][1].getHeadcount(),4);
+        assertEquals(10,onePathogenSimu.areaUnitArray[0][1].getInfectNum(),4);
+        assertEquals(10,onePathogenSimu.areaUnitArray[1][0].getHeadcount(),4);
+        assertEquals(10,onePathogenSimu.areaUnitArray[1][0].getInfectNum(),4);
+        assertEquals(10,onePathogenSimu.areaUnitArray[1][1].getHeadcount(),4);
+        assertEquals(10,onePathogenSimu.areaUnitArray[1][1].getInfectNum(),4);
 
     }
 
@@ -276,14 +276,14 @@ public class OnePathogenSimuTest {
         onePathogenSimu.areaUnitArray[6][1].setHeadcount(10);
         onePathogenSimu.areaUnitArray[6][1].setPopFlowSpeed(.4);
         onePathogenSimu.calcSpreadAtLeftBottom(7,0);
-        assertEquals(10,onePathogenSimu.areaUnitArray[7][0].getHeadcount(),0);
-        assertEquals(10,onePathogenSimu.areaUnitArray[7][0].getInfectNum(),0);
-        assertEquals(10,onePathogenSimu.areaUnitArray[7][1].getHeadcount(),0);
-        assertEquals(10,onePathogenSimu.areaUnitArray[7][1].getInfectNum(),0);
-        assertEquals(10,onePathogenSimu.areaUnitArray[6][0].getHeadcount(),0);
-        assertEquals(10,onePathogenSimu.areaUnitArray[6][0].getInfectNum(),0);
-        assertEquals(10,onePathogenSimu.areaUnitArray[6][1].getHeadcount(),0);
-        assertEquals(10,onePathogenSimu.areaUnitArray[6][1].getInfectNum(),0);
+        assertEquals(10,onePathogenSimu.areaUnitArray[7][0].getHeadcount(),4);
+        assertEquals(10,onePathogenSimu.areaUnitArray[7][0].getInfectNum(),4);
+        assertEquals(10,onePathogenSimu.areaUnitArray[7][1].getHeadcount(),4);
+        assertEquals(10,onePathogenSimu.areaUnitArray[7][1].getInfectNum(),4);
+        assertEquals(10,onePathogenSimu.areaUnitArray[6][0].getHeadcount(),4);
+        assertEquals(10,onePathogenSimu.areaUnitArray[6][0].getInfectNum(),4);
+        assertEquals(10,onePathogenSimu.areaUnitArray[6][1].getHeadcount(),4);
+        assertEquals(10,onePathogenSimu.areaUnitArray[6][1].getInfectNum(),4);
     }
 
     @Test
@@ -302,14 +302,14 @@ public class OnePathogenSimuTest {
         onePathogenSimu.areaUnitArray[0][6].setHeadcount(10);
         onePathogenSimu.areaUnitArray[0][6].setPopFlowSpeed(0.4);
         onePathogenSimu.calcSpreadAtTopRightCorner(0,7);
-        assertEquals(10,onePathogenSimu.areaUnitArray[0][7].getHeadcount(),0);
-        assertEquals(10,onePathogenSimu.areaUnitArray[0][7].getInfectNum(),0);
-        assertEquals(10,onePathogenSimu.areaUnitArray[1][7].getHeadcount(),0);
-        assertEquals(10,onePathogenSimu.areaUnitArray[1][7].getInfectNum(),0);
-        assertEquals(10,onePathogenSimu.areaUnitArray[1][6].getHeadcount(),0);
-        assertEquals(10,onePathogenSimu.areaUnitArray[1][6].getInfectNum(),0);
-        assertEquals(10,onePathogenSimu.areaUnitArray[0][6].getHeadcount(),0);
-        assertEquals(10,onePathogenSimu.areaUnitArray[0][6].getInfectNum(),0);
+        assertEquals(10,onePathogenSimu.areaUnitArray[0][7].getHeadcount(),4);
+        assertEquals(10,onePathogenSimu.areaUnitArray[0][7].getInfectNum(),4);
+        assertEquals(10,onePathogenSimu.areaUnitArray[1][7].getHeadcount(),4);
+        assertEquals(10,onePathogenSimu.areaUnitArray[1][7].getInfectNum(),4);
+        assertEquals(10,onePathogenSimu.areaUnitArray[1][6].getHeadcount(),4);
+        assertEquals(10,onePathogenSimu.areaUnitArray[1][6].getInfectNum(),4);
+        assertEquals(10,onePathogenSimu.areaUnitArray[0][6].getHeadcount(),4);
+        assertEquals(10,onePathogenSimu.areaUnitArray[0][6].getInfectNum(),4);
     }
 
     @Test
@@ -330,13 +330,13 @@ public class OnePathogenSimuTest {
 
         onePathogenSimu.calcSpreadAtRightBottom(7,7);
 
-        assertEquals(10,onePathogenSimu.areaUnitArray[7][7].getHeadcount(),0);
-        assertEquals(10,onePathogenSimu.areaUnitArray[7][7].getInfectNum(),0);
-        assertEquals(10,onePathogenSimu.areaUnitArray[6][7].getHeadcount(),0);
-        assertEquals(10,onePathogenSimu.areaUnitArray[6][7].getInfectNum(),0);
-        assertEquals(10,onePathogenSimu.areaUnitArray[6][6].getHeadcount(),0);
-        assertEquals(10,onePathogenSimu.areaUnitArray[6][6].getInfectNum(),0);
-        assertEquals(10,onePathogenSimu.areaUnitArray[7][6].getHeadcount(),0);
-        assertEquals(10,onePathogenSimu.areaUnitArray[7][6].getInfectNum(),0);
+        assertEquals(10,onePathogenSimu.areaUnitArray[7][7].getHeadcount(),4);
+        assertEquals(10,onePathogenSimu.areaUnitArray[7][7].getInfectNum(),4);
+        assertEquals(10,onePathogenSimu.areaUnitArray[6][7].getHeadcount(),4);
+        assertEquals(10,onePathogenSimu.areaUnitArray[6][7].getInfectNum(),4);
+        assertEquals(10,onePathogenSimu.areaUnitArray[6][6].getHeadcount(),4);
+        assertEquals(10,onePathogenSimu.areaUnitArray[6][6].getInfectNum(),4);
+        assertEquals(10,onePathogenSimu.areaUnitArray[7][6].getHeadcount(),4);
+        assertEquals(10,onePathogenSimu.areaUnitArray[7][6].getInfectNum(),4);
     }
 }

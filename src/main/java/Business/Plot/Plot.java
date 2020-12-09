@@ -14,7 +14,7 @@ import static Business.Utilities.DateFormat.*;
 public class Plot {
 
     public static void drawLineChartInfectNum(OnePathogenSimu pathSimu, String title) {
-        LineChart lineChart = new LineChart(title + " LineChart", "Time", "Total Infect Population");
+        LineChart lineChart = new LineChart(title + "LineChart", "Time", "Total Infect Population");
         XYSeriesCollection dataset = getXYSeriesDataSetInfectNum(pathSimu.getInfectNumList());
         JFreeChart chart = lineChart.Plot(dataset);
 
@@ -27,7 +27,7 @@ public class Plot {
     }
 
     public static void drawLineChartInfectUnits(OnePathogenSimu pathSimu, String title) {
-        LineChart lineChart = new LineChart(title + " LineChart", "Time", "Number of Infect Areas");
+        LineChart lineChart = new LineChart(title + "LineChart", "Time", "Number of Infect Areas");
         XYSeriesCollection dataset = getXYSeriesDataSetInfectUnits(pathSimu.getInfectUnitsList());
         JFreeChart chart = lineChart.Plot(dataset);
 
@@ -54,7 +54,7 @@ public class Plot {
 
     // For One Pathogen Simulation
     public static void drawScatterPlot(OnePathogenSimu pathSimu, String title) {
-        ScatterPlot scatterPlot = new ScatterPlot(title + " ScatterPlot", "", "");
+        ScatterPlot scatterPlot = new ScatterPlot(title + "ScatterPlot", "", "");
         DefaultXYDataset dataset = getDatasetEpiArea(pathSimu);
         JFreeChart chart = scatterPlot.Plot(dataset);
 

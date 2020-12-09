@@ -4,7 +4,7 @@ public class Pathogen {
     //toString
     private String name = "SARS-CoV-2"; // name of Pathogen
     private double K_FACTOR = 0.5; //k-factor
-    private double R_FACTOR = 1.5; //r-factor 1.4-3.8
+    private double R_FACTOR = 3.8; //r-factor 1.4-3.8
 
     public Pathogen(){}
 

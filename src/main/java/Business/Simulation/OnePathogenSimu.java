@@ -13,8 +13,8 @@ import java.util.Timer;
 
 public class OnePathogenSimu extends Observable implements Runnable {
     Thread thread = null;
-    public static final int AREA_LENGTH = 27; //The length of the area
-    public static final int AREA_WIDTH = 16; //The width of the area
+    public static final int AREA_LENGTH = 30; //The length of the area
+    public static final int AREA_WIDTH = 20; //The width of the area
     AreaUnit[][] areaUnitArray;
     public int time = 1;
 //    private boolean done = false;
@@ -74,14 +74,16 @@ public class OnePathogenSimu extends Observable implements Runnable {
 //                done = true;
                 clearChanged();
                 String title = pathSimu.getAreaUnitArray()[0][0].getPathogen().getName();
+
                 Plot.drawLineChartInfectNum(pathSimu, title + " InfectNum");
                 Plot.drawLineChartInfectUnits(pathSimu, title + " EpiArea");
                 Plot.drawScatterPlot(pathSimu, title + " EpiArea");
+
                 // enable the StartSimu button
                 btnStartSimu.setEnabled(true);
                 System.out.println("Simulation[" + simuStart + "] ended");
             }
-        },20000);
+        },10000);
     }
 
     // End Simulation

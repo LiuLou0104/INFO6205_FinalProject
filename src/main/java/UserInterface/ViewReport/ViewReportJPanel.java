@@ -1,6 +1,10 @@
 package UserInterface.ViewReport;
 
+import Business.Report.Chart;
+import Business.Report.ChartDirectory;
+import Business.Simulation.OnePathogenSimu;
 import Business.Simulation.PageSimu;
+import Business.Utilities.DateFormat;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,18 +23,87 @@ public class ViewReportJPanel extends javax.swing.JPanel {
      * Creates new form ViewReportJPanel
      */
     private JPanel jplContainer;
+    private PageSimu pageSimu;
+    private Component[][] charDisplayComponentGroupsArray = new Component[6][2];
+    private String[] filePathArray = new String[6];
 
     public ViewReportJPanel(JPanel jplContainer, PageSimu pageSimu) {
         initComponents();
         this.jplContainer = jplContainer;
+        this.pageSimu = pageSimu;
+
+        switchDisplayMode();
+        populateCharDisplayComponentGroupArray();
         populateScrollPane();
     }
 
+    private void switchDisplayMode() {
+        if (pageSimu.getOnePathogenSimuList().size() == 1) {
+            lblPageSimu.setText("Single Simulation Made On [" + pageSimu.getDateString() + "]");
+            singleSimuDisplayMode();
+        }else {
+            lblPageSimu.setText("Simulation Comparison Made On [" + pageSimu.getDateString() + "]");
+            multipleSimuDisplayMode();
+        }
+    }
+
+    // put chart display components into a 2-dimensional array
+    private void populateCharDisplayComponentGroupArray() {
+        charDisplayComponentGroupsArray[0][0] = lblImage1P1;
+        charDisplayComponentGroupsArray[0][1] = btnShowInExplorer1P1;
+        charDisplayComponentGroupsArray[1][0] = lblImage2P1;
+        charDisplayComponentGroupsArray[1][1] = btnShowInExplorer2P1;
+        charDisplayComponentGroupsArray[2][0] = lblImage3P1;
+        charDisplayComponentGroupsArray[2][1] = btnShowInExplorer3P1;
+
+        charDisplayComponentGroupsArray[3][0] = lblImage1P2;
+        charDisplayComponentGroupsArray[3][1] = btnShowInExplorer1P2;
+        charDisplayComponentGroupsArray[4][0] = lblImage2P2;
+        charDisplayComponentGroupsArray[4][1] = btnShowInExplorer2P2;
+        charDisplayComponentGroupsArray[5][0] = lblImage3P2;
+        charDisplayComponentGroupsArray[5][1] = btnShowInExplorer3P2;
+    }
+
     private void populateScrollPane() {
-        System.out.println(getClass().getResource("/").getPath());
-        ImageIcon icon = new StretchIcon(getClass().getResource("/test.jpg"), false);
-        jLabel1.setIcon(icon);
-//        jLabel1.setText("Graph");
+        int i = 0;
+        for(OnePathogenSimu ops : pageSimu.getOnePathogenSimuList()) {
+            String pathogenName = ops.getAreaUnitArray()[0][0].getPathogen().getName();
+            if (i < 3) {
+                lblPathogen1.setText(pathogenName);
+            }else {
+                lblPathogen2.setText(pathogenName);
+            }
+            ChartDirectory chartDirectory = ops.getChartDirectory();
+            for(Chart chart : chartDirectory.getChartDirectory()) {
+//                System.out.println(getClass().getResource("/").getPath());
+//                ImageIcon icon = new StretchIcon(getClass().getResource("/test.jpg"), false);
+                String filePath = "src/main/resources/" + chart.getFileName() + ".jpg";
+                filePathArray[i] = filePath;
+                ImageIcon icon = new StretchIcon(filePath);
+                ((JLabel)charDisplayComponentGroupsArray[i][0]).setIcon(icon);
+                i ++;
+            }
+        }
+    }
+
+    private void singleSimuDisplayMode() {
+        lblPathogen2.setVisible(false);
+        lblImage1P2.setVisible(false);
+        lblImage2P2.setVisible(false);
+        lblImage3P2.setVisible(false);
+        btnShowInExplorer1P2.setVisible(false);
+        btnShowInExplorer2P2.setVisible(false);
+        btnShowInExplorer3P2.setVisible(false);
+    }
+
+    private void multipleSimuDisplayMode() {
+        lblPathogen2.setVisible(true);
+        lblImage1P2.setVisible(true);
+        lblImage2P2.setVisible(true);
+        lblImage3P2.setVisible(true);
+        btnShowInExplorer1P2.setVisible(true);
+        btnShowInExplorer2P2.setVisible(true);
+        btnShowInExplorer3P2.setVisible(true);
     }
 
     /**
@@ -42,53 +115,184 @@ public class ViewReportJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
 
-        jLabel6 = new javax.swing.JLabel();
-        btnBack1 = new javax.swing.JButton();
+        lblPageSimu = new javax.swing.JLabel();
+        btnBack = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        btnShowInExplorer = new javax.swing.JButton();
+        lblImage1P1 = new javax.swing.JLabel();
+        btnShowInExplorer1P1 = new javax.swing.JButton();
+        lblPathogen1 = new javax.swing.JLabel();
+        lblImage2P1 = new javax.swing.JLabel();
+        btnShowInExplorer2P1 = new javax.swing.JButton();
+        lblImage3P1 = new javax.swing.JLabel();
+        btnShowInExplorer3P1 = new javax.swing.JButton();
+        lblImage3P2 = new javax.swing.JLabel();
+        btnShowInExplorer3P2 = new javax.swing.JButton();
+        btnShowInExplorer2P2 = new javax.swing.JButton();
+        lblImage2P2 = new javax.swing.JLabel();
+        lblImage1P2 = new javax.swing.JLabel();
+        btnShowInExplorer1P2 = new javax.swing.JButton();
+        lblPathogen2 = new javax.swing.JLabel();
 
-        jLabel6.setFont(new java.awt.Font("微软雅黑", 1, 16)); // NOI18N
-        jLabel6.setText("Simulation Made On [yyyy:MM:dd HH:mm:ss] ");
+        lblPageSimu.setFont(new java.awt.Font("arial", 1, 16)); // NOI18N
+        lblPageSimu.setText("Simulation Made On [yyyy:MM:dd HH:mm:ss] ");
 
-        btnBack1.setFont(new java.awt.Font("微软雅黑", 1, 14)); // NOI18N
-        btnBack1.setText("<<Back");
-        btnBack1.addActionListener(new java.awt.event.ActionListener() {
+        btnBack.setFont(new java.awt.Font("arial", 1, 14)); // NOI18N
+        btnBack.setText("<<Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBack1ActionPerformed(evt);
+                btnBackActionPerformed(evt);
             }
         });
 
-        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
+        lblImage1P1.setBackground(new java.awt.Color(255, 255, 255));
+        lblImage1P1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/test.jpg"))); // NOI18N
+//        lblImage1P1.setText("Graph");
 
-        btnShowInExplorer.setFont(new java.awt.Font("微软雅黑", 1, 14)); // NOI18N
-        btnShowInExplorer.setText("Show In Explorer");
-        btnShowInExplorer.addActionListener(new java.awt.event.ActionListener() {
+        btnShowInExplorer1P1.setFont(new java.awt.Font("arial", 1, 14)); // NOI18N
+        btnShowInExplorer1P1.setText("Show In Explorer");
+        btnShowInExplorer1P1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnShowInExplorerActionPerformed(evt);
+                btnShowInExplorer1P1ActionPerformed(evt);
             }
         });
+
+        lblPathogen1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        lblPathogen1.setText("Pathogen1 Name");
+
+        lblImage2P1.setBackground(new java.awt.Color(255, 255, 255));
+        lblImage2P1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/test.jpg"))); // NOI18N
+//        lblImage2P1.setText("Graph");
+
+        btnShowInExplorer2P1.setFont(new java.awt.Font("arial", 1, 14)); // NOI18N
+        btnShowInExplorer2P1.setText("Show In Explorer");
+        btnShowInExplorer2P1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnShowInExplorer2P1ActionPerformed(evt);
+            }
+        });
+
+        lblImage3P1.setBackground(new java.awt.Color(255, 255, 255));
+        lblImage3P1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/test.jpg"))); // NOI18N
+//        lblImage3P1.setText("Graph");
+
+        btnShowInExplorer3P1.setFont(new java.awt.Font("arial", 1, 14)); // NOI18N
+        btnShowInExplorer3P1.setText("Show In Explorer");
+        btnShowInExplorer3P1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnShowInExplorer3P1ActionPerformed(evt);
+            }
+        });
+
+        lblImage3P2.setBackground(new java.awt.Color(255, 255, 255));
+        lblImage3P2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/test.jpg"))); // NOI18N
+//        lblImage3P2.setText("Graph");
+
+        btnShowInExplorer3P2.setFont(new java.awt.Font("arial", 1, 14)); // NOI18N
+        btnShowInExplorer3P2.setText("Show In Explorer");
+        btnShowInExplorer3P2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnShowInExplorer3P2ActionPerformed(evt);
+            }
+        });
+
+        btnShowInExplorer2P2.setFont(new java.awt.Font("arial", 1, 14)); // NOI18N
+        btnShowInExplorer2P2.setText("Show In Explorer");
+        btnShowInExplorer2P2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnShowInExplorer2P2ActionPerformed(evt);
+            }
+        });
+
+        lblImage2P2.setBackground(new java.awt.Color(255, 255, 255));
+        lblImage2P2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/test.jpg"))); // NOI18N
+//        lblImage2P2.setText("Graph");
+
+        lblImage1P2.setBackground(new java.awt.Color(255, 255, 255));
+        lblImage1P2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/test.jpg"))); // NOI18N
+//        lblImage1P2.setText("Graph");
+
+        btnShowInExplorer1P2.setFont(new java.awt.Font("arial", 1, 14)); // NOI18N
+        btnShowInExplorer1P2.setText("Show In Explorer");
+        btnShowInExplorer1P2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnShowInExplorer1P2ActionPerformed(evt);
+            }
+        });
+
+        lblPathogen2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        lblPathogen2.setText("Pathogen2 Name");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
                 jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(31, 31, 31)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(57, 57, 57)
-                                .addComponent(btnShowInExplorer)
-                                .addContainerGap(42, Short.MAX_VALUE))
+                                .addGap(56, 56, 56)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                                        .addComponent(lblImage3P2, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addGap(57, 57, 57)
+                                                        .addComponent(btnShowInExplorer3P2))
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                                                .addComponent(lblImage2P2, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(57, 57, 57)
+                                                                .addComponent(btnShowInExplorer2P2))
+                                                        .addComponent(lblPathogen2, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                                                .addComponent(lblImage1P2, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(57, 57, 57)
+                                                                .addComponent(btnShowInExplorer1P2))))
+                                        .addComponent(lblPathogen1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                                        .addComponent(lblImage3P1, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(btnShowInExplorer3P1))
+                                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                                        .addComponent(lblImage2P1, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(btnShowInExplorer2P1))
+                                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                                        .addComponent(lblImage1P1, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addGap(57, 57, 57)
+                                                        .addComponent(btnShowInExplorer1P1))))
+                                .addGap(65, 65, 65))
         );
         jPanel1Layout.setVerticalGroup(
                 jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addContainerGap(55, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addComponent(lblPathogen1)
+                                .addGap(30, 30, 30)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(btnShowInExplorer))
-                                .addGap(48, 48, 48))
+                                        .addComponent(lblImage1P1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnShowInExplorer1P1))
+                                .addGap(40, 40, 40)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(lblImage2P1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnShowInExplorer2P1))
+                                .addGap(40, 40, 40)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(lblImage3P1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnShowInExplorer3P1))
+                                .addGap(50, 50, 50)
+                                .addComponent(lblPathogen2)
+                                .addGap(30, 30, 30)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(lblImage1P2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnShowInExplorer1P2))
+                                .addGap(30, 30, 30)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(lblImage2P2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnShowInExplorer2P2))
+                                .addGap(30, 30, 30)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(lblImage3P2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnShowInExplorer3P2))
+                                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         jScrollPane1.setViewportView(jPanel1);
@@ -100,36 +304,60 @@ public class ViewReportJPanel extends javax.swing.JPanel {
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(26, 26, 26)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(btnBack1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel6))
-                                .addContainerGap(25, Short.MAX_VALUE))
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lblPageSimu))
+                                .addGap(25, 25, 25))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(80, 80, 80)
-                                .addComponent(jLabel6)
+                                .addComponent(lblPageSimu)
                                 .addGap(27, 27, 27)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnBack1)
-                                .addContainerGap(404, Short.MAX_VALUE))
+                                .addComponent(btnBack)
+                                .addContainerGap(68, Short.MAX_VALUE))
         );
     }// </editor-fold>
 
-    private void btnShowInExplorerActionPerformed(java.awt.event.ActionEvent evt) {
+    private void btnShowInExplorerAction(int index) {
         // TODO add your handling code here:
         if (Desktop.isDesktopSupported()) {
             try {
-                Desktop.getDesktop().open(new File("C:\\"));
+                Desktop.getDesktop().open(new File(filePathArray[index]));
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private void btnBack1ActionPerformed(java.awt.event.ActionEvent evt) {
+    private void btnShowInExplorer1P1ActionPerformed(java.awt.event.ActionEvent evt) {
+        btnShowInExplorerAction(0);
+    }
+
+    private void btnShowInExplorer2P1ActionPerformed(java.awt.event.ActionEvent evt) {
+        btnShowInExplorerAction(1);
+    }
+
+    private void btnShowInExplorer3P1ActionPerformed(java.awt.event.ActionEvent evt) {
+        btnShowInExplorerAction(2);
+    }
+
+    private void btnShowInExplorer1P2ActionPerformed(java.awt.event.ActionEvent evt) {
+        btnShowInExplorerAction(3);
+    }
+
+    private void btnShowInExplorer2P2ActionPerformed(java.awt.event.ActionEvent evt) {
+        btnShowInExplorerAction(4);
+    }
+
+    private void btnShowInExplorer3P2ActionPerformed(java.awt.event.ActionEvent evt) {
+        btnShowInExplorerAction(5);
+    }
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         jplContainer.remove(this);
         CardLayout layout = (CardLayout) jplContainer.getLayout();
@@ -138,11 +366,23 @@ public class ViewReportJPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify
-    private javax.swing.JButton btnBack1;
-    private javax.swing.JButton btnShowInExplorer;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel6;
+    private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnShowInExplorer1P1;
+    private javax.swing.JButton btnShowInExplorer1P2;
+    private javax.swing.JButton btnShowInExplorer2P1;
+    private javax.swing.JButton btnShowInExplorer2P2;
+    private javax.swing.JButton btnShowInExplorer3P1;
+    private javax.swing.JButton btnShowInExplorer3P2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblImage1P1;
+    private javax.swing.JLabel lblImage1P2;
+    private javax.swing.JLabel lblImage2P1;
+    private javax.swing.JLabel lblImage2P2;
+    private javax.swing.JLabel lblImage3P1;
+    private javax.swing.JLabel lblImage3P2;
+    private javax.swing.JLabel lblPageSimu;
+    private javax.swing.JLabel lblPathogen1;
+    private javax.swing.JLabel lblPathogen2;
     // End of variables declaration
 }

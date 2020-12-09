@@ -16,7 +16,7 @@ public class AreaUnit {
     private boolean isQuarantine = false;
     private boolean isMask = false;
     private boolean isTest = false;
-    private Pathogen pathogen;
+    private Pathogen pathogen = new Pathogen();
     private Hospital hospital; // not used
 
     public AreaUnit() {
@@ -26,7 +26,7 @@ public class AreaUnit {
     public AreaUnit(Pathogen pathogen){
         this.pathogen = pathogen; // set pathogen
         Random random = new Random();
-        headcount = random.nextDouble() * 10000;
+        headcount = 5000 + random.nextDouble() * 5000;
 //        headcount = 5000; // set populationDensity
         popFlowSpeed = random.nextDouble();
         //popFlowSpeed = 1000; // set popFlowSpeed
@@ -85,12 +85,28 @@ public class AreaUnit {
         this.populationDensity = this.headcount / (BLOCK_WIDTH * BLOCK_LENGTH);
     }
 
+    private void calcHeadCount() {
+        this.headcount = this.populationDensity * (BLOCK_WIDTH * BLOCK_LENGTH);
+    }
+
     public double getPopulationDensity() {
         return populationDensity;
     }
 
     public void setPopulationDensity(double populationDensity) {
         this.populationDensity = populationDensity;
+        calcHeadCount();
+        if(this.isMask && !this.isTest){
+            this.infectSpeed = 0.6 * infectNum * (0.005 * populationDensity * pathogen.getR_FACTOR() * 0.3 / pathogen.getK_FACTOR() * 9);
+        } else if(!this.isMask && this.isTest){
+            this.infectSpeed = 0.4 * infectNum * (0.005 * populationDensity * pathogen.getR_FACTOR() * 0.3 / pathogen.getK_FACTOR() * 9);
+        } else if(this.isMask && this.isTest){
+            this.infectSpeed = 0.6 * 0.4 *  infectNum * (0.005 * populationDensity * pathogen.getR_FACTOR() * 0.3 / pathogen.getK_FACTOR() * 9);
+        } else {
+            this.infectSpeed = infectNum * (0.005 * populationDensity * pathogen.getR_FACTOR() * 0.3 / pathogen.getK_FACTOR() * 9);
+        }
+        this.infectSpeed *= 0.01;
+        //this.infectSpeed = 1.0;
     }
 
     public double getInfectSpeed() {
