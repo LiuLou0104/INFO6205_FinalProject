@@ -4,15 +4,13 @@ import Business.DrawArea.AreaUnit;
 import Business.Simulation.OnePathogenSimu;
 import org.jfree.chart.ChartUtils;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.title.TextTitle;
-import org.jfree.data.category.CategoryDataset;
-import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.DefaultXYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
-import java.awt.Font;
+import java.awt.*;
 import java.util.List;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -24,8 +22,11 @@ public class PlotAbstract {
         TextTitle title = new TextTitle(chartTitle);
         title.setFont(font);
         chart.setTitle(title);
-
-        // TODO: if need to set legend font
+        XYPlot plot = chart.getXYPlot();
+        plot.setBackgroundPaint(Color.getHSBColor(34, 14, 98));
+        plot.setDomainGridlinePaint(Color.lightGray); // set color of line for horizontal as white
+        plot.setDomainGridlinesVisible(true); // set visible
+        plot.setRangeGridlinePaint(Color.lightGray); //set color of line for vertical as white
 
         FileOutputStream fos_jpg = null;
         try {

@@ -11,8 +11,6 @@ import javax.swing.*;
 import java.util.*;
 import java.util.Timer;
 
-import static java.lang.Thread.sleep;
-
 public class OnePathogenSimu extends Observable implements Runnable {
     Thread thread = null;
     public static final int AREA_LENGTH = 30; //The length of the area
@@ -31,9 +29,9 @@ public class OnePathogenSimu extends Observable implements Runnable {
 
     private long simuStart;
 
-    /*
-    * 构造器
-    * */
+    /**
+     * Constructor
+     */
     public OnePathogenSimu(){
        area = new Area(AREA_LENGTH,AREA_WIDTH);
        this.areaUnitArray = area.getArea();
@@ -52,8 +50,10 @@ public class OnePathogenSimu extends Observable implements Runnable {
         this.chartDirectory = new ChartDirectory();
     }
 
-
-    //开始模拟
+    /**
+     * Start the simulation
+     * @param btnStartSimu
+     */
     public void startSim(JButton btnStartSimu){
 //        System.out.println("Starting the simulation");
 //        onePathogenSimu = new OnePathogenSimu();
@@ -67,18 +67,18 @@ public class OnePathogenSimu extends Observable implements Runnable {
         // disable the StartSimu button
         btnStartSimu.setEnabled(false);
 
-        // TODO 运行n时间(s)停止
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
 //                done = true;
                 clearChanged();
-                // TODO generate the report of this simulation
                 String title = pathSimu.getAreaUnitArray()[0][0].getPathogen().getName();
-                Plot.drawLineChartInfectNum(pathSimu, title + "InfectNum");
-                Plot.drawLineChartInfectUnits(pathSimu, title + "InfectUnits");
-                Plot.drawScatterPlot(pathSimu, title + "EpiArea");
+
+                Plot.drawLineChartInfectNum(pathSimu, title + " InfectNum");
+                Plot.drawLineChartInfectUnits(pathSimu, title + " EpiArea");
+                Plot.drawScatterPlot(pathSimu, title + " EpiArea");
+
                 // enable the StartSimu button
                 btnStartSimu.setEnabled(true);
                 System.out.println("Simulation[" + simuStart + "] ended");
@@ -116,6 +116,9 @@ public class OnePathogenSimu extends Observable implements Runnable {
         }
     }
 
+    /**
+     * Update the simulation status to GUI Canvas
+     */
     private void updateSim(){
         calcSpread();
         notifyObservers(this);
@@ -160,8 +163,8 @@ public class OnePathogenSimu extends Observable implements Runnable {
 
     //↑
     public void currToDownR(int i, int j) {
-        double infectRate = areaUnitArray[i+1][j].getInfectNum() / areaUnitArray[i+1][j].getHeadcount(); //infect rate in area[i][j]
-        double headcountOutNum = areaUnitArray[i+1][j].getHeadcount() * areaUnitArray[i+1][j].getPopFlowSpeed(); // population of area[i][j]
+        double infectRate = areaUnitArray[i + 1][j].getInfectNum() / areaUnitArray[i + 1][j].getHeadcount(); //infect rate in area[i + 1][j]
+        double headcountOutNum = areaUnitArray[i + 1][j].getHeadcount() * areaUnitArray[i + 1][j].getPopFlowSpeed(); // population of area[i + 1][j]
         double infectOutNum = headcountOutNum * infectRate; // infect number to flow out
 
         areaUnitArray[i + 1][j].setHeadcount(areaUnitArray[i + 1][j].getHeadcount() - headcountOutNum);
@@ -185,13 +188,13 @@ public class OnePathogenSimu extends Observable implements Runnable {
 
     //←
     public void currToRightR(int i, int j) {
-        double infectRate = areaUnitArray[i][j+1].getInfectNum() / areaUnitArray[i][j+1].getHeadcount(); //infect rate in area[i][j]
-        double headcountOutNum = areaUnitArray[i][j+1].getHeadcount() * areaUnitArray[i][j+1].getPopFlowSpeed(); // population of area[i][j]
+        double infectRate = areaUnitArray[i][j + 1].getInfectNum() / areaUnitArray[i][j + 1].getHeadcount(); //infect rate in area[i][j + 1]
+        double headcountOutNum = areaUnitArray[i][j + 1].getHeadcount() * areaUnitArray[i][j + 1].getPopFlowSpeed(); // population of area[i][j + 1]
         double infectOutNum = headcountOutNum * infectRate; // infect number to flow out
 
-        areaUnitArray[i][j + 1].setHeadcount(areaUnitArray[i][j+1].getHeadcount() - headcountOutNum);
+        areaUnitArray[i][j + 1].setHeadcount(areaUnitArray[i][j + 1].getHeadcount() - headcountOutNum);
         areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount() + headcountOutNum);
-        areaUnitArray[i][j + 1].setInfectNum(areaUnitArray[i][j+1].getInfectNum() - infectOutNum);
+        areaUnitArray[i][j + 1].setInfectNum(areaUnitArray[i][j + 1].getInfectNum() - infectOutNum);
         areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum() + infectOutNum);
     }
 
@@ -209,13 +212,13 @@ public class OnePathogenSimu extends Observable implements Runnable {
 
     //↖
     public void currToRightBottomR(int i, int j) {
-        double infectRate = areaUnitArray[i+1][j+1].getInfectNum() / areaUnitArray[i+1][j+1].getHeadcount(); //infect rate in area[i][j]
-        double headcountOutNum = areaUnitArray[i+1][j+1].getHeadcount() * areaUnitArray[i+1][j+1].getPopFlowSpeed(); // population of area[i][j]
+        double infectRate = areaUnitArray[i + 1][j + 1].getInfectNum() / areaUnitArray[i + 1][j + 1].getHeadcount(); //infect rate in area[i + 1][j + 1]
+        double headcountOutNum = areaUnitArray[i + 1][j + 1].getHeadcount() * areaUnitArray[i + 1][j + 1].getPopFlowSpeed(); // population of area[i + 1][j + 1]
         double infectOutNum = headcountOutNum * infectRate; // infect number to flow out
 
-        areaUnitArray[i + 1][j+1].setHeadcount(areaUnitArray[i + 1][j + 1].getHeadcount() - headcountOutNum);
+        areaUnitArray[i + 1][j + 1].setHeadcount(areaUnitArray[i + 1][j + 1].getHeadcount() - headcountOutNum);
         areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount() + headcountOutNum);
-        areaUnitArray[i+1][j+1].setInfectNum(areaUnitArray[i+1][j+1].getInfectNum()-infectOutNum);
+        areaUnitArray[i + 1][j + 1].setInfectNum(areaUnitArray[i + 1][j + 1].getInfectNum()-infectOutNum);
         areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()+infectOutNum);
     }
 
@@ -226,19 +229,19 @@ public class OnePathogenSimu extends Observable implements Runnable {
         double infectOutNum = headcountOutNum * infectRate; // infect number to flow out
 
         areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount() - headcountOutNum);
-        areaUnitArray[i-1][j].setHeadcount(areaUnitArray[i-1][j].getHeadcount() + headcountOutNum);
+        areaUnitArray[i - 1][j].setHeadcount(areaUnitArray[i - 1][j].getHeadcount() + headcountOutNum);
         areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum() - infectOutNum);
-        areaUnitArray[i-1][j].setInfectNum(areaUnitArray[i-1][j].getInfectNum() + infectOutNum);
+        areaUnitArray[i - 1][j].setInfectNum(areaUnitArray[i - 1][j].getInfectNum() + infectOutNum);
     }
 
     //↓
     public void currToUpR(int i, int j){
-        double infectRate = areaUnitArray[i-1][j].getInfectNum() / areaUnitArray[i-1][j].getHeadcount(); //infect rate in area[i][j]
-        double headcountOutNum = areaUnitArray[i-1][j].getHeadcount() * areaUnitArray[i-1][j].getPopFlowSpeed(); // population of area[i][j]
+        double infectRate = areaUnitArray[i-1][j].getInfectNum() / areaUnitArray[i-1][j].getHeadcount(); //infect rate in area[i - 1][j]
+        double headcountOutNum = areaUnitArray[i-1][j].getHeadcount() * areaUnitArray[i-1][j].getPopFlowSpeed(); // population of area[i - 1][j]
         double infectOutNum = headcountOutNum * infectRate; // infect number to flow out
-        areaUnitArray[i-1][j].setHeadcount(areaUnitArray[i-1][j].getHeadcount()- headcountOutNum);
+        areaUnitArray[i - 1][j].setHeadcount(areaUnitArray[i - 1][j].getHeadcount()- headcountOutNum);
         areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()+ headcountOutNum);
-        areaUnitArray[i-1][j].setInfectNum(areaUnitArray[i-1][j].getInfectNum()-infectOutNum);
+        areaUnitArray[i - 1][j].setInfectNum(areaUnitArray[i - 1][j].getInfectNum()-infectOutNum);
         areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()+infectOutNum);
     }
 
@@ -249,20 +252,20 @@ public class OnePathogenSimu extends Observable implements Runnable {
         double infectOutNum = headcountOutNum * infectRate; // infect number to flow out
 
         areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()- headcountOutNum);
-        areaUnitArray[i-1][j+1].setHeadcount(areaUnitArray[i-1][j+1].getHeadcount()+ headcountOutNum);
+        areaUnitArray[i - 1][j + 1].setHeadcount(areaUnitArray[i - 1][j + 1].getHeadcount()+ headcountOutNum);
         areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()-infectOutNum);
-        areaUnitArray[i-1][j+1].setInfectNum(areaUnitArray[i-1][j+1].getInfectNum()+infectOutNum);
+        areaUnitArray[i - 1][j + 1].setInfectNum(areaUnitArray[i - 1][j + 1].getInfectNum()+infectOutNum);
     }
 
     //↙
     public void currToRightTopR(int i, int j){
-        double infectRate = areaUnitArray[i-1][j+1].getInfectNum() / areaUnitArray[i-1][j+1].getHeadcount(); //infect rate in area[i][j]
-        double headcountOutNum = areaUnitArray[i-1][j+1].getHeadcount() * areaUnitArray[i-1][j+1].getPopFlowSpeed(); // population of area[i][j]
+        double infectRate = areaUnitArray[i - 1][j + 1].getInfectNum() / areaUnitArray[i - 1][j + 1].getHeadcount(); //infect rate in area[i - 1][j + 1]
+        double headcountOutNum = areaUnitArray[i - 1][j + 1].getHeadcount() * areaUnitArray[i - 1][j + 1].getPopFlowSpeed(); // population of area[i - 1][j + 1]
         double infectOutNum = headcountOutNum * infectRate; // infect number to flow out
 
-        areaUnitArray[i-1][j+1].setHeadcount(areaUnitArray[i-1][j+1].getHeadcount()- headcountOutNum);
+        areaUnitArray[i - 1][j + 1].setHeadcount(areaUnitArray[i - 1][j + 1].getHeadcount()- headcountOutNum);
         areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()+ headcountOutNum);
-        areaUnitArray[i-1][j+1].setInfectNum(areaUnitArray[i-1][j+1].getInfectNum()-infectOutNum);
+        areaUnitArray[i - 1][j + 1].setInfectNum(areaUnitArray[i - 1][j + 1].getInfectNum()-infectOutNum);
         areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()+infectOutNum);
     }
 
@@ -273,20 +276,20 @@ public class OnePathogenSimu extends Observable implements Runnable {
         double infectOutNum = headcountOutNum * infectRate; // infect number to flow out
 
         areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()- headcountOutNum);
-        areaUnitArray[i][j-1].setHeadcount(areaUnitArray[i][j-1].getHeadcount()+ headcountOutNum);
+        areaUnitArray[i][j - 1].setHeadcount(areaUnitArray[i][j - 1].getHeadcount()+ headcountOutNum);
         areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()-infectOutNum);
-        areaUnitArray[i][j-1].setInfectNum(areaUnitArray[i][j-1].getInfectNum()+infectOutNum);
+        areaUnitArray[i][j - 1].setInfectNum(areaUnitArray[i][j - 1].getInfectNum()+infectOutNum);
     }
 
     //→
     public void currToLeftR(int i, int j){
-        double infectRate = areaUnitArray[i][j-1].getInfectNum() / areaUnitArray[i][j-1].getHeadcount(); //infect rate in area[i][j]
-        double headcountOutNum = areaUnitArray[i][j-1].getHeadcount() * areaUnitArray[i][j-1].getPopFlowSpeed(); // population of area[i][j]
+        double infectRate = areaUnitArray[i][j - 1].getInfectNum() / areaUnitArray[i][j - 1].getHeadcount(); //infect rate in area[i][j - 1]
+        double headcountOutNum = areaUnitArray[i][j - 1].getHeadcount() * areaUnitArray[i][j - 1].getPopFlowSpeed(); // population of area[i][j - 1]
         double infectOutNum = headcountOutNum * infectRate; // infect number to flow out
 
-        areaUnitArray[i][j-1].setHeadcount(areaUnitArray[i][j-1].getHeadcount()- headcountOutNum);
+        areaUnitArray[i][j - 1].setHeadcount(areaUnitArray[i][j - 1].getHeadcount()- headcountOutNum);
         areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()+ headcountOutNum);
-        areaUnitArray[i][j-1].setInfectNum(areaUnitArray[i][j-1].getInfectNum()-infectOutNum);
+        areaUnitArray[i][j - 1].setInfectNum(areaUnitArray[i][j - 1].getInfectNum()-infectOutNum);
         areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()+infectOutNum);
     }
 
@@ -296,20 +299,20 @@ public class OnePathogenSimu extends Observable implements Runnable {
         double headcountOutNum = areaUnitArray[i][j].getHeadcount() * areaUnitArray[i][j].getPopFlowSpeed(); // population of area[i][j]
         double infectOutNum = headcountOutNum * infectRate; // infect number to flow out
         areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount() - headcountOutNum);
-        areaUnitArray[i+1][j-1].setHeadcount(areaUnitArray[i+1][j-1].getHeadcount()+ headcountOutNum);
+        areaUnitArray[i + 1][j - 1].setHeadcount(areaUnitArray[i + 1][j - 1].getHeadcount()+ headcountOutNum);
         areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum() - infectOutNum);
-        areaUnitArray[i+1][j-1].setInfectNum(areaUnitArray[i+1][j-1].getInfectNum() + infectOutNum);
+        areaUnitArray[i + 1][j - 1].setInfectNum(areaUnitArray[i + 1][j - 1].getInfectNum() + infectOutNum);
     }
 
     //↗
     public void currToLeftBottomR(int i, int j){
-        double infectRate = areaUnitArray[i+1][j-1].getInfectNum() / areaUnitArray[i+1][j-1].getHeadcount(); //infect rate in area[i][j]
-        double headcountOutNum = areaUnitArray[i+1][j-1].getHeadcount() * areaUnitArray[i+1][j-1].getPopFlowSpeed(); // population of area[i][j]
+        double infectRate = areaUnitArray[i + 1][j - 1].getInfectNum() / areaUnitArray[i + 1][j - 1].getHeadcount(); //infect rate in area[i + 1][j - 1]
+        double headcountOutNum = areaUnitArray[i + 1][j - 1].getHeadcount() * areaUnitArray[i + 1][j - 1].getPopFlowSpeed(); // population of area[i + 1][j - 1]
         double infectOutNum = headcountOutNum * infectRate; // infect number to flow out
 
-        areaUnitArray[i+1][j-1].setHeadcount(areaUnitArray[i+1][j-1].getHeadcount()- headcountOutNum);
+        areaUnitArray[i + 1][j - 1].setHeadcount(areaUnitArray[i + 1][j - 1].getHeadcount()- headcountOutNum);
         areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()+ headcountOutNum);
-        areaUnitArray[i+1][j-1].setInfectNum(areaUnitArray[i+1][j-1].getInfectNum()-infectOutNum);
+        areaUnitArray[i + 1][j - 1].setInfectNum(areaUnitArray[i + 1][j - 1].getInfectNum()-infectOutNum);
         areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()+infectOutNum);
     }
 
@@ -320,140 +323,134 @@ public class OnePathogenSimu extends Observable implements Runnable {
         double infectOutNum = headcountOutNum * infectRate; // infect number to flow out
 
         areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()- headcountOutNum);
-        areaUnitArray[i-1][j-1].setHeadcount(areaUnitArray[i-1][j-1].getHeadcount()+ headcountOutNum);
+        areaUnitArray[i - 1][j - 1].setHeadcount(areaUnitArray[i - 1][j - 1].getHeadcount()+ headcountOutNum);
         areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()-infectOutNum);
-        areaUnitArray[i-1][j-1].setInfectNum(areaUnitArray[i-1][j-1].getInfectNum()+infectOutNum);
+        areaUnitArray[i - 1][j - 1].setInfectNum(areaUnitArray[i - 1][j - 1].getInfectNum()+infectOutNum);
     }
 
     //↘
     public void currToLeftTopR(int i, int j){
-        double infectRate = areaUnitArray[i-1][j-1].getInfectNum() / areaUnitArray[i-1][j-1].getHeadcount(); //infect rate in area[i][j]
-        double headcountOutNum = areaUnitArray[i-1][j-1].getHeadcount() * areaUnitArray[i-1][j-1].getPopFlowSpeed(); // population of area[i][j]
+        double infectRate = areaUnitArray[i - 1][j - 1].getInfectNum() / areaUnitArray[i - 1][j - 1].getHeadcount(); //infect rate in area[i][j]
+        double headcountOutNum = areaUnitArray[i - 1][j - 1].getHeadcount() * areaUnitArray[i - 1][j - 1].getPopFlowSpeed(); // population of area[i][j]
         double infectOutNum = headcountOutNum * infectRate; // infect number to flow out
 
-        areaUnitArray[i-1][j-1].setHeadcount(areaUnitArray[i-1][j-1].getHeadcount()- headcountOutNum);
+        areaUnitArray[i - 1][j - 1].setHeadcount(areaUnitArray[i - 1][j - 1].getHeadcount()- headcountOutNum);
         areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount()+ headcountOutNum);
-        areaUnitArray[i-1][j-1].setInfectNum(areaUnitArray[i-1][j-1].getInfectNum()-infectOutNum);
+        areaUnitArray[i - 1][j - 1].setInfectNum(areaUnitArray[i - 1][j - 1].getInfectNum()-infectOutNum);
         areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum()+infectOutNum);
     }
 
-    //计算左上角的传染扩散
+    /*
+       Calculate teh spread of the infection
+       If the population flow is n in unit time, the number of infection among them will be n * infectRate
+       if the area take quantatine, we assume that there won't be any population flow
+     */
+
     public void calcSpreadAtTopLeftCorner(int i, int j) {
-
-            //如果流动的人口数量是n，那么其中的感染者数量为n * infectRate
-            //如果该地区采取了旅行限制措施，那么我们认为该地区的传染者不会流出
-
-            //1.上方向下方流动
-            if(!areaUnitArray[i][j].isQuarantine()){
-                currToDown(i,j);
-            }
-            //2.下方向上方流动
-            if(!areaUnitArray[i+1][j].isQuarantine()){
-                currToDownR(i,j);
-            }
-            //3.上方向右方流动
-            if(!areaUnitArray[i][j].isQuarantine()){
-                currToRight(i,j);
-            }
-            //4.右方向上方流动
-            if(!areaUnitArray[i][j+1].isQuarantine()){
-                currToRightR(i,j);
-            }
-            //5.上方向右下流动
-            if(!areaUnitArray[i][j].isQuarantine()){
-                currToRightBottom(i,j);
-            }
-            //6.右下向上方流动
-            if(!areaUnitArray[i+1][j+1].isQuarantine()){
-                currToRightBottomR(i,j);
-            }
-    }
-
-    //计算左下角的传染扩散
-    public void calcSpreadAtLeftBottom(int i, int j) {
-        //1.下方向上方流动
         if(!areaUnitArray[i][j].isQuarantine()){
-            currToUp(i,j);
+            currToDown(i,j);
         }
-        //2.上方向下方流动
-        if(!areaUnitArray[i-1][j].isQuarantine()){
-            currToUpR(i,j);
+
+        if(!areaUnitArray[i+1][j].isQuarantine()){
+            currToDownR(i,j);
         }
-        //3.上方向右方流动
+
         if(!areaUnitArray[i][j].isQuarantine()){
             currToRight(i,j);
         }
-        //4.右方向上方流动
+
         if(!areaUnitArray[i][j+1].isQuarantine()){
             currToRightR(i,j);
         }
-        //5.下方向右上流动
+
+        if(!areaUnitArray[i][j].isQuarantine()){
+            currToRightBottom(i,j);
+        }
+
+        if(!areaUnitArray[i+1][j+1].isQuarantine()){
+            currToRightBottomR(i,j);
+        }
+    }
+
+    public void calcSpreadAtLeftBottom(int i, int j) {
+        if(!areaUnitArray[i][j].isQuarantine()){
+            currToUp(i,j);
+        }
+
+        if(!areaUnitArray[i-1][j].isQuarantine()){
+            currToUpR(i,j);
+        }
+
+        if(!areaUnitArray[i][j].isQuarantine()){
+            currToRight(i,j);
+        }
+
+        if(!areaUnitArray[i][j+1].isQuarantine()){
+            currToRightR(i,j);
+        }
+
         if(!areaUnitArray[i][j].isQuarantine()){
             currToRightTop(i,j);
         }
-        //6.右上向下方流动
+
         if(!areaUnitArray[i-1][j+1].isQuarantine()){
             currToRightTopR(i,j);
         }
     }
 
-    //计算右上角的传染扩散
     public void calcSpreadAtTopRightCorner(int i, int j){
-        //1.←
         if(!areaUnitArray[i][j].isQuarantine()){
             currToLeft(i,j);
         }
-        //2.→
+
         if(!areaUnitArray[i][j-1].isQuarantine()){
             currToLeftR(i,j);
         }
-        //3.↓
+
         if(!areaUnitArray[i][j].isQuarantine()){
             currToDown(i,j);
         }
-        //4.↑
+
         if(!areaUnitArray[i+1][j].isQuarantine()){
             currToDownR(i,j);
         }
-        //5.↙
+
         if(!areaUnitArray[i][j].isQuarantine()){
             currToLeftBottom(i,j);
         }
-        //6.↗
+
         if(!areaUnitArray[i+1][j-1].isQuarantine()){
             currToLeftBottomR(i,j);
         }
     }
 
-    //计算右下角的传染扩散
     public void calcSpreadAtRightBottom(int i, int j) {
-        //1.←
+
         if(!areaUnitArray[i][j].isQuarantine()){
             currToLeft(i,j);
         }
-        //2.→
+
         if(!areaUnitArray[i][j-1].isQuarantine()){
             currToLeftR(i,j);
         }
-        //3.↑
+
         if(!areaUnitArray[i][j].isQuarantine()){
             currToUp(i,j);
         }
-        //4.↓
+
         if(!areaUnitArray[i-1][j].isQuarantine()){
             currToUpR(i,j);
         }
-        //5.↖
+
         if(!areaUnitArray[i][j].isQuarantine()){
             currToLeftTop(i,j);
         }
-        //6.↘
+
         if(!areaUnitArray[i-1][j-1].isQuarantine()){
             currToLeftTopR(i,j);
         }
     }
 
-    //计算传染扩散
     public void calcSpread() {
         double counterForInfectNum = 0;
         int counterUnites = 0;
@@ -462,12 +459,12 @@ public class OnePathogenSimu extends Observable implements Runnable {
 
 //                System.out.println("i " + i +", j "+ j + " infectNum " + areaUnitArray[i][j].getInfectNum() + ", head count " + areaUnitArray[i][j].getHeadcount());
 
-                if (areaUnitArray[i][j].getInfectNum() > 15) {
+                if (areaUnitArray[i][j].getInfectNum() / areaUnitArray[i][j].getHeadcount() > 0.3) {
                     counterUnites++;
                 }
                 counterForInfectNum += areaUnitArray[i][j].getInfectNum();
-                //TODO store data to draw chart
-                //每一次都要计算该地区的传染扩散情况
+
+                // calculate the spread
                 if(!areaUnitArray[i][j].isQuarantine()){
 
                     double updateInfect = areaUnitArray[i][j].getInfectNum() + areaUnitArray[i][j].getInfectSpeed();
@@ -493,7 +490,7 @@ public class OnePathogenSimu extends Observable implements Runnable {
                     calcSpreadAtTopRightCorner(i,j);
                 } else if(i == AREA_WIDTH / AreaUnit.BLOCK_WIDTH - 1 && j == AREA_LENGTH / AreaUnit.BLOCK_LENGTH - 1){
                     calcSpreadAtRightBottom(i,j);
-                } else if(j == 0){ //位于左边上
+                } else if(j == 0){
                     calcSpreadAtTopLeftCorner(i,j);
                     if(!areaUnitArray[i][j].isQuarantine()){
                         //↑
@@ -505,18 +502,16 @@ public class OnePathogenSimu extends Observable implements Runnable {
                     }
                     //↗
                     if(!areaUnitArray[i][j].isQuarantine()){
-                        //area[i][j]地区的感染率
                         currToRightTop(i,j);
                     }
                     //↙
                     if(!areaUnitArray[i-1][j+1].isQuarantine()){
                         currToRightTopR(i,j);
                     }
-                } else if(i == 0){ //位于上边上
+                } else if(i == 0){
                     calcSpreadAtTopRightCorner(i,j);
                     //→
                     if(!areaUnitArray[i][j].isQuarantine()){
-                        //area[i][j]地区的感染率
                         currToRight(i,j);
                     }
                     //←
@@ -525,18 +520,16 @@ public class OnePathogenSimu extends Observable implements Runnable {
                     }
                     //↘
                     if(!areaUnitArray[i][j].isQuarantine()){
-                        //area[i][j]地区的感染率
                         currToRightBottom(i,j);
                     }
                     //↖
                     if(!areaUnitArray[i+1][j+1].isQuarantine()){
                         currToRightBottomR(i,j);
                     }
-                } else if(j == AREA_LENGTH / AreaUnit.BLOCK_LENGTH - 1){ //位于右边上
+                } else if(j == AREA_LENGTH / AreaUnit.BLOCK_LENGTH - 1){
                     calcSpreadAtTopRightCorner(i,j);
                     //↑
                     if(!areaUnitArray[i][j].isQuarantine()){
-                        //area[i][j]地区的感染率
                         currToUp(i,j);
                     }
                     //↓
@@ -545,14 +538,13 @@ public class OnePathogenSimu extends Observable implements Runnable {
                     }
                     //↖
                     if(!areaUnitArray[i][j].isQuarantine()){
-                        //area[i][j]地区的感染率
                         currToLeftTop(i,j);
                     }
                     //↘
                     if(!areaUnitArray[i-1][j-1].isQuarantine()){
                         currToLeftTopR(i,j);
                     }
-                } else if(i == AREA_WIDTH / AreaUnit.BLOCK_WIDTH - 1){ //位于下边上
+                } else if(i == AREA_WIDTH / AreaUnit.BLOCK_WIDTH - 1){
                     calcSpreadAtRightBottom(i,j);
                     //→
                     if(!areaUnitArray[i][j].isQuarantine()){

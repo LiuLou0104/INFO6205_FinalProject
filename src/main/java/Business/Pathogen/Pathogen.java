@@ -2,8 +2,8 @@ package Business.Pathogen;
 
 public class Pathogen {
     //toString
-    private String name = "SARS-CoV-2"; //病原体名称
-    private double K_FACTOR = 0.5; //k-factor 人有多少概率携带并传播
+    private String name = "SARS-CoV-2"; // name of Pathogen
+    private double K_FACTOR = 0.5; //k-factor
     private double R_FACTOR = 3.8; //r-factor 1.4-3.8
 
     public Pathogen(){}
