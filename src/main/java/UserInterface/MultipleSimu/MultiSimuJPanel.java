@@ -9,6 +9,7 @@ import UserInterface.ViewReport.ChooseSimuJPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
 
 /**
  * @Author: LiuLou
@@ -367,6 +368,26 @@ public class MultiSimuJPanel extends javax.swing.JPanel {
         // create two OnePathogenSimu
         OnePathogenSimu ops1 = new OnePathogenSimu(pathogen1, popuDensity, isWearingMask, isQuarantine, isTest);
         OnePathogenSimu ops2 = new OnePathogenSimu(pathogen2, popuDensity, isWearingMask, isQuarantine, isTest);
+//        ops2.setArea(ops1.getArea());
+//        ops2.setAreaUnitArray(ops1.getAreaUnitArray());
+        for(int i=0; i<OnePathogenSimu.AREA_WIDTH; i++) {
+           for(int j=0; j<OnePathogenSimu.AREA_LENGTH; j++) {
+               ops2.getAreaUnitArray()[i][j].setHeadcount(ops1.getAreaUnitArray()[i][j].getHeadcount());
+               ops2.getAreaUnitArray()[i][j].setPopFlowSpeed(ops1.getAreaUnitArray()[i][j].getPopFlowSpeed());
+               ops2.getAreaUnitArray()[i][j].setInfectNum(ops1.getAreaUnitArray()[i][j].getInfectNum());
+               ops2.getAreaUnitArray()[i][j].setQuarantine(ops1.getAreaUnitArray()[i][j].isQuarantine());
+               ops2.getAreaUnitArray()[i][j].setMask(ops1.getAreaUnitArray()[i][j].isMask());
+               ops2.getAreaUnitArray()[i][j].setTest(ops1.getAreaUnitArray()[i][j].isTest());
+           }
+        }
+//        Random random = new Random();
+//        int index1 = random.nextInt(OnePathogenSimu.AREA_WIDTH);
+//        int index2 = random.nextInt(OnePathogenSimu.AREA_LENGTH);
+        int index1 = 10;
+        int index2 = 11;
+        ops1.getAreaUnitArray()[index1][index2].setQuarantine(false);
+//        ops1.getAreaUnitArray()[index1][index2].setInfectNum(random.nextInt((int) ops1.getAreaUnitArray()[index1][index2].getHeadcount()));
+        ops1.getAreaUnitArray()[index1][index2].setInfectNum(ops1.getAreaUnitArray()[index1][index2].getHeadcount());
         // add above two OnePathogenSimu to OnePathogenSimuList in PageSimu
         ps.add(ops1);
         ps.add(ops2);

@@ -52,25 +52,6 @@ public class OnePathogenSimu extends Observable implements Runnable {
         this.chartDirectory = new ChartDirectory();
     }
 
-    public AreaUnit[][] getAreaUnitArray() {
-        return areaUnitArray;
-    }
-
-    public List<Double> getInfectNumList() {
-        return infectNumList;
-    }
-
-    public List<Integer> getInfectUnitsList() {
-        return infectUnitsList;
-    }
-
-    public ChartDirectory getChartDirectory() {
-        return chartDirectory;
-    }
-
-    public void addChart(Chart chart) {
-        this.chartDirectory.add(chart);
-    }
 
     //开始模拟
     public void startSim(JButton btnStartSimu){
@@ -102,7 +83,7 @@ public class OnePathogenSimu extends Observable implements Runnable {
                 btnStartSimu.setEnabled(true);
                 System.out.println("Simulation[" + simuStart + "] ended");
             }
-        },5000);
+        },20000);
     }
 
     // End Simulation
@@ -612,5 +593,35 @@ public class OnePathogenSimu extends Observable implements Runnable {
         this.infectUnitsList.add(counterUnites);
     }
 
+    public List<Double> getInfectNumList() {
+        return infectNumList;
+    }
 
+    public AreaUnit[][] getAreaUnitArray() {
+        return areaUnitArray;
+    }
+
+    public void setAreaUnitArray(AreaUnit[][] areaUnitArray) {
+        this.areaUnitArray = areaUnitArray;
+    }
+
+    public Area getArea() {
+        return area;
+    }
+
+    public void setArea(Area area) {
+        this.area = area;
+    }
+
+    public List<Integer> getInfectUnitsList() {
+        return infectUnitsList;
+    }
+
+    public ChartDirectory getChartDirectory() {
+        return chartDirectory;
+    }
+
+    public void addChart(Chart chart) {
+        this.chartDirectory.add(chart);
+    }
 }
