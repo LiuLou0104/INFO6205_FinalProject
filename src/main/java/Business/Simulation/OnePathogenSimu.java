@@ -468,11 +468,22 @@ public class OnePathogenSimu extends Observable implements Runnable {
                 counterForInfectNum += areaUnitArray[i][j].getInfectNum();
                 //TODO store data to draw chart
                 //每一次都要计算该地区的传染扩散情况
-                double updateInfect = areaUnitArray[i][j].getInfectNum() + areaUnitArray[i][j].getInfectSpeed();
-                if (updateInfect > areaUnitArray[i][j].getHeadcount()) {
-                    areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getHeadcount());
+                if(!areaUnitArray[i][j].isQuarantine()){
+
+                    double updateInfect = areaUnitArray[i][j].getInfectNum() + areaUnitArray[i][j].getInfectSpeed();
+                    if (updateInfect > areaUnitArray[i][j].getHeadcount()) {
+                        areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getHeadcount());
+                    } else {
+                        areaUnitArray[i][j].setInfectNum(updateInfect);
+                    }
                 } else {
-                    areaUnitArray[i][j].setInfectNum(updateInfect);
+                    double updateInfect = areaUnitArray[i][j].getInfectNum();
+                    if (updateInfect > areaUnitArray[i][j].getHeadcount()) {
+                        areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getHeadcount());
+                    } else {
+                        areaUnitArray[i][j].setInfectNum(updateInfect);
+                    }
+
                 }
                 if(i == 0 && j == 0){
                     calcSpreadAtTopLeftCorner(i,j);
