@@ -31,6 +31,7 @@ public class SingleSimuJPanel extends javax.swing.JPanel {
         initComponents();
         this.jplContainer = jplContainer;
         this.platform = platform;
+        btnSeeAllReport.setEnabled(false);
 
         populateCbxPathogen();
         initButtonGroups();
@@ -325,7 +326,7 @@ public class SingleSimuJPanel extends javax.swing.JPanel {
 //        ops1.getAreaUnitArray()[index1][index2].setInfectNum(random.nextInt((int) ops1.getAreaUnitArray()[index1][index2].getHeadcount()));
 
         ops.addObserver(jplCanvas);
-        ops.startSim(btnStartSimu);
+        ops.startSim(btnStartSimu, btnSeeAllReport);
 
         // TODO use CompletableFuture to make sure that the PageSimu result appears only when the simulation has done
         // add above OnePathogenSimu to OnePathogenSimuList in PageSimu

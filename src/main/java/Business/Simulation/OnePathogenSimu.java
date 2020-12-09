@@ -54,7 +54,7 @@ public class OnePathogenSimu extends Observable implements Runnable {
      * Start the simulation
      * @param btnStartSimu
      */
-    public void startSim(JButton btnStartSimu){
+    public void startSim(JButton btnStartSimu, JButton btnSeeAllReport){
 //        System.out.println("Starting the simulation");
 //        onePathogenSimu = new OnePathogenSimu();
         OnePathogenSimu pathSimu = this;
@@ -81,6 +81,7 @@ public class OnePathogenSimu extends Observable implements Runnable {
 
                 // enable the StartSimu button
                 btnStartSimu.setEnabled(true);
+                btnSeeAllReport.setEnabled(true);
                 System.out.println("Simulation[" + simuStart + "] ended");
             }
         },10000);

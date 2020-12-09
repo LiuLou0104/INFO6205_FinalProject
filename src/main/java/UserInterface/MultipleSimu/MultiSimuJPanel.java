@@ -29,6 +29,7 @@ public class MultiSimuJPanel extends javax.swing.JPanel {
         initComponents();
         this.jplContainer = jplContainer;
         this.platform = platform;
+        btnSeeAllReport.setEnabled(false);
 
         populateCbxPathogen();
         initButtonGroups();
@@ -416,10 +417,10 @@ public class MultiSimuJPanel extends javax.swing.JPanel {
         ops2.getAreaUnitArray()[index1][index2].setInfectNum(ops2.getAreaUnitArray()[index1][index2].getHeadcount() / 2);
 
         ops1.addObserver(jplCanvas1);
-        ops1.startSim(btnStartSimu);
+        ops1.startSim(btnStartSimu, btnSeeAllReport);
 
         ops2.addObserver(jplCanvas2);
-        ops2.startSim(btnStartSimu);
+        ops2.startSim(btnStartSimu, btnSeeAllReport);
 
         // add above two OnePathogenSimu to OnePathogenSimuList in PageSimu
         ps.add(ops1);
