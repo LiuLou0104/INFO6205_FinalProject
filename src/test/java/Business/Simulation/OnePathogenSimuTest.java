@@ -234,7 +234,7 @@ public class OnePathogenSimuTest {
     }
 
     @Test
-    public void calcOilSpreadAtTopLeftCorner() {
+    public void calcSpreadAtTopLeftCorner() {
         OnePathogenSimu onePathogenSimu = new OnePathogenSimu();
         onePathogenSimu.areaUnitArray[0][0].setInfectNum(10);
         onePathogenSimu.areaUnitArray[0][0].setHeadcount(10);
@@ -248,7 +248,7 @@ public class OnePathogenSimuTest {
         onePathogenSimu.areaUnitArray[1][1].setInfectNum(10);
         onePathogenSimu.areaUnitArray[1][1].setHeadcount(10);
         onePathogenSimu.areaUnitArray[1][1].setPopFlowSpeed(0.4);
-        onePathogenSimu.calcOilSpreadAtTopLeftCorner(0,0);
+        onePathogenSimu.calcSpreadAtTopLeftCorner(0,0);
         assertEquals(10,onePathogenSimu.areaUnitArray[0][0].getHeadcount(),0);
         assertEquals(10,onePathogenSimu.areaUnitArray[0][0].getInfectNum(),0);
         assertEquals(10,onePathogenSimu.areaUnitArray[0][1].getHeadcount(),0);
@@ -261,7 +261,7 @@ public class OnePathogenSimuTest {
     }
 
     @Test
-    public void calcOilSpreadAtLeftBottom() {
+    public void calcSpreadAtLeftBottom() {
         OnePathogenSimu onePathogenSimu = new OnePathogenSimu();
         onePathogenSimu.areaUnitArray[7][0].setInfectNum(10);
         onePathogenSimu.areaUnitArray[7][0].setHeadcount(10);
@@ -275,7 +275,7 @@ public class OnePathogenSimuTest {
         onePathogenSimu.areaUnitArray[6][1].setInfectNum(10);
         onePathogenSimu.areaUnitArray[6][1].setHeadcount(10);
         onePathogenSimu.areaUnitArray[6][1].setPopFlowSpeed(.4);
-        onePathogenSimu.calcOilSpreadAtLeftBottom(7,0);
+        onePathogenSimu.calcSpreadAtLeftBottom(7,0);
         assertEquals(10,onePathogenSimu.areaUnitArray[7][0].getHeadcount(),0);
         assertEquals(10,onePathogenSimu.areaUnitArray[7][0].getInfectNum(),0);
         assertEquals(10,onePathogenSimu.areaUnitArray[7][1].getHeadcount(),0);
@@ -287,7 +287,7 @@ public class OnePathogenSimuTest {
     }
 
     @Test
-    public void calcOilSpreadAtTopRightCorner() {
+    public void calcSpreadAtTopRightCorner() {
         OnePathogenSimu onePathogenSimu = new OnePathogenSimu();
         onePathogenSimu.areaUnitArray[0][7].setInfectNum(10);
         onePathogenSimu.areaUnitArray[0][7].setHeadcount(10);
@@ -301,7 +301,7 @@ public class OnePathogenSimuTest {
         onePathogenSimu.areaUnitArray[0][6].setInfectNum(10);
         onePathogenSimu.areaUnitArray[0][6].setHeadcount(10);
         onePathogenSimu.areaUnitArray[0][6].setPopFlowSpeed(0.4);
-        onePathogenSimu.calcOilSpreadAtTopRightCorner(0,7);
+        onePathogenSimu.calcSpreadAtTopRightCorner(0,7);
         assertEquals(10,onePathogenSimu.areaUnitArray[0][7].getHeadcount(),0);
         assertEquals(10,onePathogenSimu.areaUnitArray[0][7].getInfectNum(),0);
         assertEquals(10,onePathogenSimu.areaUnitArray[1][7].getHeadcount(),0);
@@ -313,7 +313,7 @@ public class OnePathogenSimuTest {
     }
 
     @Test
-    public void calcOilSpreadAtRightBottom() {
+    public void calcSpreadAtRightBottom() {
         OnePathogenSimu onePathogenSimu = new OnePathogenSimu();
         onePathogenSimu.areaUnitArray[7][7].setInfectNum(10);
         onePathogenSimu.areaUnitArray[7][7].setHeadcount(10);
@@ -327,7 +327,9 @@ public class OnePathogenSimuTest {
         onePathogenSimu.areaUnitArray[7][6].setInfectNum(10);
         onePathogenSimu.areaUnitArray[7][6].setHeadcount(10);
         onePathogenSimu.areaUnitArray[7][6].setPopFlowSpeed(.4);
-        onePathogenSimu.calcOilSpreadAtRightBottom(7,7);
+
+        onePathogenSimu.calcSpreadAtRightBottom(7,7);
+
         assertEquals(10,onePathogenSimu.areaUnitArray[7][7].getHeadcount(),0);
         assertEquals(10,onePathogenSimu.areaUnitArray[7][7].getInfectNum(),0);
         assertEquals(10,onePathogenSimu.areaUnitArray[6][7].getHeadcount(),0);

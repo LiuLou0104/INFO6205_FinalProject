@@ -43,38 +43,20 @@ public class PlotAbstract {
 
     /**
      * XY Series for line chart
-     * @param pathogenSimus
+     * @param infectNumList
      * @return
      */
-//    public static XYSeriesCollection getXYSeriesDataSetInfectNum(List<OnePathogenSimu> pathogenSimus){
-//        XYSeriesCollection dataset = new XYSeriesCollection();
-//        int seriesNum = 0;
-//        int abTime = 0; // Absolute time of the simulaiton
-//
-//        for (OnePathogenSimu pathogenSimu : pathogenSimus) {
-//            XYSeries series = new XYSeries("XYSeries" + seriesNum);
-//
-//            for (OnePathogenSimu patheSim : pathogenSimu.getdataSetForPlot()) {
-//                series.add(abTime++, patheSim.calcInfectedNum());
-//            }
-//            dataset.addSeries(series);
-//        }
-//
-//        return dataset;
-//    }
 
     public static XYSeriesCollection getXYSeriesDataSetInfectNum(List<Double> infectNumList){
         XYSeriesCollection dataset = new XYSeriesCollection();
         int seriesNum = 0;
         int abTime = 1; // Absolute time of the simulaiton
 
-//        for (OnePathogenSimu pathogenSimu : pathogenSimus) {
         XYSeries series = new XYSeries("XYSeries" + seriesNum);
 
         for (Double infectNum : infectNumList) {
             series.add(abTime++, infectNum);
         }
-//        }
         dataset.addSeries(series);
 
         return dataset;
@@ -82,25 +64,23 @@ public class PlotAbstract {
 
     /**
      * XY Series for line chart
-     * @param pathogenSimus
+     * @param infectUnitsList
      * @return
      */
-//    public static XYSeriesCollection getXYSeriesDataSetInfectUnits(List<OnePathogenSimu> pathogenSimus){
-//        XYSeriesCollection dataset = new XYSeriesCollection();
-//        int seriesNum = 0;
-//        int abTime = 0; // Absolute time of the simulaiton
-//
-//        for (OnePathogenSimu pathogenSimu : pathogenSimus) {
-//            XYSeries series = new XYSeries("XYSeries" + seriesNum++);
-//
-//            for (OnePathogenSimu patheSim : pathogenSimu.getdataSetForPlot()) {
-//                series.add(abTime++, patheSim.calcInfectedUnits());
-//            }
-//            dataset.addSeries(series);
-//        }
-//
-//        return dataset;
-//    }
+    public static XYSeriesCollection getXYSeriesDataSetInfectUnits(List<Integer> infectUnitsList){
+        XYSeriesCollection dataset = new XYSeriesCollection();
+        int seriesNum = 0;
+        int abTime = 0; // Absolute time of the simulaiton
+
+        XYSeries series = new XYSeries("XYSeries" + seriesNum);
+
+        for (Integer unitCnt : infectUnitsList) {
+            series.add(abTime++, unitCnt);
+        }
+        dataset.addSeries(series);
+
+        return dataset;
+    }
 
 
     /**
@@ -129,35 +109,34 @@ public class PlotAbstract {
     /**
      * XY Series for Scatter Plot to draw the Area for
      * which is under serious epidemic
-     * @param pathogenSimus
+     * @param pathSimu
      * @return
      */
-//    public static DefaultXYDataset getDatasetEpiArea(List<OnePathogenSimu> pathogenSimus){
-//        DefaultXYDataset dataset = new DefaultXYDataset();
-//        int seriesNum = 0;
-//
-//        for (OnePathogenSimu pathogenSimu : pathogenSimus) {
-//            AreaUnit[][] areaUnits = pathogenSimu.getAreaUnitArray();
-//            double[][] data = new double[2][pathogenSimu.AREA_WIDTH * pathogenSimu.AREA_LENGTH];
-//            int k = 0;
-//            for (int i = 0; i < pathogenSimu.AREA_WIDTH; i++) {
-//                for (int j = 0; j < pathogenSimu.AREA_LENGTH; j++) {
-//                    if(areaUnits[i][j].getInfectNum() / areaUnits[i][j].getHeadcount() > 0.3) {
-//                        data[0][k] = i;
-//                        data[1][k] = j;
-//                        k++;
-////                        XYSeries serie = new XYSeries("XYSeries" + seriesNum++);
-////                        int x = j;
-////                        int y = i;
-////                        serie.add(x, y);
-////                        dataset.addSeries(serie);
-//                    }
-//                }
-//            }
-//            dataset.addSeries("Epidemic Area", data);
-//        }
-//
-//        return dataset;
-//    }
+    public static DefaultXYDataset getDatasetEpiArea(OnePathogenSimu pathSimu){
+        DefaultXYDataset dataset = new DefaultXYDataset();
+        int seriesNum = 0;
+
+        AreaUnit[][] areaUnits = pathSimu.getAreaUnitArray();
+
+        double[][] data = new double[2][pathSimu.AREA_WIDTH * pathSimu.AREA_LENGTH];
+        int k = 0;
+        for (int i = 0; i < pathSimu.AREA_WIDTH; i++) {
+            for (int j = 0; j < pathSimu.AREA_LENGTH; j++) {
+                if(areaUnits[i][j].getInfectNum() / areaUnits[i][j].getHeadcount() > 0.3) {
+                    data[0][k] = i + 1;
+                    data[1][k] = j + 1;
+                    k++;
+//                        XYSeries serie = new XYSeries("XYSeries" + seriesNum++);
+//                        int x = j;
+//                        int y = i;
+//                        serie.add(x, y);
+//                        dataset.addSeries(serie);
+                }
+            }
+        }
+        dataset.addSeries("Epidemic Area", data);
+
+        return dataset;
+    }
 
 }

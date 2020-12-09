@@ -11,12 +11,10 @@ public class PageSimu {
     //Date toString
     private Date date;
     private List<OnePathogenSimu> onePathogenSimuList;
-    private ChartDirectory chartDirectory;
 
     public PageSimu(){
         date = new Date();
         onePathogenSimuList = new ArrayList<>();
-        chartDirectory = new ChartDirectory();
     }
 
     @Override
@@ -31,10 +29,6 @@ public class PageSimu {
 
     public void add(OnePathogenSimu onePathogenSimu){
         onePathogenSimuList.add(onePathogenSimu);
-    }
-
-    public void addChart(Chart chart) {
-        this.chartDirectory.add(chart);
     }
 
     public List<OnePathogenSimu> getOnePathogenSimuList() {
