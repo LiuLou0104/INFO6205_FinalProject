@@ -300,6 +300,11 @@ public class SingleSimuJPanel extends javax.swing.JPanel {
         PageSimu ps = new PageSimu();
         // create OnePathogenSimu
         OnePathogenSimu ops = new OnePathogenSimu(pathogen, popuDensity, isWearingMask, isQuarantine, isTest);
+        int index1 = 10;
+        int index2 = 11;
+        ops.getAreaUnitArray()[index1][index2].setQuarantine(false);
+//        ops1.getAreaUnitArray()[index1][index2].setInfectNum(random.nextInt((int) ops1.getAreaUnitArray()[index1][index2].getHeadcount()));
+        ops.getAreaUnitArray()[index1][index2].setInfectNum(ops.getAreaUnitArray()[index1][index2].getHeadcount());
         // add above OnePathogenSimu to OnePathogenSimuList in PageSimu
         ps.add(ops);
         // add above PageSimu to PageSimuDirectory in platform
