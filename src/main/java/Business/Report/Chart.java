@@ -15,4 +15,12 @@ public class Chart {
         this.date = date;
         this.fileName = fileName;
     }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
 }

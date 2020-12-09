@@ -26,7 +26,7 @@ public class AreaUnit {
     public AreaUnit(Pathogen pathogen){
         this.pathogen = pathogen; // set pathogen
         Random random = new Random();
-        headcount = random.nextDouble() * 10000;
+        headcount = 5000 + random.nextDouble() * 5000;
 //        headcount = 5000; // set populationDensity
         popFlowSpeed = random.nextDouble();
         //popFlowSpeed = 1000; // set popFlowSpeed
@@ -39,7 +39,7 @@ public class AreaUnit {
         int r3 = random.nextInt();
         if(r3 % 2 == 0) isTest = true;
         calcInfectSpeed(); // set infectSpeed
-        System.out.println(this.toString());
+//        System.out.println(this.toString());
     }
 
     public AreaUnit(Pathogen pathogen, double populationDensity, boolean isQuarantine, boolean isMask, boolean isTest) {
@@ -77,12 +77,16 @@ public class AreaUnit {
         } else {
             this.infectSpeed = infectNum * (0.005 * populationDensity * pathogen.getR_FACTOR() * 0.3 / pathogen.getK_FACTOR() * 9);
         }
-//        this.infectSpeed *= 0.01;
+        this.infectSpeed *= 0.01;
         //this.infectSpeed = 1.0;
     }
   
     private void calcPopulationDensity(){
         this.populationDensity = this.headcount / (BLOCK_WIDTH * BLOCK_LENGTH);
+    }
+
+    private void calcHeadCount() {
+        this.headcount = this.populationDensity * (BLOCK_WIDTH * BLOCK_LENGTH);
     }
 
     public double getPopulationDensity() {
@@ -91,6 +95,18 @@ public class AreaUnit {
 
     public void setPopulationDensity(double populationDensity) {
         this.populationDensity = populationDensity;
+        calcHeadCount();
+        if(this.isMask && !this.isTest){
+            this.infectSpeed = 0.6 * infectNum * (0.005 * populationDensity * pathogen.getR_FACTOR() * 0.3 / pathogen.getK_FACTOR() * 9);
+        } else if(!this.isMask && this.isTest){
+            this.infectSpeed = 0.4 * infectNum * (0.005 * populationDensity * pathogen.getR_FACTOR() * 0.3 / pathogen.getK_FACTOR() * 9);
+        } else if(this.isMask && this.isTest){
+            this.infectSpeed = 0.6 * 0.4 *  infectNum * (0.005 * populationDensity * pathogen.getR_FACTOR() * 0.3 / pathogen.getK_FACTOR() * 9);
+        } else {
+            this.infectSpeed = infectNum * (0.005 * populationDensity * pathogen.getR_FACTOR() * 0.3 / pathogen.getK_FACTOR() * 9);
+        }
+        this.infectSpeed *= 0.01;
+        //this.infectSpeed = 1.0;
     }
 
     public double getInfectSpeed() {

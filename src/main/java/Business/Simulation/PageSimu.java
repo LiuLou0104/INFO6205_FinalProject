@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static Business.Utilities.DateFormat.dateFormat1;
+
 public class PageSimu {
     //Date toString
     private Date date;
@@ -19,12 +21,15 @@ public class PageSimu {
 
     @Override
     public String toString() {
-        return Business.Utilities.DateFormat.dateFormat1(date);
+        return date.toString();
     }
 
     public String getDateString() {
-        DateFormat dateFormat = DateFormat.getDateTimeInstance();
-        return dateFormat.format(date);
+        return date.toString();
+    }
+
+    public Date getDate() {
+        return date;
     }
 
     public void add(OnePathogenSimu onePathogenSimu){

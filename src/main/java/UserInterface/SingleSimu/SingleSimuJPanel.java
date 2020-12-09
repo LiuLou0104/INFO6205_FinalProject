@@ -11,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * @Author: LiuLou
@@ -91,21 +92,22 @@ public class SingleSimuJPanel extends javax.swing.JPanel {
         cbxPathogen = new javax.swing.JComboBox<>();
         btnStartSimu = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
+        lblAreaUnitPosition = new javax.swing.JLabel();
 
-        jplCanvas.setBackground(new java.awt.Color(255, 255, 255));
+        jplCanvas.setBackground(new java.awt.Color(240, 240, 240));
 
         javax.swing.GroupLayout jplCanvasLayout = new javax.swing.GroupLayout(jplCanvas);
         jplCanvas.setLayout(jplCanvasLayout);
         jplCanvasLayout.setHorizontalGroup(
                 jplCanvasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 457, Short.MAX_VALUE)
+                        .addGap(0, 460, Short.MAX_VALUE)
         );
         jplCanvasLayout.setVerticalGroup(
                 jplCanvasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 316, Short.MAX_VALUE)
+                        .addGap(0, 320, Short.MAX_VALUE)
         );
 
-        btnBack.setFont(new java.awt.Font("微软雅黑", 1, 14)); // NOI18N
+        btnBack.setFont(new java.awt.Font("arial", 1, 14)); // NOI18N
         btnBack.setText("<<Back");
         btnBack.setEnabled(false);
         btnBack.addActionListener(new java.awt.event.ActionListener() {
@@ -115,7 +117,7 @@ public class SingleSimuJPanel extends javax.swing.JPanel {
         });
 
         btnSeeAllReport.setBackground(new java.awt.Color(255, 153, 51));
-        btnSeeAllReport.setFont(new java.awt.Font("微软雅黑", 1, 14)); // NOI18N
+        btnSeeAllReport.setFont(new java.awt.Font("arial", 1, 14)); // NOI18N
         btnSeeAllReport.setText("See All Reports");
         btnSeeAllReport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -125,10 +127,10 @@ public class SingleSimuJPanel extends javax.swing.JPanel {
 
         txtPopulationDensity.setToolTipText("");
 
-        jLabel1.setFont(new java.awt.Font("微软雅黑", 1, 12)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("arial", 1, 12)); // NOI18N
         jLabel1.setText("Population Density");
 
-        jLabel2.setFont(new java.awt.Font("微软雅黑", 1, 12)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("arial", 1, 12)); // NOI18N
         jLabel2.setText("Wearing Masks");
 
         rbtnMaskYes.setText("yes");
@@ -140,7 +142,7 @@ public class SingleSimuJPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("微软雅黑", 1, 12)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("arial", 1, 12)); // NOI18N
         jLabel3.setText("Testing and Contact Tracing");
 
         rbtnTestYes.setText("yes");
@@ -152,7 +154,7 @@ public class SingleSimuJPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("微软雅黑", 1, 12)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("arial", 1, 12)); // NOI18N
         jLabel4.setText("Quarantining");
 
         rbtnQuarantineYes.setText("yes");
@@ -164,14 +166,14 @@ public class SingleSimuJPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel5.setFont(new java.awt.Font("微软雅黑", 1, 12)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("arial", 1, 12)); // NOI18N
         jLabel5.setText("Pathogen Type");
 
-        cbxPathogen.setFont(new java.awt.Font("微软雅黑", 2, 12)); // NOI18N
+        cbxPathogen.setFont(new java.awt.Font("arial", 2, 12)); // NOI18N
         cbxPathogen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnStartSimu.setBackground(new java.awt.Color(0, 0, 0));
-        btnStartSimu.setFont(new java.awt.Font("微软雅黑", 1, 14)); // NOI18N
+        btnStartSimu.setFont(new java.awt.Font("arial", 1, 14)); // NOI18N
         btnStartSimu.setForeground(new java.awt.Color(255, 0, 0));
         btnStartSimu.setText("Start Simulation");
         btnStartSimu.addActionListener(new java.awt.event.ActionListener() {
@@ -180,8 +182,12 @@ public class SingleSimuJPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel6.setFont(new java.awt.Font("微软雅黑", 1, 16)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("arial", 1, 16)); // NOI18N
         jLabel6.setText("Single Pathogen Simulation");
+
+        lblAreaUnitPosition.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        lblAreaUnitPosition.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        lblAreaUnitPosition.setText("This pandemic is starting from block [x,y]");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -189,8 +195,11 @@ public class SingleSimuJPanel extends javax.swing.JPanel {
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(26, 26, 26)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(lblAreaUnitPosition, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addComponent(jplCanvas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jLabel6))
                                 .addGap(38, 38, 38)
@@ -255,10 +264,12 @@ public class SingleSimuJPanel extends javax.swing.JPanel {
                                                         .addComponent(rbtnTestYes)
                                                         .addComponent(rbtnTestNo))))
                                 .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(btnBack)
-                                        .addComponent(btnStartSimu))
-                                .addContainerGap(106, Short.MAX_VALUE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(btnBack, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(btnStartSimu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(lblAreaUnitPosition, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addContainerGap(105, Short.MAX_VALUE))
         );
     }// </editor-fold>
 
@@ -300,18 +311,27 @@ public class SingleSimuJPanel extends javax.swing.JPanel {
         PageSimu ps = new PageSimu();
         // create OnePathogenSimu
         OnePathogenSimu ops = new OnePathogenSimu(pathogen, popuDensity, isWearingMask, isQuarantine, isTest);
-        int index1 = 10;
-        int index2 = 11;
-        ops.getAreaUnitArray()[index1][index2].setQuarantine(false);
-//        ops1.getAreaUnitArray()[index1][index2].setInfectNum(random.nextInt((int) ops1.getAreaUnitArray()[index1][index2].getHeadcount()));
+        Random random = new Random();
+        int index1 = random.nextInt(OnePathogenSimu.AREA_WIDTH);
+        int index2 = random.nextInt(OnePathogenSimu.AREA_LENGTH);
+
+        lblAreaUnitPosition.setText("This pandemic is starting from block [" + index1 + ", " + index2 + " ]");
+
+        ops.getAreaUnitArray()[index1][index2].setPopulationDensity(popuDensity);
+        ops.getAreaUnitArray()[index1][index2].setQuarantine(isQuarantine);
+        ops.getAreaUnitArray()[index1][index2].setMask(isWearingMask);
+        ops.getAreaUnitArray()[index1][index2].setTest(isTest);
         ops.getAreaUnitArray()[index1][index2].setInfectNum(ops.getAreaUnitArray()[index1][index2].getHeadcount());
+//        ops1.getAreaUnitArray()[index1][index2].setInfectNum(random.nextInt((int) ops1.getAreaUnitArray()[index1][index2].getHeadcount()));
+
+        ops.addObserver(jplCanvas);
+        ops.startSim(btnStartSimu);
+
+        // TODO use CompletableFuture to make sure that the PageSimu result appears only when the simulation has done
         // add above OnePathogenSimu to OnePathogenSimuList in PageSimu
         ps.add(ops);
         // add above PageSimu to PageSimuDirectory in platform
         platform.getPageSimuDirectory().add(ps);
-
-        ops.addObserver(jplCanvas);
-        ops.startSim(btnStartSimu);
     }
 
     private void btnSeeAllReportActionPerformed(java.awt.event.ActionEvent evt) {
@@ -354,6 +374,7 @@ public class SingleSimuJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private SimuCanvasJPanel jplCanvas;
+    private javax.swing.JLabel lblAreaUnitPosition;
     private javax.swing.ButtonGroup bgMask;
     private javax.swing.ButtonGroup bgQuarantine;
     private javax.swing.ButtonGroup bgTest;

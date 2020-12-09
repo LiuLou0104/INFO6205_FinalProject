@@ -17,10 +17,18 @@ import java.util.Observer;
 public class SimuCanvasJPanel extends JPanel implements Observer{
     private int ctr = 0;
     private OnePathogenSimu mySimulation;
-    private int lineSize = 20; // How big each cell should be
-    private int halfLineSize = lineSize / 2;
+    private int canvasHeight;
+    private int canvasWidth;
+    private int maxRow;
+    private int maxCol;
+//    private int lineSize = 20; // How big each cell should be
+    private int lineSize;
+    private int ylineSize;
+//    private int halfLineSize = lineSize / 2;
 
     public SimuCanvasJPanel() {
+//        System.out.println("constructor getSize(): " + getSize());
+//        System.out.println("constructor this.getSize(): " + this.getSize());
     }
 
     // Swing calls when a redraw is needed
@@ -32,10 +40,18 @@ public class SimuCanvasJPanel extends JPanel implements Observer{
     // Draw the contents of the panel
     private void drawCanvas(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        Dimension size = getSize();
+//        Dimension size = getSize();
+        System.out.println("drawCanvas getSize(): " + getSize());
+        System.out.println("drawCanvas this.getSize(): " + this.getSize());
+        this.canvasHeight = getSize().height;
+        this.canvasWidth = getSize().width;
+        this.lineSize = canvasWidth / OnePathogenSimu.AREA_LENGTH;
+        this.ylineSize = canvasHeight / OnePathogenSimu.AREA_WIDTH;
 
-        g2d.setColor(Color.black);
-        g2d.fillRect(0, 0, size.width, size.height);
+//        g2d.setColor(new Color(240, 240, 240));
+        g2d.setColor(new JButton().getBackground());
+//        g2d.fillRect(0, 0, size.width, size.height);
+        g2d.fillRect(0, 0, canvasWidth, canvasHeight);
 //        System.out.println(size.width + " " + size.height);
 
         if (mySimulation != null) {
@@ -45,13 +61,13 @@ public class SimuCanvasJPanel extends JPanel implements Observer{
 
     private void drawOceanGrid(Graphics2D g2d) {
 
-        int maxRows = OnePathogenSimu.AREA_WIDTH;
-        int maxCols = OnePathogenSimu.AREA_LENGTH;
-//        int maxRows = getSize().width / lineSize;
-//        int maxCols = getSize().height / lineSize;
+        int maxRow = OnePathogenSimu.AREA_WIDTH;
+        int maxCol = OnePathogenSimu.AREA_LENGTH;
+//        int maxRow = getSize().width / lineSize;
+//        int maxCol = getSize().height / lineSize;
 
-        for (int j = 0; j < maxRows; j++) {
-            for (int i = 0; i < maxCols; i++) {
+        for (int j = 0; j < maxRow; j++) {
+            for (int i = 0; i < maxCol; i++) {
 
                 int startx = i * lineSize;
                 AreaUnit[][] area = mySimulation.getAreaUnitArray();
@@ -61,16 +77,17 @@ public class SimuCanvasJPanel extends JPanel implements Observer{
 
                 if (area[j][i].getInfectNum() > 0) {
                     int red = validColor(255 - (int) (255 * area[j][i].getInfectNum() / area[j][i].getHeadcount()));
-                    int green = validColor(153 - (int) (153 * area[j][i].getInfectNum() / area[j][i].getHeadcount()));
-                    int blue = validColor(51 - (int) (51 * area[j][i].getInfectNum() / area[j][i].getHeadcount()));
+                    int green = validColor(209 - (int) (209 * area[j][i].getInfectNum() / area[j][i].getHeadcount()));
+                    int blue = validColor(111 - (int) (111 * area[j][i].getInfectNum() / area[j][i].getHeadcount()));
 //                    System.out.println("i " + i +", j "+ j + " infectNum " + area[j][i].getInfectNum() + ", head count " + area[j][i].getHeadcount());
                     g2d.setColor(new Color(red, green, blue));
                 } else {
-                    g2d.setColor(new Color(255, 153, 51));
+//                    g2d.setColor(new Color(255, 153, 51));
+                    g2d.setColor(new Color(255, 209, 111));
                 }
 
-
-                g2d.fillRect(startx, j * lineSize, lineSize - 1, lineSize - 1);
+                // draw areaUnit
+                g2d.fillRect(startx, j * ylineSize, lineSize - 1, ylineSize - 1);
 
 //                if(mySimulation.boat.getBoatPositionX()==j && mySimulation.boat.getBoatPositionY()==i) {
 //                    Font font = new Font("Boat", Font.PLAIN, 30);

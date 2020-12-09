@@ -31,7 +31,7 @@ public class MainJFrame extends javax.swing.JFrame {
         this.platform = new Platform();
         //TODO initialize platform
         platform.getPathogenDirectory().add(new Pathogen());
-        platform.getPathogenDirectory().add(new Pathogen("SARS", 2, 1));
+        platform.getPathogenDirectory().add(new Pathogen("SARS", 0.86, 1.2));
     }
 
     /**
@@ -64,12 +64,12 @@ public class MainJFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("微软雅黑", 1, 16)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("arial", 1, 16)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Covid-19 Simulation Platform");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        btnSingleSimu.setFont(new java.awt.Font("微软雅黑", 1, 12)); // NOI18N
+        btnSingleSimu.setFont(new java.awt.Font("arial", 1, 12)); // NOI18N
         btnSingleSimu.setText("Single Pathogen Simulation");
         btnSingleSimu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -77,7 +77,7 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        btnMultiSimu.setFont(new java.awt.Font("微软雅黑", 1, 12)); // NOI18N
+        btnMultiSimu.setFont(new java.awt.Font("arial", 1, 12)); // NOI18N
         btnMultiSimu.setText("Multiple Pathogens Simulation");
         btnMultiSimu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
