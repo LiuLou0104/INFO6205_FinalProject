@@ -10,7 +10,8 @@ Zongduo Li 001096123
 
 #### Project Target:
 Simulate the spread of a virus such as SARS-CoV-2, the pathogen behind COVID-19.
-Show the progress in GUI.
+
+Show the simulation progress in GUI. 
 
 ## Getting Started
 1. run `MainJFrame` to get the GUI
