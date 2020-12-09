@@ -16,7 +16,7 @@ public class AreaUnit {
     private boolean isQuarantine = false;
     private boolean isMask = false;
     private boolean isTest = false;
-    private Pathogen pathogen;
+    private Pathogen pathogen = new Pathogen();
     private Hospital hospital; // not used
 
     public AreaUnit() {
