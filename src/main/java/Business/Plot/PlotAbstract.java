@@ -135,7 +135,7 @@ public class PlotAbstract {
                 }
             }
         }
-        dataset.addSeries("Epidemic Area", data);
+        dataset.addSeries("Epidemic Area (> 30% infection)", data);
 
         return dataset;
     }

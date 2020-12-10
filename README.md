@@ -16,9 +16,17 @@ Show the simulation progress in GUI.
 ## Getting Started
 1. run `MainJFrame` to get the GUI
 2. Choose `Single Pathegon Simulation` or `Multiple Pathogens Simulation` to get into simulation mode
-3. Enter the textbox and check boxes to set some factors that affect the spread of the virus
-4. Click on `Start Simulation` and the canvas will show the progress of simulation
-5. After the simulation stop, there are several charts to view using `See ALL Reports`
-6. And `Back` button take back from the reporters page to simulation page
+3. Enter the `Population Density` textbox with number (better to larger than 5000);
+ check boxes to set some factors that affect the spread of the virus (if `Quarantine` is 'yes',
+ the infection will not go outside that origin area)
+4. Click on `Start Simulation` and there will be a random-selected area as the beginning epidemic area, then
+ canvas will show the progress of simulation
+5. After the simulation stop, there are several charts to view using `See ALL Reports`, select the time of 
+simulation to see details charts
+6. `Back` button take back from the report view page to simulation page
 
+#### Design Document
+The `Project Design.pdf` is the design of GUI, UML of the project and program structure
 
+#### Report Document
+The `Re`
