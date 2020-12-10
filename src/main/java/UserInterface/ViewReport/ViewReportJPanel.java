@@ -146,7 +146,7 @@ public class ViewReportJPanel extends javax.swing.JPanel {
         });
 
         lblImage1P1.setBackground(new java.awt.Color(255, 255, 255));
-        lblImage1P1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/test.jpg"))); // NOI18N
+//        lblImage1P1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/test.jpg"))); // NOI18N
 //        lblImage1P1.setText("Graph");
 
         btnShowInExplorer1P1.setFont(new java.awt.Font("arial", 1, 14)); // NOI18N
@@ -161,7 +161,7 @@ public class ViewReportJPanel extends javax.swing.JPanel {
         lblPathogen1.setText("Pathogen1 Name");
 
         lblImage2P1.setBackground(new java.awt.Color(255, 255, 255));
-        lblImage2P1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/test.jpg"))); // NOI18N
+//        lblImage2P1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/test.jpg"))); // NOI18N
 //        lblImage2P1.setText("Graph");
 
         btnShowInExplorer2P1.setFont(new java.awt.Font("arial", 1, 14)); // NOI18N
@@ -173,7 +173,7 @@ public class ViewReportJPanel extends javax.swing.JPanel {
         });
 
         lblImage3P1.setBackground(new java.awt.Color(255, 255, 255));
-        lblImage3P1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/test.jpg"))); // NOI18N
+//        lblImage3P1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/test.jpg"))); // NOI18N
 //        lblImage3P1.setText("Graph");
 
         btnShowInExplorer3P1.setFont(new java.awt.Font("arial", 1, 14)); // NOI18N
@@ -185,7 +185,7 @@ public class ViewReportJPanel extends javax.swing.JPanel {
         });
 
         lblImage3P2.setBackground(new java.awt.Color(255, 255, 255));
-        lblImage3P2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/test.jpg"))); // NOI18N
+//        lblImage3P2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/test.jpg"))); // NOI18N
 //        lblImage3P2.setText("Graph");
 
         btnShowInExplorer3P2.setFont(new java.awt.Font("arial", 1, 14)); // NOI18N
@@ -205,11 +205,11 @@ public class ViewReportJPanel extends javax.swing.JPanel {
         });
 
         lblImage2P2.setBackground(new java.awt.Color(255, 255, 255));
-        lblImage2P2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/test.jpg"))); // NOI18N
+//        lblImage2P2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/test.jpg"))); // NOI18N
 //        lblImage2P2.setText("Graph");
 
         lblImage1P2.setBackground(new java.awt.Color(255, 255, 255));
-        lblImage1P2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/test.jpg"))); // NOI18N
+//        lblImage1P2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/test.jpg"))); // NOI18N
 //        lblImage1P2.setText("Graph");
 
         btnShowInExplorer1P2.setFont(new java.awt.Font("arial", 1, 14)); // NOI18N
