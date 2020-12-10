@@ -84,7 +84,7 @@ public class OnePathogenSimu extends Observable implements Runnable {
                 btnSeeAllReport.setEnabled(true);
                 System.out.println("Simulation[" + simuStart + "] ended");
             }
-        },10000);
+        },20000);
     }
 
     // End Simulation
@@ -144,6 +144,16 @@ public class OnePathogenSimu extends Observable implements Runnable {
         for (int i = 0; i < AREA_WIDTH / AreaUnit.BLOCK_WIDTH; i++) {
             for (int j = 0; j < AREA_LENGTH / AreaUnit.BLOCK_LENGTH; j++) {
                 counter += areaUnitArray[i][j].getInfectNum();
+            }
+        }
+        return counter;
+    }
+
+    public double calcPopulation() {
+        double counter = 0;
+        for (int i = 0; i < AREA_WIDTH / AreaUnit.BLOCK_WIDTH; i++) {
+            for (int j = 0; j < AREA_LENGTH / AreaUnit.BLOCK_LENGTH; j++) {
+                counter += areaUnitArray[i][j].getHeadcount();
             }
         }
         return counter;

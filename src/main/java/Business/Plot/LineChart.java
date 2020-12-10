@@ -10,7 +10,7 @@ public class LineChart extends PlotAbstract {
     private String title;
     private String xAxisLable;
     private String yAxisLable;
-    private boolean legend = false;
+    private boolean legend = true;
     private boolean tooltips = false;
     private boolean urls = false;
 
