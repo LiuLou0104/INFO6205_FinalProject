@@ -379,12 +379,10 @@ public class MultiSimuJPanel extends javax.swing.JPanel {
         lblPathogen2.setText(pathogen2.getName());
 
         // create two OnePathogenSimu
-        OnePathogenSimu ops1 = new OnePathogenSimu(pathogen1, popuDensity, isWearingMask, isQuarantine, isTest);
-        OnePathogenSimu ops2 = new OnePathogenSimu(pathogen2, popuDensity, isWearingMask, isQuarantine, isTest);
-//        ops2.setArea(ops1.getArea());
-//        ops2.setAreaUnitArray(ops1.getAreaUnitArray());
+        OnePathogenSimu ops1 = new OnePathogenSimu(pathogen1);
+        OnePathogenSimu ops2 = new OnePathogenSimu(pathogen2);
 
-        // set the two OnePathogenSimu have the same random values
+        // set the AreaUnit[][] in two OnePathogenSimus have the same initial random values
         for(int i=0; i<OnePathogenSimu.AREA_WIDTH; i++) {
            for(int j=0; j<OnePathogenSimu.AREA_LENGTH; j++) {
                ops2.getAreaUnitArray()[i][j].setHeadcount(ops1.getAreaUnitArray()[i][j].getHeadcount());
@@ -395,26 +393,17 @@ public class MultiSimuJPanel extends javax.swing.JPanel {
                ops2.getAreaUnitArray()[i][j].setTest(ops1.getAreaUnitArray()[i][j].isTest());
            }
         }
+
+        // set a random AreaUnit to be the pandemic starter
         Random random = new Random();
-//        int index1 = random.nextInt(OnePathogenSimu.AREA_WIDTH);
-//        int index2 = random.nextInt(OnePathogenSimu.AREA_LENGTH);
         int index1 = random.nextInt(OnePathogenSimu.AREA_WIDTH);
         int index2 = random.nextInt(OnePathogenSimu.AREA_LENGTH);
 
         lblAreaUnitPosition.setText("This pandemic is starting from block [" + index1 + ", " + index2 + " ]");
 
-//        ops1.getAreaUnitArray()[index1][index2].setInfectNum(random.nextInt((int) ops1.getAreaUnitArray()[index1][index2].getHeadcount()));
-        ops1.getAreaUnitArray()[index1][index2].setPopulationDensity(popuDensity);
-        ops1.getAreaUnitArray()[index1][index2].setQuarantine(isQuarantine);
-        ops1.getAreaUnitArray()[index1][index2].setMask(isWearingMask);
-        ops1.getAreaUnitArray()[index1][index2].setTest(isTest);
-        ops1.getAreaUnitArray()[index1][index2].setInfectNum(ops1.getAreaUnitArray()[index1][index2].getHeadcount() / 2);
+        ops1.getAreaUnitArray()[index1][index2].setFiveParameters(isQuarantine, isWearingMask, isTest, popuDensity, ops1.getAreaUnitArray()[index1][index2].getHeadcount() / 2);
 
-        ops2.getAreaUnitArray()[index1][index2].setPopulationDensity(popuDensity);
-        ops2.getAreaUnitArray()[index1][index2].setQuarantine(isQuarantine);
-        ops2.getAreaUnitArray()[index1][index2].setMask(isWearingMask);
-        ops2.getAreaUnitArray()[index1][index2].setTest(isTest);
-        ops2.getAreaUnitArray()[index1][index2].setInfectNum(ops2.getAreaUnitArray()[index1][index2].getHeadcount() / 2);
+        ops2.getAreaUnitArray()[index1][index2].setFiveParameters(isQuarantine, isWearingMask, isTest, popuDensity, ops2.getAreaUnitArray()[index1][index2].getHeadcount() / 2);
 
         Component[] componentsToDisEnabled = {btnSeeAllReport, cbxPathogen1, cbxPathogen2, txtPopulationDensity, rbtnQuarantineYes, rbtnQuarantineNo, rbtnMaskYes, rbtnMaskNo, rbtnTestYes, rbtnTestNo, btnStartSimu};
         ops1.addObserver(jplCanvas1);

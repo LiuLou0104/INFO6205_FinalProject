@@ -24,21 +24,32 @@ public class AreaUnit {
     }
 
     public AreaUnit(Pathogen pathogen){
-        this.pathogen = pathogen; // set pathogen
+        // set pathogen
+        this.pathogen = pathogen;
+
+        // set headcount
         Random random = new Random();
         headcount = 5000 + random.nextDouble() * 5000;
-//        headcount = 5000; // set populationDensity
+
+        // calculate ppopulation density based on headcount
+        calcPopulationDensity();
+
+        // set popFlowSpeed
         popFlowSpeed = 0.5 * random.nextDouble();
-        //popFlowSpeed = 1000; // set popFlowSpeed
-//        infectNum = random.nextDouble() * 30;
-        infectNum = 0; // set infectNum
+
+        // set the default value of infectNum to 0 for each AreaUnit
+        infectNum = 0;
+
+        // randomly set isQuarantine, isMask, isTest for each AreaUnit
         int r1 = random.nextInt();
         if(r1 % 3 == 0) isQuarantine = true;
         int r2 = random.nextInt();
         if(r2 % 2 == 0) isMask = true;
         int r3 = random.nextInt();
         if(r3 % 2 == 0) isTest = true;
-        calcInfectSpeed(); // set infectSpeed
+
+        // set infectSpeed
+        calcInfectSpeed();
 //        System.out.println(this.toString());
     }
 
@@ -66,6 +77,14 @@ public class AreaUnit {
                 '}';
     }
 
+    public void setFiveParameters(boolean isQuarantine, boolean isWearingMask, boolean isTest, double popuDensity, double infectNum) {
+        this.setQuarantine(isQuarantine);
+        this.setMask(isWearingMask);
+        this.setTest(isTest);
+        this.setPopulationDensity(popuDensity);
+        this.setInfectNum(this.headcount);
+    }
+
     private void calcInnerInfectSpeed(){
         if(this.isMask && !this.isTest){
             this.infectSpeed = 0.06 * infectNum * (0.005 * populationDensity * pathogen.getR_FACTOR() * 0.3 / pathogen.getK_FACTOR() * 9);
@@ -80,7 +99,7 @@ public class AreaUnit {
     }
 
     public void calcInfectSpeed(){
-        calcPopulationDensity();
+//        calcPopulationDensity();
         calcInnerInfectSpeed();
     }
   
