@@ -48,12 +48,11 @@ public class PlotAbstract {
      * @return
      */
 
-    public static XYSeriesCollection getXYSeriesDataSetInfectNum(List<Double> infectNumList){
+    public static XYSeriesCollection getXYSeriesDataSetInfectNum(List<Double> infectNumList, double totalPopulation){
         XYSeriesCollection dataset = new XYSeriesCollection();
-        int seriesNum = 0;
         int abTime = 1; // Absolute time of the simulaiton
 
-        XYSeries series = new XYSeries("XYSeries" + seriesNum);
+        XYSeries series = new XYSeries("Total Population is " + (int)totalPopulation);
 
         for (Double infectNum : infectNumList) {
             series.add(abTime++, infectNum);
@@ -73,7 +72,7 @@ public class PlotAbstract {
         int seriesNum = 0;
         int abTime = 0; // Absolute time of the simulaiton
 
-        XYSeries series = new XYSeries("XYSeries" + seriesNum);
+        XYSeries series = new XYSeries("Total Number of Areas is 600");
 
         for (Integer unitCnt : infectUnitsList) {
             series.add(abTime++, unitCnt);
@@ -124,8 +123,8 @@ public class PlotAbstract {
         for (int i = 0; i < pathSimu.AREA_WIDTH; i++) {
             for (int j = 0; j < pathSimu.AREA_LENGTH; j++) {
                 if(areaUnits[i][j].getInfectNum() / areaUnits[i][j].getHeadcount() > 0.3) {
-                    data[0][k] = i + 1;
-                    data[1][k] = j + 1;
+                    data[0][k] = j + 1;
+                    data[1][k] = i + 1;
                     k++;
 //                        XYSeries serie = new XYSeries("XYSeries" + seriesNum++);
 //                        int x = j;

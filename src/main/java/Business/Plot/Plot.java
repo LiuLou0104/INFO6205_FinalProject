@@ -15,7 +15,7 @@ public class Plot {
 
     public static void drawLineChartInfectNum(OnePathogenSimu pathSimu, String title) {
         LineChart lineChart = new LineChart(title + " Line Chart", "Time", "Total Infect Population");
-        XYSeriesCollection dataset = getXYSeriesDataSetInfectNum(pathSimu.getInfectNumList());
+        XYSeriesCollection dataset = getXYSeriesDataSetInfectNum(pathSimu.getInfectNumList(), pathSimu.calcPopulation());
         JFreeChart chart = lineChart.Plot(dataset);
 
         Date date = new Date();
