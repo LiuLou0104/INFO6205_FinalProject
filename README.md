@@ -1,5 +1,5 @@
 # INFO6205_FinalProject 
-## Group Assignment for INFO6205 in NEU
+## Group Project for INFO6205 in NEU
 
 #### Group Member:
 Lou Liu 001000382
@@ -29,4 +29,4 @@ simulation to see details charts
 The `Project Design.pdf` is the design of GUI, UML of the project and program structure
 
 #### Report Document
-The `Re`
+The `report/Report for COVID-19 Simulation project Team 1.docx` contains project target, experiment conclusion of simulation with assumptions and support evidence. 
