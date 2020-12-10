@@ -5,6 +5,7 @@ import Business.Simulation.OnePathogenSimu;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ListIterator;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -56,6 +57,21 @@ public class SimuCanvasJPanel extends JPanel implements Observer{
 
         if (mySimulation != null) {
             drawOceanGrid(g2d);
+//            ListIterator<Double> it = mySimulation.getInfectNumList().listIterator();
+            double lastInfectNum = 0;
+            for (double infectNum : mySimulation.getInfectNumList()) {
+                lastInfectNum = infectNum;
+            }
+
+            int fontSize = 14;
+            Font font = new Font("arial", Font.BOLD, fontSize);
+            g2d.setFont(font);
+            g2d.setColor(Color.BLACK);
+            g2d.drawString("# Infected Cases ", 0 , 10);
+
+            g2d.setColor(new Color(65, 105, 225));
+            String dataStr = String.valueOf(lastInfectNum);
+            g2d.drawString(dataStr.substring(0, dataStr.indexOf('.')), 120, 10);
         }
     }
 
@@ -66,7 +82,7 @@ public class SimuCanvasJPanel extends JPanel implements Observer{
 //        int maxRow = getSize().width / lineSize;
 //        int maxCol = getSize().height / lineSize;
 
-        for (int j = 0; j < maxRow; j++) {
+        for (int j = 1; j < maxRow; j++) {
             for (int i = 0; i < maxCol; i++) {
 
                 int startx = i * lineSize;

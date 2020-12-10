@@ -15,7 +15,7 @@ import java.util.Timer;
 
 public class OnePathogenSimu extends Observable implements Runnable {
     Thread thread = null;
-    public static final int AREA_LENGTH = 30; //The length of the area
+    public static final int AREA_LENGTH = 26; //The length of the area
     public static final int AREA_WIDTH = 20; //The width of the area
     AreaUnit[][] areaUnitArray;
     public int time = 1;
@@ -43,8 +43,17 @@ public class OnePathogenSimu extends Observable implements Runnable {
        this.chartDirectory = new ChartDirectory();
     }
 
+    public OnePathogenSimu(Pathogen pathogen) {
+        area = new Area(AREA_LENGTH, AREA_WIDTH, pathogen);
+        this.areaUnitArray = area.getArea();
+        this.simuStart = new Date().getTime();
+        this.infectNumList = new ArrayList<>();
+        this.infectUnitsList = new ArrayList<>();
+        this.chartDirectory = new ChartDirectory();
+    }
+
     public OnePathogenSimu(Pathogen pathogen, double popuDensity, boolean isWearingMask, boolean isQuarantine, boolean isTest) {
-        area = new Area(AREA_LENGTH, AREA_WIDTH, pathogen, popuDensity, isWearingMask, isQuarantine, isTest);
+        area = new Area(AREA_LENGTH, AREA_WIDTH, pathogen);
         this.areaUnitArray = area.getArea();
         this.simuStart = new Date().getTime();
         this.infectNumList = new ArrayList<>();
@@ -244,13 +253,14 @@ public class OnePathogenSimu extends Observable implements Runnable {
         double headcountOutNum = areaUnitArray[i][j].getHeadcount() * areaUnitArray[i][j].getPopFlowSpeed(); // population of area[i][j]
         double infectOutNum = headcountOutNum * infectRate; // infect number to flow out
 
+        // TODO better to conduct population flow bidirectional simultaneously
         areaUnitArray[i][j].setHeadcount(areaUnitArray[i][j].getHeadcount() - headcountOutNum);
         areaUnitArray[i - 1][j].setHeadcount(areaUnitArray[i - 1][j].getHeadcount() + headcountOutNum);
         areaUnitArray[i][j].setInfectNum(areaUnitArray[i][j].getInfectNum() - infectOutNum);
         areaUnitArray[i - 1][j].setInfectNum(areaUnitArray[i - 1][j].getInfectNum() + infectOutNum);
     }
 
-    //↓
+    //↓ reverse
     public void currToUpR(int i, int j){
         double infectRate = areaUnitArray[i-1][j].getInfectNum() / areaUnitArray[i-1][j].getHeadcount(); //infect rate in area[i - 1][j]
         double headcountOutNum = areaUnitArray[i-1][j].getHeadcount() * areaUnitArray[i-1][j].getPopFlowSpeed(); // population of area[i - 1][j]
@@ -370,6 +380,10 @@ public class OnePathogenSimu extends Observable implements Runnable {
         if(!areaUnitArray[i+1][j].isQuarantine()){
             currToDownR(i,j);
         }
+        // TODO need to review
+//        if(!areaUnitArray[i+1][j].isQuarantine() && !areaUnitArray[i][j].isQuarantine()){
+//            currToDownR(i,j);
+//        }
 
         if(!areaUnitArray[i][j].isQuarantine()){
             currToRight(i,j);

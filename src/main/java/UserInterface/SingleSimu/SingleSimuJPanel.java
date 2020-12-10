@@ -310,20 +310,18 @@ public class SingleSimuJPanel extends javax.swing.JPanel {
 
         // create PageSimu
         PageSimu ps = new PageSimu();
+
         // create OnePathogenSimu
-        OnePathogenSimu ops = new OnePathogenSimu(pathogen, popuDensity, isWearingMask, isQuarantine, isTest);
+        OnePathogenSimu ops = new OnePathogenSimu(pathogen);
+
+        // set a random AreaUnit to be the pandemic starter
         Random random = new Random();
         int index1 = random.nextInt(OnePathogenSimu.AREA_WIDTH);
         int index2 = random.nextInt(OnePathogenSimu.AREA_LENGTH);
 
         lblAreaUnitPosition.setText("This pandemic is starting from block [" + index1 + ", " + index2 + " ]");
 
-        ops.getAreaUnitArray()[index1][index2].setPopulationDensity(popuDensity);
-        ops.getAreaUnitArray()[index1][index2].setQuarantine(isQuarantine);
-        ops.getAreaUnitArray()[index1][index2].setMask(isWearingMask);
-        ops.getAreaUnitArray()[index1][index2].setTest(isTest);
-        ops.getAreaUnitArray()[index1][index2].setInfectNum(ops.getAreaUnitArray()[index1][index2].getHeadcount());
-//        ops1.getAreaUnitArray()[index1][index2].setInfectNum(random.nextInt((int) ops1.getAreaUnitArray()[index1][index2].getHeadcount()));
+        ops.getAreaUnitArray()[index1][index2].setFiveParameters(isQuarantine, isWearingMask, isTest, popuDensity, ops.getAreaUnitArray()[index1][index2].getHeadcount() / 2);
 
         ops.addObserver(jplCanvas);
         Component[] componentsToDisEnabled = {btnSeeAllReport, cbxPathogen, txtPopulationDensity, rbtnQuarantineYes, rbtnQuarantineNo, rbtnMaskYes, rbtnMaskNo, rbtnTestYes, rbtnTestNo, btnStartSimu};
@@ -332,6 +330,7 @@ public class SingleSimuJPanel extends javax.swing.JPanel {
         // TODO use CompletableFuture to make sure that the PageSimu result appears only when the simulation has done
         // add above OnePathogenSimu to OnePathogenSimuList in PageSimu
         ps.add(ops);
+
         // add above PageSimu to PageSimuDirectory in platform
         platform.getPageSimuDirectory().add(ps);
     }
