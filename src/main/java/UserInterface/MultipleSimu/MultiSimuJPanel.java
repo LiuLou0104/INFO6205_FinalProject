@@ -416,11 +416,12 @@ public class MultiSimuJPanel extends javax.swing.JPanel {
         ops2.getAreaUnitArray()[index1][index2].setTest(isTest);
         ops2.getAreaUnitArray()[index1][index2].setInfectNum(ops2.getAreaUnitArray()[index1][index2].getHeadcount() / 2);
 
+        Component[] componentsToDisEnabled = {btnSeeAllReport, cbxPathogen1, cbxPathogen2, txtPopulationDensity, rbtnQuarantineYes, rbtnQuarantineNo, rbtnMaskYes, rbtnMaskNo, rbtnTestYes, rbtnTestNo, btnStartSimu};
         ops1.addObserver(jplCanvas1);
-        ops1.startSim(btnStartSimu, btnSeeAllReport);
+        ops1.startSim(componentsToDisEnabled);
 
         ops2.addObserver(jplCanvas2);
-        ops2.startSim(btnStartSimu, btnSeeAllReport);
+        ops2.startSim(componentsToDisEnabled);
 
         // add above two OnePathogenSimu to OnePathogenSimuList in PageSimu
         ps.add(ops1);
