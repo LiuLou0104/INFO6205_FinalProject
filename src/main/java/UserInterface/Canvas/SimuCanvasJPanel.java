@@ -41,8 +41,8 @@ public class SimuCanvasJPanel extends JPanel implements Observer{
     private void drawCanvas(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
 //        Dimension size = getSize();
-        System.out.println("drawCanvas getSize(): " + getSize());
-        System.out.println("drawCanvas this.getSize(): " + this.getSize());
+        //System.out.println("drawCanvas getSize(): " + getSize());
+        //System.out.println("drawCanvas this.getSize(): " + this.getSize());
         this.canvasHeight = getSize().height;
         this.canvasWidth = getSize().width;
         this.lineSize = canvasWidth / OnePathogenSimu.AREA_LENGTH;
