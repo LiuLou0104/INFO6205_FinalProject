@@ -326,7 +326,8 @@ public class SingleSimuJPanel extends javax.swing.JPanel {
 //        ops1.getAreaUnitArray()[index1][index2].setInfectNum(random.nextInt((int) ops1.getAreaUnitArray()[index1][index2].getHeadcount()));
 
         ops.addObserver(jplCanvas);
-        ops.startSim(btnStartSimu, btnSeeAllReport);
+        Component[] componentsToDisEnabled = {btnSeeAllReport, cbxPathogen, txtPopulationDensity, rbtnQuarantineYes, rbtnQuarantineNo, rbtnMaskYes, rbtnMaskNo, rbtnTestYes, rbtnTestNo, btnStartSimu};
+        ops.startSim(componentsToDisEnabled);
 
         // TODO use CompletableFuture to make sure that the PageSimu result appears only when the simulation has done
         // add above OnePathogenSimu to OnePathogenSimuList in PageSimu

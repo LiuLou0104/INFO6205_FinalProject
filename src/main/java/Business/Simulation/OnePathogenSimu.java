@@ -8,7 +8,9 @@ import Business.Report.Chart;
 import Business.Report.ChartDirectory;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 import java.util.Timer;
 
 public class OnePathogenSimu extends Observable implements Runnable {
@@ -52,9 +54,9 @@ public class OnePathogenSimu extends Observable implements Runnable {
 
     /**
      * Start the simulation
-     * @param btnStartSimu
+     * @param componentsToDisEnabled
      */
-    public void startSim(JButton btnStartSimu, JButton btnSeeAllReport){
+    public void startSim(Component[] componentsToDisEnabled){
 //        System.out.println("Starting the simulation");
 //        onePathogenSimu = new OnePathogenSimu();
         OnePathogenSimu pathSimu = this;
@@ -65,7 +67,9 @@ public class OnePathogenSimu extends Observable implements Runnable {
         thread.start();
 
         // disable the StartSimu button
-        btnStartSimu.setEnabled(false);
+        for (Component c : componentsToDisEnabled) {
+            c.setEnabled(false);
+        }
 
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -80,8 +84,9 @@ public class OnePathogenSimu extends Observable implements Runnable {
                 Plot.drawScatterPlot(pathSimu, title + " Epidemic Area");
 
                 // enable the StartSimu button
-                btnStartSimu.setEnabled(true);
-                btnSeeAllReport.setEnabled(true);
+                for (Component c : componentsToDisEnabled) {
+                    c.setEnabled(true);
+                }
                 System.out.println("Simulation[" + simuStart + "] ended");
             }
         },10000);
