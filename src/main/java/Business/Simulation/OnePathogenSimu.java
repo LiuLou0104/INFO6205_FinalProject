@@ -75,9 +75,9 @@ public class OnePathogenSimu extends Observable implements Runnable {
                 clearChanged();
                 String title = pathSimu.getAreaUnitArray()[0][0].getPathogen().getName();
 
-                Plot.drawLineChartInfectNum(pathSimu, title + " InfectNum");
-                Plot.drawLineChartInfectUnits(pathSimu, title + " EpiArea");
-                Plot.drawScatterPlot(pathSimu, title + " EpiArea");
+                Plot.drawLineChartInfectNum(pathSimu, title + " Infect Num");
+                Plot.drawLineChartInfectUnits(pathSimu, title + " Epidemic Area");
+                Plot.drawScatterPlot(pathSimu, title + " Epidemic Area");
 
                 // enable the StartSimu button
                 btnStartSimu.setEnabled(true);
