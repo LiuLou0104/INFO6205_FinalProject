@@ -28,7 +28,7 @@ public class Plot {
 
     public static void drawLineChartInfectUnits(OnePathogenSimu pathSimu, String title) {
         LineChart lineChart = new LineChart(title + " Line Chart", "Time", "Epidemic Areas (> 30% infection)");
-        XYSeriesCollection dataset = getXYSeriesDataSetInfectUnits(pathSimu.getInfectUnitsList());
+        XYSeriesCollection dataset = getXYSeriesDataSetInfectUnits(pathSimu.getInfectUnitsList(), pathSimu.AREA_LENGTH * pathSimu.AREA_WIDTH);
         JFreeChart chart = lineChart.Plot(dataset);
 
         Date date = new Date();
