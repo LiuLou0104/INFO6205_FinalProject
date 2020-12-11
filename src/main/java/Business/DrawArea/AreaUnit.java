@@ -32,7 +32,7 @@ public class AreaUnit {
         headcount = 5000 + random.nextDouble() * 5000;
 
         // calculate ppopulation density based on headcount
-        calcPopulationDensity();
+//        calcPopulationDensity();
 
         // set popFlowSpeed
         popFlowSpeed = 0.5 * random.nextDouble();
@@ -99,7 +99,7 @@ public class AreaUnit {
     }
 
     public void calcInfectSpeed(){
-//        calcPopulationDensity();
+        calcPopulationDensity();
         calcInnerInfectSpeed();
     }
   
