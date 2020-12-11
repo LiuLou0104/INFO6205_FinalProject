@@ -19,7 +19,7 @@ Show the simulation progress in GUI.
 3. Select `Pathogen Type` and enter the `Population Density` textbox with number; check boxes to set some factors that attribute to the random area to begin spread the virus (if `Quarantine` is chosen as 'yes',
  the infection will not go outside that origin area) 
 4. Click on `Start Simulation` and there will be a random-selected area as the beginning epidemic area, then
- canvas will show the progress of simulation
+ canvas will show the progress of simulation and dynamic display current infected cases
 5. After the simulation stop, there are several charts to view using `See ALL Reports`, select the time of 
 simulation to see details charts; Click on the `Show in Explorer` will open the picture in system
 6. `Back` button take back from the report view page to simulation page
