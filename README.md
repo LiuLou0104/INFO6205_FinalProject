@@ -16,8 +16,7 @@ Show the simulation progress in GUI.
 ## Getting Started
 1. run `MainJFrame` (locate at: `src/main/java/UserInterface/MainJFrame`) to get the GUI
 2. Choose `Single Pathegon Simulation` or `Multiple Pathogens Simulation` to get into simulation mode
-3. Select `Pathogen Type` and enter the `Population Density` textbox with number (better to larger than 5000);
- check boxes to set some factors that attribute to the random area to begin spread the virus (if `Quarantine` is chosen as 'yes',
+3. Select `Pathogen Type` and enter the `Population Density` textbox with number; check boxes to set some factors that attribute to the random area to begin spread the virus (if `Quarantine` is chosen as 'yes',
  the infection will not go outside that origin area) 
 4. Click on `Start Simulation` and there will be a random-selected area as the beginning epidemic area, then
  canvas will show the progress of simulation

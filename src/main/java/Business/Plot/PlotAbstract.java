@@ -67,12 +67,12 @@ public class PlotAbstract {
      * @param infectUnitsList
      * @return
      */
-    public static XYSeriesCollection getXYSeriesDataSetInfectUnits(List<Integer> infectUnitsList){
+    public static XYSeriesCollection getXYSeriesDataSetInfectUnits(List<Integer> infectUnitsList, int totalUnits){
         XYSeriesCollection dataset = new XYSeriesCollection();
         int seriesNum = 0;
         int abTime = 0; // Absolute time of the simulaiton
 
-        XYSeries series = new XYSeries("Total Number of Areas is 600");
+        XYSeries series = new XYSeries("Total Number of Areas is " + totalUnits);
 
         for (Integer unitCnt : infectUnitsList) {
             series.add(abTime++, unitCnt);
